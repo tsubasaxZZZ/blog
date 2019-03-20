@@ -111,7 +111,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jpazureid.github.io/2019/02/04/azure-active-directory/how-to-get-sign-in-logs/" data-id="cjth3hicv000kv0ytrhri4xgv" class="article-share-link">共有</a>
+      <a data-url="https://jpazureid.github.io/2019/02/04/azure-active-directory/how-to-get-sign-in-logs/" data-id="cjth4sca3000khgytvgsxypx6" class="article-share-link">共有</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Azure-AD/">Azure AD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Sgin-in-log/">Sgin-in log</a></li></ul>
@@ -158,7 +158,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jpazureid.github.io/2018/12/12/azure-active-directory/last-signin-reports/" data-id="cjth3hicw000lv0yterwf1fhd" class="article-share-link">共有</a>
+      <a data-url="https://jpazureid.github.io/2018/12/12/azure-active-directory/last-signin-reports/" data-id="cjth4sca7000lhgyt4yymioot" class="article-share-link">共有</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Azure-AD/">Azure AD</a></li></ul>
@@ -214,7 +214,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jpazureid.github.io/2018/11/01/azure-active-directory/create-subscription-error/" data-id="cjth3hict000fv0ytg8boudna" class="article-share-link">共有</a>
+      <a data-url="https://jpazureid.github.io/2018/11/01/azure-active-directory/create-subscription-error/" data-id="cjth4sca1000fhgytm1ibo1st" class="article-share-link">共有</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Azure-AD/">Azure AD</a></li></ul>
@@ -279,7 +279,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jpazureid.github.io/2018/10/15/azure-active-directory/mfa-reset/" data-id="cjth3hid0000pv0ytt2mrnxf9" class="article-share-link">共有</a>
+      <a data-url="https://jpazureid.github.io/2018/10/15/azure-active-directory/mfa-reset/" data-id="cjth4sca9000phgytrs8mtavd" class="article-share-link">共有</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Azure-AD/">Azure AD</a></li></ul>
@@ -363,7 +363,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jpazureid.github.io/2018/09/27/azure-active-directory/conditional-access-basuc/" data-id="cjth3hics000cv0ytdensqgbb" class="article-share-link">共有</a>
+      <a data-url="https://jpazureid.github.io/2018/09/27/azure-active-directory/conditional-access-basuc/" data-id="cjth4sc9z000chgyts2b7jbse" class="article-share-link">共有</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Azure-AD/">Azure AD</a></li></ul>
@@ -407,7 +407,7 @@
 <p>Azure AD PowerShell のインストールなどについては、以下の公開情報をご参照くださいませ。</p>
 <p><a href="powershell-module.md">Azure Active Directory の PowerShell モジュール</a></p>
 <h2 id="PowerShell-スクリプト"><a href="#PowerShell-スクリプト" class="headerlink" title="PowerShell スクリプト"></a>PowerShell スクリプト</h2><hr>
-<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Import-Module MSOnline</span><br><span class="line">Connect-MsolService</span><br><span class="line"></span><br><span class="line">#任意の csv が出力されるディレクトリを設定してください。</span><br><span class="line"></span><br><span class="line">$outfile = "C:\output.csv"</span><br><span class="line">$dataList</span><br><span class="line">$data = New-Object PSObject | Select-Object DirectoryRole, User</span><br><span class="line">$role = Get-MsolRole</span><br><span class="line">$dataList = @()</span><br><span class="line"></span><br><span class="line">foreach ($test <span class="keyword">in</span> $role) &#123;</span><br><span class="line">	$member = Get-MsolRoleMember -RoleObjectId $test.objectid</span><br><span class="line">	<span class="keyword">If</span> ($null -eq $member) &#123;</span><br><span class="line">		$role = $test.name</span><br><span class="line">		Write-Output "$role,"</span><br><span class="line">		$data = New-Object PSObject | Select-Object DirectoryRole, User</span><br><span class="line">		$data.DirectoryRole = $role</span><br><span class="line">		$data.User = $null</span><br><span class="line">		$dataList += $data</span><br><span class="line">	&#125; <span class="keyword">Else</span> &#123;</span><br><span class="line">		foreach ($m <span class="keyword">in</span> $member) &#123;</span><br><span class="line">			$role = $test.name</span><br><span class="line">			$user = $m.EmailAddress</span><br><span class="line">			Write-Output "$role,$user"</span><br><span class="line">			$data = New-Object PSObject | Select-Object DirectoryRole, User</span><br><span class="line">			$data.DirectoryRole = $role</span><br><span class="line">			$data.User = $user</span><br><span class="line">			$dataList += $data</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$DataList | Export-Csv $outfile -Encoding Default</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">Import-Module MSOnline</span><br><span class="line">Connect-MsolService</span><br><span class="line"></span><br><span class="line">#任意の csv が出力されるディレクトリを設定してください。</span><br><span class="line"></span><br><span class="line">$outfile = &quot;C:\output.csv&quot;</span><br><span class="line">$dataList</span><br><span class="line">$data = New-Object PSObject | Select-Object DirectoryRole, User</span><br><span class="line">$role = Get-MsolRole</span><br><span class="line">$dataList = @()</span><br><span class="line"></span><br><span class="line">foreach ($test in $role) &#123;</span><br><span class="line">	$member = Get-MsolRoleMember -RoleObjectId $test.objectid</span><br><span class="line">	If ($null -eq $member) &#123;</span><br><span class="line">		$role = $test.name</span><br><span class="line">		Write-Output &quot;$role,&quot;</span><br><span class="line">		$data = New-Object PSObject | Select-Object DirectoryRole, User</span><br><span class="line">		$data.DirectoryRole = $role</span><br><span class="line">		$data.User = $null</span><br><span class="line">		$dataList += $data</span><br><span class="line">	&#125; Else &#123;</span><br><span class="line">		foreach ($m in $member) &#123;</span><br><span class="line">			$role = $test.name</span><br><span class="line">			$user = $m.EmailAddress</span><br><span class="line">			Write-Output &quot;$role,$user&quot;</span><br><span class="line">			$data = New-Object PSObject | Select-Object DirectoryRole, User</span><br><span class="line">			$data.DirectoryRole = $role</span><br><span class="line">			$data.User = $user</span><br><span class="line">			$dataList += $data</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$DataList | Export-Csv $outfile -Encoding Default</span><br></pre></td></tr></table></figure>
 <h2 id="出力結果の例"><a href="#出力結果の例" class="headerlink" title="出力結果の例"></a>出力結果の例</h2><hr>
 <p> スクリプトを実行すると資格情報が求められますので、出力対象の Azure AD テナントの全体管理者の資格情報を入力します。</p>
 <p>その後自動的に csv ファイルにロールの一覧が出力されます。以下は出力のサンプルです。</p>
@@ -417,7 +417,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jpazureid.github.io/2018/09/13/azure-active-directory/output-directory-roll-members/" data-id="cjth3hid1000sv0ytff3tnwod" class="article-share-link">共有</a>
+      <a data-url="https://jpazureid.github.io/2018/09/13/azure-active-directory/output-directory-roll-members/" data-id="cjth4scaa000shgytbkcyhwi0" class="article-share-link">共有</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Azure-AD-Directory-Rolls/">Azure AD Directory Rolls</a></li></ul>
@@ -496,7 +496,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jpazureid.github.io/2018/09/13/azure-active-directory/tenant-restriction/" data-id="cjth3hid3000wv0ytbsui2xg0" class="article-share-link">共有</a>
+      <a data-url="https://jpazureid.github.io/2018/09/13/azure-active-directory/tenant-restriction/" data-id="cjth4scac000xhgytsjiqu4q1" class="article-share-link">共有</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Azure-AD/">Azure AD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Tenant-Restrictions/">Tenant Restrictions</a></li></ul>
@@ -568,7 +568,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jpazureid.github.io/2018/08/23/azure-active-directory/roles-and-administrators/" data-id="cjth3hid2000uv0yt50k1acv2" class="article-share-link">共有</a>
+      <a data-url="https://jpazureid.github.io/2018/08/23/azure-active-directory/roles-and-administrators/" data-id="cjth4scab000uhgyt8h7dwo7n" class="article-share-link">共有</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Azure-AD/">Azure AD</a></li></ul>
@@ -661,7 +661,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jpazureid.github.io/2018/08/10/azure-active-directory-connect/how-to-upgrade/" data-id="cjth3hid70014v0ytipu51rbr" class="article-share-link">共有</a>
+      <a data-url="https://jpazureid.github.io/2018/08/10/azure-active-directory-connect/how-to-upgrade/" data-id="cjth4scaf0012hgytjlagr3ev" class="article-share-link">共有</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/AAD-Connect/">AAD Connect</a></li></ul>
@@ -750,7 +750,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jpazureid.github.io/2018/08/09/azure-active-directory/about-rbac/" data-id="cjth3hicd0003v0ytzw2xswbi" class="article-share-link">共有</a>
+      <a data-url="https://jpazureid.github.io/2018/08/09/azure-active-directory/about-rbac/" data-id="cjth4sc9o0003hgyt1t5t1n12" class="article-share-link">共有</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Azure-AD/">Azure AD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/RBAC/">RBAC</a></li></ul>

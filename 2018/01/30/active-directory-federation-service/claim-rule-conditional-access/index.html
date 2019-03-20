@@ -7,18 +7,18 @@
   
   <title>クレーム ルールと条件付きアクセスの比較 | Japan Azure Identity Support Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="こんにちは、Azure &amp;amp; Identity サポート チームの坂井です。 今回は AD FS を利用したクレーム ルールとAzure AD を利用した条件付きアクセスについて比較します。これまで AD FS のクレーム ルールでアクセス制御を実施しているが、条件付きアクセスの機能にも興味をお持ちの方も多いかと思います。今後の運用においてクレーム ルールと条件付きアクセスのどちらで運用を行">
+  <meta name="description" content="はじめにクレーム ルールと条件付きアクセスは、両者ともに指定した条件に応じて認証アクセスの制御を行うことができます。例えば、多要素認証を発生させるための条件設定は、クレーム ルールでも条件付きアクセスでも可能です。 それぞれを利用する際に必要な前提条件は次のとおりです。  クレーム ルール   AD FS 環境が必須です。AD FS を利用した認証フローとなるため、認証についてはオンプレミス側で行">
 <meta name="keywords" content="AD FS,Conditional Access">
 <meta property="og:type" content="article">
 <meta property="og:title" content="クレーム ルールと条件付きアクセスの比較">
 <meta property="og:url" content="https://jpazureid.github.io/2018/01/30/active-directory-federation-service/claim-rule-conditional-access/index.html">
 <meta property="og:site_name" content="Japan Azure Identity Support Blog">
-<meta property="og:description" content="こんにちは、Azure &amp;amp; Identity サポート チームの坂井です。 今回は AD FS を利用したクレーム ルールとAzure AD を利用した条件付きアクセスについて比較します。これまで AD FS のクレーム ルールでアクセス制御を実施しているが、条件付きアクセスの機能にも興味をお持ちの方も多いかと思います。今後の運用においてクレーム ルールと条件付きアクセスのどちらで運用を行">
+<meta property="og:description" content="はじめにクレーム ルールと条件付きアクセスは、両者ともに指定した条件に応じて認証アクセスの制御を行うことができます。例えば、多要素認証を発生させるための条件設定は、クレーム ルールでも条件付きアクセスでも可能です。 それぞれを利用する際に必要な前提条件は次のとおりです。  クレーム ルール   AD FS 環境が必須です。AD FS を利用した認証フローとなるため、認証についてはオンプレミス側で行">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2019-03-20T10:59:45.468Z">
+<meta property="og:updated_time" content="2019-03-20T11:36:10.430Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="クレーム ルールと条件付きアクセスの比較">
-<meta name="twitter:description" content="こんにちは、Azure &amp;amp; Identity サポート チームの坂井です。 今回は AD FS を利用したクレーム ルールとAzure AD を利用した条件付きアクセスについて比較します。これまで AD FS のクレーム ルールでアクセス制御を実施しているが、条件付きアクセスの機能にも興味をお持ちの方も多いかと思います。今後の運用においてクレーム ルールと条件付きアクセスのどちらで運用を行">
+<meta name="twitter:description" content="はじめにクレーム ルールと条件付きアクセスは、両者ともに指定した条件に応じて認証アクセスの制御を行うことができます。例えば、多要素認証を発生させるための条件設定は、クレーム ルールでも条件付きアクセスでも可能です。 それぞれを利用する際に必要な前提条件は次のとおりです。  クレーム ルール   AD FS 環境が必須です。AD FS を利用した認証フローとなるため、認証についてはオンプレミス側で行">
   
     <link rel="alternate" href="/blog/atom.xml" title="Japan Azure Identity Support Blog" type="application/atom+xml">
   
@@ -87,9 +87,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>こんにちは、Azure &amp; Identity サポート チームの坂井です。</p>
-<p>今回は AD FS を利用したクレーム ルールとAzure AD を利用した条件付きアクセスについて比較します。これまで AD FS のクレーム ルールでアクセス制御を実施しているが、条件付きアクセスの機能にも興味をお持ちの方も多いかと思います。今後の運用においてクレーム ルールと条件付きアクセスのどちらで運用を行うか検討するにあたり少しでも本記事がお役に立ちましたら幸いです。</p>
-<h2 id="はじめに"><a href="#はじめに" class="headerlink" title="はじめに"></a>はじめに</h2><p>クレーム ルールと条件付きアクセスは、両者ともに指定した条件に応じて認証アクセスの制御を行うことができます。例えば、多要素認証を発生させるための条件設定は、クレーム ルールでも条件付きアクセスでも可能です。</p>
+        <h2 id="はじめに"><a href="#はじめに" class="headerlink" title="はじめに"></a>はじめに</h2><p>クレーム ルールと条件付きアクセスは、両者ともに指定した条件に応じて認証アクセスの制御を行うことができます。例えば、多要素認証を発生させるための条件設定は、クレーム ルールでも条件付きアクセスでも可能です。</p>
 <p>それぞれを利用する際に必要な前提条件は次のとおりです。</p>
 <ul>
 <li><p>クレーム ルール</p>
@@ -190,7 +188,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jpazureid.github.io/2018/01/30/active-directory-federation-service/claim-rule-conditional-access/" data-id="cjth3hic60000v0ytoyioo0cp" class="article-share-link">共有</a>
+      <a data-url="https://jpazureid.github.io/2018/01/30/active-directory-federation-service/claim-rule-conditional-access/" data-id="cjth4sc9g0000hgyt6atpu5a4" class="article-share-link">共有</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/AD-FS/">AD FS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Conditional-Access/">Conditional Access</a></li></ul>
