@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>テナント制限 | Japan Azure Identity Support Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="こんにちは！ Azure &amp;amp; Identity サポート チームの三浦 大です。 今回はテナント制限の機能に関して、よくあるお問い合わせと、その回答をまとめさせていただきました。 テナント制限とは まず、テナント制限とは、 Azure AD に対する認証の通信をプロキシ経由させ、そのプロキシから送信されるデータに、アクセスを許可する Azure AD テナントの情報を付与しておくことで、そ">
+<meta name="keywords" content="Azure AD,Tenant Restrictions">
+<meta property="og:type" content="article">
+<meta property="og:title" content="テナント制限">
+<meta property="og:url" content="https://jpazureid.github.io/2018/09/13/azure-active-directory/tenant-restriction/index.html">
+<meta property="og:site_name" content="Japan Azure Identity Support Blog">
+<meta property="og:description" content="こんにちは！ Azure &amp;amp; Identity サポート チームの三浦 大です。 今回はテナント制限の機能に関して、よくあるお問い合わせと、その回答をまとめさせていただきました。 テナント制限とは まず、テナント制限とは、 Azure AD に対する認証の通信をプロキシ経由させ、そのプロキシから送信されるデータに、アクセスを許可する Azure AD テナントの情報を付与しておくことで、そ">
+<meta property="og:locale" content="ja">
+<meta property="og:image" content="https://jpazureid.github.io/blog/2018/09/13/azure-active-directory/tenant-restriction/tenant-restrictions01.png">
+<meta property="og:updated_time" content="2019-03-20T10:59:45.664Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="テナント制限">
+<meta name="twitter:description" content="こんにちは！ Azure &amp;amp; Identity サポート チームの三浦 大です。 今回はテナント制限の機能に関して、よくあるお問い合わせと、その回答をまとめさせていただきました。 テナント制限とは まず、テナント制限とは、 Azure AD に対する認証の通信をプロキシ経由させ、そのプロキシから送信されるデータに、アクセスを許可する Azure AD テナントの情報を付与しておくことで、そ">
+<meta name="twitter:image" content="https://jpazureid.github.io/blog/2018/09/13/azure-active-directory/tenant-restriction/tenant-restrictions01.png">
+  
+    <link rel="alternate" href="/blog/atom.xml" title="Japan Azure Identity Support Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/blog/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/blog/" id="logo">Japan Azure Identity Support Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/blog/">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/blog/atom.xml" title="RSSフィード"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="検索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://jpazureid.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-azure-active-directory/tenant-restriction" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2018/09/13/azure-active-directory/tenant-restriction/" class="article-date">
+  <time datetime="2018-09-12T15:00:00.000Z" itemprop="datePublished">2018-09-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      テナント制限
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>こんにちは！ Azure &amp; Identity サポート チームの三浦 大です。</p>
+<p>今回はテナント制限の機能に関して、よくあるお問い合わせと、その回答をまとめさせていただきました。</p>
+<h2 id="テナント制限とは"><a href="#テナント制限とは" class="headerlink" title="テナント制限とは"></a>テナント制限とは</h2><hr>
+<p>まず、テナント制限とは、 Azure AD に対する認証の通信をプロキシ経由させ、そのプロキシから送信されるデータに、アクセスを許可する Azure AD テナントの情報を付与しておくことで、それ以外の Azure AD テナントへのアクセスをブロックする機能を指しています。</p>
+<p>詳細については、以下の公開情報をご参照ください。</p>
+<p>自社テナント以外へのアクセス制御 – “テナントの制限” 機能 (Tenant Restrictions)</p>
+<p><a href="https://blogs.technet.microsoft.com/office365-tech-japan/2017/02/06/tenant-restrictions/" target="_blank" rel="noopener">https://blogs.technet.microsoft.com/office365-tech-japan/2017/02/06/tenant-restrictions/</a></p>
+<p>テナント制限が機能しており、アクセスを許可しないテナントの  Office 365 や Azure へのサインイン時に 「ここからアクセスすることはできません」 のエラーメッセージが表示されます。</p>
+<img src="/blog/2018/09/13/azure-active-directory/tenant-restriction/tenant-restrictions01.png">
+<p>以下にて、テナント制限に関連する、よくあるお問い合わせをまとめました。</p>
+<p>ぜひご参照ください！</p>
+<h2 id="よくあるお問い合わせ"><a href="#よくあるお問い合わせ" class="headerlink" title="よくあるお問い合わせ"></a>よくあるお問い合わせ</h2><hr>
+<p><font color="DeepSkyBlue">Q</font> : MS アカウントを利用すると、制限の画面が表示されますが、回避策はありませんか？</p>
+<p><font color="red">A</font> : MS アカウントを許可する場合には、以下をテナント制限の許可するリストに追加します。</p>
+<p>(“Restrict-Access-To-Tenants” ヘッダーに含まれるようにします)</p>
+<p>microsoftservices.onmicrosoft.com</p>
+<p>MSARealms.onmicrosoft.com</p>
+<p><font color="DeepSkyBlue">Q</font> : 制限されるのは Office 365 だけですか？</p>
+<p><font color="red">A</font>  : いいえ。</p>
+<p>以下の認証エンドポイントを使用する、すべてのサービスが制限されます。</p>
+<p>login.microsoftonline.com</p>
+<p>login.windows.net</p>
+<p>login.microsoft.com</p>
+<p>例えば Azure ポータル、EA ポータルにアクセスする際も制限されます。</p>
+<p>また、ゲストユーザーの場合、招待されたテナントではなく、管理元のテナントで認証が行われるため、ゲストユーザーの招待元テナントも、テナント制限で許可する必要があります。</p>
+<p><font color="DeepSkyBlue">Q</font> : (クライアントですが)、テナント制限によってアクセスできないテナントにアクセスできるようにしてほしい。</p>
+<p><font color="red">A</font> : 接続元のクライアントが利用するプロキシサーバーの設定変更が必要です。</p>
+<p>プロキシ サーバーを管理している IT 部門へ申請をあげるなどで、テナント制限の許可するリストに該当のテナントを追加してもらってください。</p>
+<p><font color="DeepSkyBlue">Q</font> : Azure AD 側での設定変更は必要ですか？</p>
+<p><font color="red">A</font> : いいえ。</p>
+<p>プロキシの設定のみで、テナント制限が機能します。</p>
+<p><font color="DeepSkyBlue">Q</font> : “Restrict-Access-To-Tenants” に、ワイルドカードは利用できますか？</p>
+<p><font color="red">A</font> : いいえ。</p>
+<p>テナント名かテナント ID を不足なく、入力する必要がございます。</p>
+<p><font color="DeepSkyBlue">Q</font> : テナント制限で許可をすることができるテナント数に上限はありますか？</p>
+<p><font color="red">A</font> : テナント制限にて、許可をするテナント数自体には上限は設けられていません。</p>
+<p>しかし、ヘッダーの長さの上限 (MaxFieldLength) と、リクエストとヘッダーを含めた合計のサイズの上限 (MaxRequestBytes) があるため、多数のディレクトリを追加する場合、この上限を超えないように注意が必要です。</p>
+<p>※ テナント名の平均を 30 文字 (30 バイト) とすると、ヘッダーにはテナント名を約 2,000 個追加できます。</p>
+<p>MaxFieldLength の最大値: 65534 バイト (6K バイト)</p>
+<p>MaxRequestBytes 最大値: 16777216バイト (16M バイト)</p>
+<p>上記内容が、皆様のご参考になれば幸甚です。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jpazureid.github.io/2018/09/13/azure-active-directory/tenant-restriction/" data-id="cjth3hid3000wv0ytbsui2xg0" class="article-share-link">共有</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Azure-AD/">Azure AD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Tenant-Restrictions/">Tenant Restrictions</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/blog/2018/09/13/azure-active-directory/output-directory-roll-members/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">次の記事</strong>
+      <div class="article-nav-title">
+        
+          Azure AD の ディレクトリロールが割り当てられたメンバーの一覧を取得したい
+        
+      </div>
+    </a>
+  
+  
+    <a href="/blog/2018/08/23/azure-active-directory/roles-and-administrators/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前の記事</strong>
+      <div class="article-nav-title">Azure AD におけるロール管理の新しい方法</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">タグ</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/AAD-Connect/">AAD Connect</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/AD-FS/">AD FS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/AD-Sync/">AD Sync</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Azure-AD/">Azure AD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Azure-AD-Application-Proxy/">Azure AD Application Proxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Azure-AD-B2B/">Azure AD B2B</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Azure-AD-Directory-Rolls/">Azure AD Directory Rolls</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Azure-AD-License/">Azure AD License</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Conditional-Access/">Conditional Access</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/ExpressRoute/">ExpressRoute</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Hard-match/">Hard match</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Hybrid-Azure-AD-Join/">Hybrid Azure AD Join</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Intune/">Intune</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/MFA/">MFA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/PowerShell/">PowerShell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/RBAC/">RBAC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Security/">Security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Sgin-in-log/">Sgin-in log</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Smart-lockout/">Smart lockout</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Subscription/">Subscription</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Tenant-Restrictions/">Tenant Restrictions</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/UPN/">UPN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Windows-Defender-ATP/">Windows Defender ATP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Workplace-Join/">Workplace Join</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">タグクラウド</h3>
+    <div class="widget tagcloud">
+      <a href="/blog/tags/AAD-Connect/" style="font-size: 14px;">AAD Connect</a> <a href="/blog/tags/AD-FS/" style="font-size: 18px;">AD FS</a> <a href="/blog/tags/AD-Sync/" style="font-size: 10px;">AD Sync</a> <a href="/blog/tags/Azure-AD/" style="font-size: 20px;">Azure AD</a> <a href="/blog/tags/Azure-AD-Application-Proxy/" style="font-size: 10px;">Azure AD Application Proxy</a> <a href="/blog/tags/Azure-AD-B2B/" style="font-size: 14px;">Azure AD B2B</a> <a href="/blog/tags/Azure-AD-Directory-Rolls/" style="font-size: 10px;">Azure AD Directory Rolls</a> <a href="/blog/tags/Azure-AD-License/" style="font-size: 10px;">Azure AD License</a> <a href="/blog/tags/Conditional-Access/" style="font-size: 16px;">Conditional Access</a> <a href="/blog/tags/ExpressRoute/" style="font-size: 10px;">ExpressRoute</a> <a href="/blog/tags/Hard-match/" style="font-size: 10px;">Hard match</a> <a href="/blog/tags/Hybrid-Azure-AD-Join/" style="font-size: 10px;">Hybrid Azure AD Join</a> <a href="/blog/tags/Intune/" style="font-size: 12px;">Intune</a> <a href="/blog/tags/MFA/" style="font-size: 10px;">MFA</a> <a href="/blog/tags/PowerShell/" style="font-size: 10px;">PowerShell</a> <a href="/blog/tags/RBAC/" style="font-size: 12px;">RBAC</a> <a href="/blog/tags/Security/" style="font-size: 12px;">Security</a> <a href="/blog/tags/Sgin-in-log/" style="font-size: 10px;">Sgin-in log</a> <a href="/blog/tags/Smart-lockout/" style="font-size: 10px;">Smart lockout</a> <a href="/blog/tags/Subscription/" style="font-size: 10px;">Subscription</a> <a href="/blog/tags/Tenant-Restrictions/" style="font-size: 10px;">Tenant Restrictions</a> <a href="/blog/tags/UPN/" style="font-size: 10px;">UPN</a> <a href="/blog/tags/Windows-Defender-ATP/" style="font-size: 10px;">Windows Defender ATP</a> <a href="/blog/tags/Workplace-Join/" style="font-size: 10px;">Workplace Join</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">アーカイブ</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/02/">二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2018/12/">十二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2018/11/">十一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2018/10/">十月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2018/08/">八月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2018/07/">七月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2018/06/">六月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2018/05/">五月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2018/04/">四月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2018/02/">二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2018/01/">一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2017/12/">十二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2017/10/">十月 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最近の投稿</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2019/02/04/azure-active-directory/how-to-get-sign-in-logs/">Azure AD サインイン ログ取得方法まとめ</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2018/12/12/azure-active-directory/last-signin-reports/">PowerShell にて全ユーザーの最終サインイン日時を一括で取得する方法</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2018/11/01/azure-active-directory/create-subscription-error/">サブスクリプション作成時のエラー「アカウントが Azure サブスクリプションに関連付けられないディレクトリに属しています。別のアカウントでサインインしてください」</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2018/10/15/azure-active-directory/mfa-reset/">多要素認証 (MFA) のリセット手順</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2018/09/27/azure-active-directory/conditional-access-basuc/">条件付きアクセスの基本的な考え方</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 Azure Identity Support Japan<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/blog/" class="mobile-nav-link">Home</a>
+  
+    <a href="/blog/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css">
+  <script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/blog/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

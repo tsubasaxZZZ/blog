@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>サブスクリプション作成時のエラー「アカウントが Azure サブスクリプションに関連付けられないディレクトリに属しています。別のアカウントでサインインしてください」 | Japan Azure Identity Support Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="こんにちは、Azure &amp;amp; Identity サポート チームの小野です。 今回は、Azure におけるサブスクリプション作成時に表示される「アカウントが Azure サブスクリプションに関連付けられないディレクトリに属しています。別のアカウントでサインインしてください」というエラーの発生原因と対処策についてご紹介します。   本エラーは、サブスクリプション作成を試みたユーザー (のメール">
+<meta name="keywords" content="Azure AD">
+<meta property="og:type" content="article">
+<meta property="og:title" content="サブスクリプション作成時のエラー「アカウントが Azure サブスクリプションに関連付けられないディレクトリに属しています。別のアカウントでサインインしてください」">
+<meta property="og:url" content="https://jpazureid.github.io/2018/11/01/azure-active-directory/create-subscription-error/index.html">
+<meta property="og:site_name" content="Japan Azure Identity Support Blog">
+<meta property="og:description" content="こんにちは、Azure &amp;amp; Identity サポート チームの小野です。 今回は、Azure におけるサブスクリプション作成時に表示される「アカウントが Azure サブスクリプションに関連付けられないディレクトリに属しています。別のアカウントでサインインしてください」というエラーの発生原因と対処策についてご紹介します。   本エラーは、サブスクリプション作成を試みたユーザー (のメール">
+<meta property="og:locale" content="ja">
+<meta property="og:image" content="https://jpazureid.github.io/blog/2018/11/01/azure-active-directory/create-subscription-error/error.png">
+<meta property="og:image" content="https://jpazureid.github.io/blog/2018/11/01/azure-active-directory/create-subscription-error/1.png">
+<meta property="og:image" content="https://jpazureid.github.io/blog/2018/11/01/azure-active-directory/create-subscription-error/2.png">
+<meta property="og:image" content="https://jpazureid.github.io/blog/2018/11/01/azure-active-directory/create-subscription-error/3.png">
+<meta property="og:image" content="https://jpazureid.github.io/blog/2018/11/01/azure-active-directory/create-subscription-error/4.png">
+<meta property="og:updated_time" content="2019-03-20T10:59:45.583Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="サブスクリプション作成時のエラー「アカウントが Azure サブスクリプションに関連付けられないディレクトリに属しています。別のアカウントでサインインしてください」">
+<meta name="twitter:description" content="こんにちは、Azure &amp;amp; Identity サポート チームの小野です。 今回は、Azure におけるサブスクリプション作成時に表示される「アカウントが Azure サブスクリプションに関連付けられないディレクトリに属しています。別のアカウントでサインインしてください」というエラーの発生原因と対処策についてご紹介します。   本エラーは、サブスクリプション作成を試みたユーザー (のメール">
+<meta name="twitter:image" content="https://jpazureid.github.io/blog/2018/11/01/azure-active-directory/create-subscription-error/error.png">
+  
+    <link rel="alternate" href="/blog/atom.xml" title="Japan Azure Identity Support Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/blog/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/blog/" id="logo">Japan Azure Identity Support Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/blog/">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/blog/atom.xml" title="RSSフィード"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="検索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://jpazureid.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-azure-active-directory/create-subscription-error" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2018/11/01/azure-active-directory/create-subscription-error/" class="article-date">
+  <time datetime="2018-10-31T15:00:00.000Z" itemprop="datePublished">2018-11-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      サブスクリプション作成時のエラー「アカウントが Azure サブスクリプションに関連付けられないディレクトリに属しています。別のアカウントでサインインしてください」
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>こんにちは、Azure &amp; Identity サポート チームの小野です。</p>
+<p>今回は、Azure におけるサブスクリプション作成時に表示される「アカウントが Azure サブスクリプションに関連付けられないディレクトリに属しています。別のアカウントでサインインしてください」というエラーの発生原因と対処策についてご紹介します。</p>
+ <img src="/blog/2018/11/01/azure-active-directory/create-subscription-error/error.png">
+<p>本エラーは、サブスクリプション作成を試みたユーザー (のメールアドレス) が ”セルフサービス サインアップ テナント” に紐づいている場合に発生します。</p>
+<p>◆ セルフサービス サインアップ テナントとは</p>
+<p>セルフサービス サインアップ テナントとは、管理者により作成されたテナントではなく、ユーザーが Azure Active Directory(以下、Azure AD ) による認証を必須とするサービスにサインアップした (利用を試みた) 場合に自動で作成されるテナントです。具体的には Power BI などのサービスになりますが、サービスを利用するためにサインアップを試みた際に指定したユーザーのメール アドレスに含まれるドメイン名が Azure AD にまだ登録されていない場合には、自動で Azure AD テナントが作成され、これがセルフサービス サインアップ テナントになります。通常 Azure AD テナントには必ず管理者が存在しますが、このセルフサービス サインアップ テナントには管理者が存在しません。この管理者が存在しないテナントではサブスクリプションを紐づけることができないため、発生しているエラーが今回ご紹介しているエラーメッセージになります。</p>
+<p>対処策としては、以下の手順にてテナントの管理者への昇格をする必要があります。</p>
+<p>◆　エラーの対処法<br>以下手順にて管理者に昇格します。</p>
+<p>1.該当のユーザーで、<a href="https://www.office.com" target="_blank" rel="noopener">https://www.office.com</a> へログインし、管理を選択します。</p>
+ <img src="/blog/2018/11/01/azure-active-directory/create-subscription-error/1.png">
+<p>2.以下画面が表示されますので、”はい、私が管理者になります”を選択します。<br> <img src="/blog/2018/11/01/azure-active-directory/create-subscription-error/2.png"></p>
+<p>3.ドメインを認証するために、TXT レコードの更新が求められます。</p>
+<p>ドメインに指定されたTXT レコードを追加し、”レコードを追加しました”を選択します。<br>なお、このTXT レコードは、管理者への昇格が終わりましたら削除いただいて構いません。</p>
+<img src="/blog/2018/11/01/azure-active-directory/create-subscription-error/3.png">
+<p>4.TXT レコードの確認が完了すると、以下が表示されます。</p>
+<p>この画面が表示されますと、無事サブスクリプションを作成することができます。</p>
+<img src="/blog/2018/11/01/azure-active-directory/create-subscription-error/4.png">
+<p>ご不明な点がございましたら弊社サポートまでお気軽にお問い合わせください。<br>上記内容が少しでも皆様の参考となりますと幸いです。<br>※本情報の内容（添付文書、リンク先などを含む）は、作成日時点でのものであり、予告なく変更される場合があります。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jpazureid.github.io/2018/11/01/azure-active-directory/create-subscription-error/" data-id="cjth3hict000fv0ytg8boudna" class="article-share-link">共有</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Azure-AD/">Azure AD</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/blog/2018/12/12/azure-active-directory/last-signin-reports/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">次の記事</strong>
+      <div class="article-nav-title">
+        
+          PowerShell にて全ユーザーの最終サインイン日時を一括で取得する方法
+        
+      </div>
+    </a>
+  
+  
+    <a href="/blog/2018/10/15/azure-active-directory/mfa-reset/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前の記事</strong>
+      <div class="article-nav-title">多要素認証 (MFA) のリセット手順</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">タグ</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/AAD-Connect/">AAD Connect</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/AD-FS/">AD FS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/AD-Sync/">AD Sync</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Azure-AD/">Azure AD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Azure-AD-Application-Proxy/">Azure AD Application Proxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Azure-AD-B2B/">Azure AD B2B</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Azure-AD-Directory-Rolls/">Azure AD Directory Rolls</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Azure-AD-License/">Azure AD License</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Conditional-Access/">Conditional Access</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/ExpressRoute/">ExpressRoute</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Hard-match/">Hard match</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Hybrid-Azure-AD-Join/">Hybrid Azure AD Join</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Intune/">Intune</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/MFA/">MFA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/PowerShell/">PowerShell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/RBAC/">RBAC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Security/">Security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Sgin-in-log/">Sgin-in log</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Smart-lockout/">Smart lockout</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Subscription/">Subscription</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Tenant-Restrictions/">Tenant Restrictions</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/UPN/">UPN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Windows-Defender-ATP/">Windows Defender ATP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Workplace-Join/">Workplace Join</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">タグクラウド</h3>
+    <div class="widget tagcloud">
+      <a href="/blog/tags/AAD-Connect/" style="font-size: 14px;">AAD Connect</a> <a href="/blog/tags/AD-FS/" style="font-size: 18px;">AD FS</a> <a href="/blog/tags/AD-Sync/" style="font-size: 10px;">AD Sync</a> <a href="/blog/tags/Azure-AD/" style="font-size: 20px;">Azure AD</a> <a href="/blog/tags/Azure-AD-Application-Proxy/" style="font-size: 10px;">Azure AD Application Proxy</a> <a href="/blog/tags/Azure-AD-B2B/" style="font-size: 14px;">Azure AD B2B</a> <a href="/blog/tags/Azure-AD-Directory-Rolls/" style="font-size: 10px;">Azure AD Directory Rolls</a> <a href="/blog/tags/Azure-AD-License/" style="font-size: 10px;">Azure AD License</a> <a href="/blog/tags/Conditional-Access/" style="font-size: 16px;">Conditional Access</a> <a href="/blog/tags/ExpressRoute/" style="font-size: 10px;">ExpressRoute</a> <a href="/blog/tags/Hard-match/" style="font-size: 10px;">Hard match</a> <a href="/blog/tags/Hybrid-Azure-AD-Join/" style="font-size: 10px;">Hybrid Azure AD Join</a> <a href="/blog/tags/Intune/" style="font-size: 12px;">Intune</a> <a href="/blog/tags/MFA/" style="font-size: 10px;">MFA</a> <a href="/blog/tags/PowerShell/" style="font-size: 10px;">PowerShell</a> <a href="/blog/tags/RBAC/" style="font-size: 12px;">RBAC</a> <a href="/blog/tags/Security/" style="font-size: 12px;">Security</a> <a href="/blog/tags/Sgin-in-log/" style="font-size: 10px;">Sgin-in log</a> <a href="/blog/tags/Smart-lockout/" style="font-size: 10px;">Smart lockout</a> <a href="/blog/tags/Subscription/" style="font-size: 10px;">Subscription</a> <a href="/blog/tags/Tenant-Restrictions/" style="font-size: 10px;">Tenant Restrictions</a> <a href="/blog/tags/UPN/" style="font-size: 10px;">UPN</a> <a href="/blog/tags/Windows-Defender-ATP/" style="font-size: 10px;">Windows Defender ATP</a> <a href="/blog/tags/Workplace-Join/" style="font-size: 10px;">Workplace Join</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">アーカイブ</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/02/">二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2018/12/">十二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2018/11/">十一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2018/10/">十月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2018/08/">八月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2018/07/">七月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2018/06/">六月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2018/05/">五月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2018/04/">四月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2018/02/">二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2018/01/">一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2017/12/">十二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2017/10/">十月 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最近の投稿</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2019/02/04/azure-active-directory/how-to-get-sign-in-logs/">Azure AD サインイン ログ取得方法まとめ</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2018/12/12/azure-active-directory/last-signin-reports/">PowerShell にて全ユーザーの最終サインイン日時を一括で取得する方法</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2018/11/01/azure-active-directory/create-subscription-error/">サブスクリプション作成時のエラー「アカウントが Azure サブスクリプションに関連付けられないディレクトリに属しています。別のアカウントでサインインしてください」</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2018/10/15/azure-active-directory/mfa-reset/">多要素認証 (MFA) のリセット手順</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2018/09/27/azure-active-directory/conditional-access-basuc/">条件付きアクセスの基本的な考え方</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 Azure Identity Support Japan<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/blog/" class="mobile-nav-link">Home</a>
+  
+    <a href="/blog/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css">
+  <script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/blog/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

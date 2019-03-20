@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>Japan Azure Identity Support Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="日本マイクロソフトの Azure Active Directory と AD FS に関するサポート情報のブログです。">
+<meta name="keywords" content="Azure,Azure AD,Identity,AD FS">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Japan Azure Identity Support Blog">
+<meta property="og:url" content="https://jpazureid.github.io/index.html">
+<meta property="og:site_name" content="Japan Azure Identity Support Blog">
+<meta property="og:description" content="日本マイクロソフトの Azure Active Directory と AD FS に関するサポート情報のブログです。">
+<meta property="og:locale" content="ja">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Japan Azure Identity Support Blog">
+<meta name="twitter:description" content="日本マイクロソフトの Azure Active Directory と AD FS に関するサポート情報のブログです。">
+  
+    <link rel="alternate" href="/blog/atom.xml" title="Japan Azure Identity Support Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/blog/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/blog/" id="logo">Japan Azure Identity Support Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/blog/">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/blog/atom.xml" title="RSSフィード"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="検索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://jpazureid.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-azure-active-directory/how-to-get-sign-in-logs" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2019/02/04/azure-active-directory/how-to-get-sign-in-logs/" class="article-date">
+  <time datetime="2019-02-03T15:00:00.000Z" itemprop="datePublished">2019-02-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/02/04/azure-active-directory/how-to-get-sign-in-logs/">Azure AD サインイン ログ取得方法まとめ</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>こんにちは。Azure Identity チームの三浦です。</p>
+<p>Azure AD のサインイン ログは Azure ポータルで確認するほかに次のような方法で確認することができます。</p>
+<ol>
+<li>ポータルから CSV 形式のファイルをダウンロード</li>
+<li>ポータルから取得したスクリプトを利用して CSV 形式のファイルを取得する</li>
+<li>API を利用して CSV 形式のファイルを取得する</li>
+<li>データをエクスポートし、 PowerBI で解析する</li>
+<li>Log Analytics に統合する</li>
+</ol>
+<p>それぞれ簡単に概要を紹介します。</p>
+<p>なお、 Azure ポータルのサインインからログを確認することを含めて Azure AD テナントに Azure AD Premium のライセンスが必要ですのでご注意ください。</p>
+<h2 id="1-ポータルから-CSV-形式のファイルをダウンロード"><a href="#1-ポータルから-CSV-形式のファイルをダウンロード" class="headerlink" title="1. ポータルから CSV 形式のファイルをダウンロード"></a>1. ポータルから CSV 形式のファイルをダウンロード</h2><p>Azure のポータルからは CSV 形式でサインイン ログをダウンロードすることができます。ここで注意しなければいけないことが 2 点あります。</p>
+<p>1) 5000 件までしか取得できない。<br>FAQ にもありますが、 5000 件までしか入手できません。</p>
+<p>2) 日本語環境で文字化けする<br>ダウンロードした CSV ファイルには BOM (Byte Order Mark の略で Unicode 判別のために利用する情報) が含まれていません。<br>そのため、ダウンロードしたファイルをそのまま Excel で開くと文字化けします。<br>一旦ダウンロードした CSV ファイルを notepad.exe で開き、上書き保存すると BOM が付与されるため、その後は日本語が正しく表示されます。</p>
+<h2 id="2-ポータルから取得したスクリプトを利用して-CSV-形式のファイルを取得する"><a href="#2-ポータルから取得したスクリプトを利用して-CSV-形式のファイルを取得する" class="headerlink" title="2. ポータルから取得したスクリプトを利用して CSV 形式のファイルを取得する"></a>2. ポータルから取得したスクリプトを利用して CSV 形式のファイルを取得する</h2><p>ポータルから CSV 形式でファイルを生成するための PowerShell スクリプトを入手することができます。<br>このスクリプトはカスタマイズ可能ですので、毎回 Azure ポータルにアクセスして CSV をダウンロードしなくともスクリプトの実行によりサインインログを入手できます。<br>このスクリプトを実行するためには、予め Azure の PowerShell モジュールのインストール (PowerShell を管理者で開き install-module azure の実行でインストール) と Set-ExcecutionPolicy unrestricted を実行してスクリプトの実行制限を解除しておく必要があります。</p>
+<h2 id="3-API-を利用して-CSV-形式のファイルを取得する"><a href="#3-API-を利用して-CSV-形式のファイルを取得する" class="headerlink" title="3. API を利用して CSV 形式のファイルを取得する"></a>3. API を利用して CSV 形式のファイルを取得する</h2><p>2 と同じような目的となりますが、私たちのブログで紹介しているスクリプトでも CSV ファイルとして取得できます。</p>
+<p>Microsoft Graph API を利用して Azure AD のサインイン アクティビティ レポートを CSV ファイルで取得する PowerShell スクリプト<br>Azure AD Reporting API を利用して PowerShell より Azure AD のサインイン アクティビティ レポートと監査アクティビティ レポートを CSV ファイルで取得する方法</p>
+<h2 id="4-データをエクスポートし、-PowerBI-で解析する"><a href="#4-データをエクスポートし、-PowerBI-で解析する" class="headerlink" title="4. データをエクスポートし、 PowerBI で解析する"></a>4. データをエクスポートし、 PowerBI で解析する</h2><p>PowerBI には Azure AD のサインイン ログを解析するためのコンテンツ パックが用意されています。<br>このコンテンツ パックを利用することで、簡単に視覚化されたサインインのデータの確認が可能です。具体的な手順については、 Azure Active Directory Power BI コンテンツ パックの使用方法 を参照ください。</p>
+<h2 id="5-Log-Analytics-に統合する"><a href="#5-Log-Analytics-に統合する" class="headerlink" title="5. Log Analytics に統合する"></a>5. Log Analytics に統合する</h2><p>Azure サブスクリプションをお持ちでしたら是非 Log Analytics と Azure AD のサインインログの統合についても検討してみてください。<br>2019/1 の時点でまだ Public Preview ですが、 Azure Security Center や Application Insights の機能も利用可能です。詳細、具体的な手順については、こちらの公開情報を参照してみてください。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jpazureid.github.io/2019/02/04/azure-active-directory/how-to-get-sign-in-logs/" data-id="cjth3hicv000kv0ytrhri4xgv" class="article-share-link">共有</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Azure-AD/">Azure AD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Sgin-in-log/">Sgin-in log</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-azure-active-directory/last-signin-reports" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2018/12/12/azure-active-directory/last-signin-reports/" class="article-date">
+  <time datetime="2018-12-11T15:00:00.000Z" itemprop="datePublished">2018-12-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2018/12/12/azure-active-directory/last-signin-reports/">PowerShell にて全ユーザーの最終サインイン日時を一括で取得する方法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>こんにちは、Azure &amp; Identity サポート チームの小野です。<br>今回は、PowerShell で Azure AD 上の全ユーザー（ゲストユーザーも含む）の最終サインイン日時を一括で取得する方法をご紹介します。</p>
+<p>Azure AD における最終サインイン日時は、皆さまから強いご要望を受けており開発チームも機能追加に向け動き出しています。<br>今回ご案内する方法は正式に機能が追加されるまでの回避策となりますが、ご活用いただけますと幸いです。</p>
+<p>この方法を実施すると、以下のようにユーザー毎の最終サインイン時刻が、csv 形式で出力されます。</p>
+<img src="/blog/2018/12/12/azure-active-directory/last-signin-reports/csv.png">
+<p>なお、今回はスクリプトとしてご用意をしたため、Japan Azure ID Support チームの GitHub にアップロードをしましたので、以下サイトをご確認ください。</p>
+<p><a href="https://github.com/jpazureid/get-last-signin-reports" target="_blank" rel="noopener">Get last-sign-in activity reports</a></p>
+<p>今後も、Japan Azure ID Support チームの GitHub には、Azure を利用するにあたり便利なスクリプトをアップロードしてまいります。</p>
+<p>ぜひチェックしてみてください！</p>
+<p>ご不明な点がございましたら弊社サポートまでお気軽にお問い合わせください。<br>上記内容が少しでも皆様の参考となりますと幸いです。<br>※本情報の内容（添付文書、リンク先などを含む）は、作成日時点でのものであり、予告なく変更される場合があります。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jpazureid.github.io/2018/12/12/azure-active-directory/last-signin-reports/" data-id="cjth3hicw000lv0yterwf1fhd" class="article-share-link">共有</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Azure-AD/">Azure AD</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-azure-active-directory/create-subscription-error" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2018/11/01/azure-active-directory/create-subscription-error/" class="article-date">
+  <time datetime="2018-10-31T15:00:00.000Z" itemprop="datePublished">2018-11-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2018/11/01/azure-active-directory/create-subscription-error/">サブスクリプション作成時のエラー「アカウントが Azure サブスクリプションに関連付けられないディレクトリに属しています。別のアカウントでサインインしてください」</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>こんにちは、Azure &amp; Identity サポート チームの小野です。</p>
+<p>今回は、Azure におけるサブスクリプション作成時に表示される「アカウントが Azure サブスクリプションに関連付けられないディレクトリに属しています。別のアカウントでサインインしてください」というエラーの発生原因と対処策についてご紹介します。</p>
+ <img src="/blog/2018/11/01/azure-active-directory/create-subscription-error/error.png">
+<p>本エラーは、サブスクリプション作成を試みたユーザー (のメールアドレス) が ”セルフサービス サインアップ テナント” に紐づいている場合に発生します。</p>
+<p>◆ セルフサービス サインアップ テナントとは</p>
+<p>セルフサービス サインアップ テナントとは、管理者により作成されたテナントではなく、ユーザーが Azure Active Directory(以下、Azure AD ) による認証を必須とするサービスにサインアップした (利用を試みた) 場合に自動で作成されるテナントです。具体的には Power BI などのサービスになりますが、サービスを利用するためにサインアップを試みた際に指定したユーザーのメール アドレスに含まれるドメイン名が Azure AD にまだ登録されていない場合には、自動で Azure AD テナントが作成され、これがセルフサービス サインアップ テナントになります。通常 Azure AD テナントには必ず管理者が存在しますが、このセルフサービス サインアップ テナントには管理者が存在しません。この管理者が存在しないテナントではサブスクリプションを紐づけることができないため、発生しているエラーが今回ご紹介しているエラーメッセージになります。</p>
+<p>対処策としては、以下の手順にてテナントの管理者への昇格をする必要があります。</p>
+<p>◆　エラーの対処法<br>以下手順にて管理者に昇格します。</p>
+<p>1.該当のユーザーで、<a href="https://www.office.com" target="_blank" rel="noopener">https://www.office.com</a> へログインし、管理を選択します。</p>
+ <img src="/blog/2018/11/01/azure-active-directory/create-subscription-error/1.png">
+<p>2.以下画面が表示されますので、”はい、私が管理者になります”を選択します。<br> <img src="/blog/2018/11/01/azure-active-directory/create-subscription-error/2.png"></p>
+<p>3.ドメインを認証するために、TXT レコードの更新が求められます。</p>
+<p>ドメインに指定されたTXT レコードを追加し、”レコードを追加しました”を選択します。<br>なお、このTXT レコードは、管理者への昇格が終わりましたら削除いただいて構いません。</p>
+<img src="/blog/2018/11/01/azure-active-directory/create-subscription-error/3.png">
+<p>4.TXT レコードの確認が完了すると、以下が表示されます。</p>
+<p>この画面が表示されますと、無事サブスクリプションを作成することができます。</p>
+<img src="/blog/2018/11/01/azure-active-directory/create-subscription-error/4.png">
+<p>ご不明な点がございましたら弊社サポートまでお気軽にお問い合わせください。<br>上記内容が少しでも皆様の参考となりますと幸いです。<br>※本情報の内容（添付文書、リンク先などを含む）は、作成日時点でのものであり、予告なく変更される場合があります。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jpazureid.github.io/2018/11/01/azure-active-directory/create-subscription-error/" data-id="cjth3hict000fv0ytg8boudna" class="article-share-link">共有</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Azure-AD/">Azure AD</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-azure-active-directory/mfa-reset" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2018/10/15/azure-active-directory/mfa-reset/" class="article-date">
+  <time datetime="2018-10-14T15:00:00.000Z" itemprop="datePublished">2018-10-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2018/10/15/azure-active-directory/mfa-reset/">多要素認証 (MFA) のリセット手順</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="多要素認証-MFA-のリセット手順"><a href="#多要素認証-MFA-のリセット手順" class="headerlink" title="多要素認証 (MFA) のリセット手順"></a>多要素認証 (MFA) のリセット手順</h3><p>こんにちは、Azure &amp; Identity サポート チームの小野です。</p>
+<p>今回は、Azure AD における多要素認証 (Multi-Factor Authentication = MFA) のリセット手順についてご紹介します。</p>
+<p>Azure AD では、ログイン時の追加認証方式として電話・スマートフォンアプリなどを使った多要素認証 (Multi-Factor Authentication = MFA) を利用することができ、パスワードのセルフサービス リセット時にも同様の認証方式を利用させることが可能です。MFA の設定を有効にしている場合、Azure AD にログインをするためには認証方法に指定したスマートフォンなどを利用できる必要がありますが、スマートフォンを紛失してしまった場合や電話番号が無効になった場合などには、MFA で設定していた認証を利用できない状況となり、ユーザー認証を完了することができずサービスを利用することができなくなります。<br>このような場合は、Azure AD  の管理者による対象ユーザーのMFA 設定のリセットを実施します。</p>
+<p>なお、一般ユーザー権限では他ユーザーのMFA 認証設定のリセットは行うことができません。一般ユーザーは 、ログインができる状態であればユーザー自身で登録されている MFA の設定を変更することはできますが、MFA の追加の認証を受け取れるスマートフォンを紛失したなどの場合に、自ら MFA 設定のリセットを行うことはできません。</p>
+<p>MFA のリセットは、Azure Portal またはPowerShell より行うことが可能です。Azure Portal からの操作では事前準備が不要なため、すぐに操作を実施することができます。PowerShell からの操作では、CSV 形式で用意した全ユーザーに対してリセットを行うことができるため、多くのユーザーに対し一括でリセットを行いたい場合に有効です。</p>
+<h2 id="Azure-Portal-での手順"><a href="#Azure-Portal-での手順" class="headerlink" title="Azure Portal での手順"></a>Azure Portal での手順</h2><p>1.多要素認証設定画面へアクセスします。</p>
+<p>全体管理者でAzure Portal へログイン後、[すべてのサービス] &gt; [Azure Active Directory] &gt; [ユーザー] &gt; [Multi-Factor Authentication] を選択します。</p>
+<p>2.多要素認証設定画面にて該当のユーザーにチェックをつけ、”ユーザー設定の管理”を選択します。</p>
+<img src="/blog/2018/10/15/azure-active-directory/mfa-reset/mfa-config-1.png">
+<p>3.“選択したユーザーについて連絡方法の再指定を必須にする”にチェックし、”保存”を選択します。<br><img src="/blog/2018/10/15/azure-active-directory/mfa-reset/mfa-config-2.png"></p>
+<p>この後、上記操作が行われたユーザーがサインインしようとすると、MFA のセットアップ画面が表示されます。ユーザーは、新しく電話・スマートフォンアプリ・メールなどを使用して、多要素認証を構成できます。</p>
+<h2 id="PowerShell-での手順"><a href="#PowerShell-での手順" class="headerlink" title="PowerShell での手順"></a>PowerShell での手順</h2><p>コマンドを実行する前に、MSOnline モジュールのインストールが必要となります。MSOnline モジュールのインストール方法は、下記ブログをご参照ください。</p>
+<p><a href="https://blogs.technet.microsoft.com/jpazureid/2017/12/04/aad-powershell/" target="_blank" rel="noopener">https://blogs.technet.microsoft.com/jpazureid/2017/12/04/aad-powershell/</a></p>
+<p>以下コマンドを実行し、ユーザーのMFA 設定をリセットできます。 </p>
+<p>Connect-MsolService＃Azure AD へログイン</p>
+<p>Set-MsolUser -UserPrincipalName “&lt;リセットしたいユーザーのUPN&gt;” -StrongAuthenticationMethods @()</p>
+<p>例えば、以下のようにCSV からユーザーを読み込んで、一括でリセットを行うことも可能です。</p>
+<p>Connect-MsolService＃Azure AD へログイン</p>
+<p>$users = Import-Csv “CSV のファイルパス”</p>
+<p>foreach ($user in $users) {</p>
+<p>Set-MsolUser -UserPrincipalName $user.UserPrincipalName -StrongAuthenticationMethods @()</p>
+<p>}</p>
+<img src="/blog/2018/10/15/azure-active-directory/mfa-reset/csv.png">
+<p>用意するCSV の例</p>
+<p>以下のコマンドで、MFA の設定がされていない（リセット済み）であるユーザーの一覧を確認することができます。</p>
+<p>Get-MsolUser  -all | ?{ !$_.StrongAuthenticationMethods }</p>
+<p>ご不明な点がございましたら弊社サポートまでお気軽にお問い合わせください。<br>上記内容が少しでも皆様の参考となりますと幸いです。<br>※本情報の内容（添付文書、リンク先などを含む）は、作成日時点でのものであり、予告なく変更される場合があります。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jpazureid.github.io/2018/10/15/azure-active-directory/mfa-reset/" data-id="cjth3hid0000pv0ytt2mrnxf9" class="article-share-link">共有</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Azure-AD/">Azure AD</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-azure-active-directory/conditional-access-basuc" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2018/09/27/azure-active-directory/conditional-access-basuc/" class="article-date">
+  <time datetime="2018-09-26T15:00:00.000Z" itemprop="datePublished">2018-09-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2018/09/27/azure-active-directory/conditional-access-basuc/">条件付きアクセスの基本的な考え方</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>こんにちは、Azure &amp; Identity サポート チームの栗井です。</p>
+<p>この記事では条件付きアクセスポリシー設定の基本的な考え方について解説します。</p>
+<h2 id="条件付きアクセスの基本的な考え方は、アクセスを制限すること"><a href="#条件付きアクセスの基本的な考え方は、アクセスを制限すること" class="headerlink" title="条件付きアクセスの基本的な考え方は、アクセスを制限すること"></a>条件付きアクセスの基本的な考え方は、アクセスを制限すること</h2><p>条件付きアクセスポリシーは、アクセスを許可する条件の設定ではなく、アクセスをブロック / または制限 (特定の条件を満たさなければブロック) する条件を設定します。</p>
+<p>基本的にはすべてのアクセスが許可された状態で、「ブロック、もしくは制御したいアクセスパターンのブラックリストを作成する」とイメージすると、分かりやすいかもしれません。</p>
+<p>条件付きアクセスポリシーを 1つも設定していない場合や、それぞれのポリシーの「割り当て」で設定した対象に合致しない場合は、特に制限無くアクセスできる動作となります。</p>
+<p>ポリシーの「割り当て」で設定した対象に合致した場合には、「アクセス制御」で設定した内容が適用されます。</p>
+<p>例えば、アクセスがブロックされたり、あるいは 多要素認証が要求されるなど、アクセスするための制限が加わります。</p>
+<h2 id="条件付きアクセスのポリシーに、順序による優先順位はありません"><a href="#条件付きアクセスのポリシーに、順序による優先順位はありません" class="headerlink" title="条件付きアクセスのポリシーに、順序による優先順位はありません"></a>条件付きアクセスのポリシーに、順序による優先順位はありません</h2><p>条件付きアクセスポリシーを複数定義した場合、定義した順番 (画面表示上の上下) で優先順位はありません。</p>
+<p>すべてのポリシーが評価対象であり、以下のように動作します。</p>
+<ul>
+<li>どれか１つのポリシーでブロックの対象となった場合、アクセスはブロックされます。</li>
+<li>複数のポリシーでアクセスを制限された場合、すべての条件を満たさないかぎり、アクセスはブロックされます。</li>
+<li>どのポリシーの対象にもならない場合、あるいはすべての条件を満たした場合、アクセスが許可されます。</li>
+</ul>
+
+<h2 id="条件付きアクセスのポリシーの設定とアクセス可否の図"><a href="#条件付きアクセスのポリシーの設定とアクセス可否の図" class="headerlink" title="条件付きアクセスのポリシーの設定とアクセス可否の図"></a>条件付きアクセスのポリシーの設定とアクセス可否の図</h2><p>以下に、条件付きアクセスのポリシーの設定とアクセス可否の関係を簡潔なチャートで示します。</p>
+<ol>
+<li><p>ポリシーの「割り当て」に該当するか<br>最初に、ポリシーの割り当て対象に該当するかどうかが評価されます。<br>割り当て対象に該当しない場合は、アクセスは許可されます。<br>割り当て対象に該当する場合、以下の 2 の評価に続きます。</p>
+</li>
+<li><p>ポリシーの「アクセスのブロック」対象か「アクセス権の付与」対象か<br>すべてのポリシーには、「アクセスのブロック」「アクセス権の付与」のいずれかのコントロールが設定されています。<br>「アクセスのブロック」が設定されている場合、アクセスはブロックされます。<br>「アクセス権の付与」である場合、以下の 3 の評価に続きます。</p>
+</li>
+<li><p>「アクセス権の付与」条件を満たすかどうか<br>「アクセス権の付与」のコントロールが設定されているポリシーでは、アクセス権の付与条件が少なくとも一つ以上設定されています。</p>
+</li>
+</ol>
+
+<p>この項目によって設定される条件を満たした場合、アクセスが許可されます。<br>条件を満たさない場合には、アクセスはブロックされます。</p>
+<p>上記の 1 から 3 の評価を、すべてのポリシーに対して行います。<br>その中で、1つでもブロックの対象となるポリシーが存在する場合には、アクセスは許可されません。<br>すべてのポリシーで「割り当て」が対象外、あるいは「アクセス権の付与」条件を満たした場合にのみ、アクセスすることができます。</p>
+<h2 id="条件付きアクセスポリシー設定の例と挙動"><a href="#条件付きアクセスポリシー設定の例と挙動" class="headerlink" title="条件付きアクセスポリシー設定の例と挙動"></a>条件付きアクセスポリシー設定の例と挙動</h2><p>以下に、主な設定例をいくつか示します。</p>
+<h3 id="ポリシーA"><a href="#ポリシーA" class="headerlink" title="ポリシーA"></a>ポリシーA</h3>
+<p>「全体管理者以外のすべてのユーザーに対して、いずれのクラウドアプリにログインする場合にも、スマートフォン (iOS、Android、Windows Phone) からのアクセスを禁止したい」場合の設定です。</p>
+<h3 id="ポリシーB"><a href="#ポリシーB" class="headerlink" title="ポリシーB"></a>ポリシーB</h3>
+<p>「特定のユーザーがアクセスする際に、多要素認証を要求したい」場合の設定です。</p>
+<p>ポリシーA と B がどちらも適用されるアクセスの場合<br>「アクセス権をブロック」 は 「アクセス権を付与する」 よりも強力にはたらくため、ポリシーA と B がどちらも適用されるアクセスはブロックされます。</p>
+<p>※ 注意<br>割り当て対象を「すべてのユーザー」「すべてのクラウドアプリ」といたしますと、管理者を含めてすべてのユーザーがポータルにアクセスできない状態となり、ポリシーを変更することもできない状況となります。<br>ポリシーを変更する管理者についてはアクセスできるように、対象外に該当のユーザーを登録してください。</p>
+<h3 id="関連サイト"><a href="#関連サイト" class="headerlink" title="関連サイト"></a>関連サイト</h3><p>条件付きアクセスに関する公式ドキュメントのリンクです。ぜひご覧ください。</p>
+<ul>
+<li><a href="https://docs.microsoft.com/ja-jp/azure/active-directory/conditional-access/" target="_blank" rel="noopener">Azure AD の条件付きアクセスのドキュメント</a></li>
+<li><a href="https://docs.microsoft.com/ja-jp/azure/active-directory/conditional-access/overview" target="_blank" rel="noopener">Azure Active Directory の条件付きアクセスとは</a></li>
+<li><a href="https://docs.microsoft.com/ja-jp/azure/active-directory/conditional-access/conditions" target="_blank" rel="noopener">Active Directory 条件付きアクセスの条件の概要</a></li>
+<li><a href="https://docs.microsoft.com/ja-jp/azure/active-directory/conditional-access/best-practices" target="_blank" rel="noopener">Azure Active Directory の条件付きアクセスのベスト プラクティス</a></li>
+<li><a href="https://docs.microsoft.com/ja-jp/azure/active-directory/conditional-access/faqs" target="_blank" rel="noopener">Azure Active Directory の条件付きアクセスに関する FAQ</a><br>などの公式情報が公開されています。</li>
+</ul>
+<p><a href="(./azure-active-directory/qanda-conditional-access.md">Japan Azure Identity Support Blog ：Azure AD の条件付きアクセスに関する Q&amp;A</a>)</p>
+<p>上記内容が少しでも参考となりますと幸いです。</p>
+<p>製品動作に関する正式な見解や回答については、お客様環境などを十分に把握したうえでサポート部門より提供させていただきますので、ぜひ弊社サポート サービスをご利用ください。</p>
+<p>※本情報の内容（添付文書、リンク先などを含む）は、作成日時点でのものであり、予告なく変更される場合があります。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jpazureid.github.io/2018/09/27/azure-active-directory/conditional-access-basuc/" data-id="cjth3hics000cv0ytdensqgbb" class="article-share-link">共有</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Azure-AD/">Azure AD</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-azure-active-directory/output-directory-roll-members" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2018/09/13/azure-active-directory/output-directory-roll-members/" class="article-date">
+  <time datetime="2018-09-12T15:00:00.000Z" itemprop="datePublished">2018-09-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2018/09/13/azure-active-directory/output-directory-roll-members/">Azure AD の ディレクトリロールが割り当てられたメンバーの一覧を取得したい</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>こんにちは！ Azure &amp; Identity サポート チームの三浦 大です。</p>
+<p>今回は Azure AD のディレクトリロールが割り当てられているユーザーの一覧を CSV で出力する PowerShell スクリプトをご紹介します。</p>
+<p>Azure AD はセキュリティの観点から、ディレクトリロールにて設定できるロールが細かく分類されております。</p>
+<p>各ロールのメンバーの一覧は、先日の <a href="roles-and-administrators.md">ブログ</a> で紹介しましたように、 Azure ポータルから参照することができます。</p>
+<p>しかし、この一覧をファイルとして出力したいというご要望もあるかと思います。</p>
+<p>以下のとおり、ディレクトリロールの一覧を出力する PowerShell スクリプトを作成いたしましたので、ぜひご利用ください！</p>
+<p>※ 実行に際しては、事前に Install-Module -Name MSOnline コマンドを実行し、 Azure AD PowerShell モジュールのインストールをお願いいたします。</p>
+<p>Azure AD PowerShell のインストールなどについては、以下の公開情報をご参照くださいませ。</p>
+<p><a href="powershell-module.md">Azure Active Directory の PowerShell モジュール</a></p>
+<h2 id="PowerShell-スクリプト"><a href="#PowerShell-スクリプト" class="headerlink" title="PowerShell スクリプト"></a>PowerShell スクリプト</h2><hr>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">Import-Module MSOnline</span><br><span class="line">Connect-MsolService</span><br><span class="line"></span><br><span class="line">#任意の csv が出力されるディレクトリを設定してください。</span><br><span class="line"></span><br><span class="line">$outfile = "C:\output.csv"</span><br><span class="line">$dataList</span><br><span class="line">$data = New-Object PSObject | Select-Object DirectoryRole, User</span><br><span class="line">$role = Get-MsolRole</span><br><span class="line">$dataList = @()</span><br><span class="line"></span><br><span class="line">foreach ($test <span class="keyword">in</span> $role) &#123;</span><br><span class="line">	$member = Get-MsolRoleMember -RoleObjectId $test.objectid</span><br><span class="line">	<span class="keyword">If</span> ($null -eq $member) &#123;</span><br><span class="line">		$role = $test.name</span><br><span class="line">		Write-Output "$role,"</span><br><span class="line">		$data = New-Object PSObject | Select-Object DirectoryRole, User</span><br><span class="line">		$data.DirectoryRole = $role</span><br><span class="line">		$data.User = $null</span><br><span class="line">		$dataList += $data</span><br><span class="line">	&#125; <span class="keyword">Else</span> &#123;</span><br><span class="line">		foreach ($m <span class="keyword">in</span> $member) &#123;</span><br><span class="line">			$role = $test.name</span><br><span class="line">			$user = $m.EmailAddress</span><br><span class="line">			Write-Output "$role,$user"</span><br><span class="line">			$data = New-Object PSObject | Select-Object DirectoryRole, User</span><br><span class="line">			$data.DirectoryRole = $role</span><br><span class="line">			$data.User = $user</span><br><span class="line">			$dataList += $data</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$DataList | Export-Csv $outfile -Encoding Default</span><br></pre></td></tr></table></figure>
+<h2 id="出力結果の例"><a href="#出力結果の例" class="headerlink" title="出力結果の例"></a>出力結果の例</h2><hr>
+<p> スクリプトを実行すると資格情報が求められますので、出力対象の Azure AD テナントの全体管理者の資格情報を入力します。</p>
+<p>その後自動的に csv ファイルにロールの一覧が出力されます。以下は出力のサンプルです。</p>
+<img src="/blog/2018/09/13/azure-active-directory/output-directory-roll-members/output-directory-roll-member011.png"> 
+<p>本ブログにて、管理者の方のご負担、少しでも軽減されれば幸甚です。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jpazureid.github.io/2018/09/13/azure-active-directory/output-directory-roll-members/" data-id="cjth3hid1000sv0ytff3tnwod" class="article-share-link">共有</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Azure-AD-Directory-Rolls/">Azure AD Directory Rolls</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-azure-active-directory/tenant-restriction" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2018/09/13/azure-active-directory/tenant-restriction/" class="article-date">
+  <time datetime="2018-09-12T15:00:00.000Z" itemprop="datePublished">2018-09-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2018/09/13/azure-active-directory/tenant-restriction/">テナント制限</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>こんにちは！ Azure &amp; Identity サポート チームの三浦 大です。</p>
+<p>今回はテナント制限の機能に関して、よくあるお問い合わせと、その回答をまとめさせていただきました。</p>
+<h2 id="テナント制限とは"><a href="#テナント制限とは" class="headerlink" title="テナント制限とは"></a>テナント制限とは</h2><hr>
+<p>まず、テナント制限とは、 Azure AD に対する認証の通信をプロキシ経由させ、そのプロキシから送信されるデータに、アクセスを許可する Azure AD テナントの情報を付与しておくことで、それ以外の Azure AD テナントへのアクセスをブロックする機能を指しています。</p>
+<p>詳細については、以下の公開情報をご参照ください。</p>
+<p>自社テナント以外へのアクセス制御 – “テナントの制限” 機能 (Tenant Restrictions)</p>
+<p><a href="https://blogs.technet.microsoft.com/office365-tech-japan/2017/02/06/tenant-restrictions/" target="_blank" rel="noopener">https://blogs.technet.microsoft.com/office365-tech-japan/2017/02/06/tenant-restrictions/</a></p>
+<p>テナント制限が機能しており、アクセスを許可しないテナントの  Office 365 や Azure へのサインイン時に 「ここからアクセスすることはできません」 のエラーメッセージが表示されます。</p>
+<img src="/blog/2018/09/13/azure-active-directory/tenant-restriction/tenant-restrictions01.png">
+<p>以下にて、テナント制限に関連する、よくあるお問い合わせをまとめました。</p>
+<p>ぜひご参照ください！</p>
+<h2 id="よくあるお問い合わせ"><a href="#よくあるお問い合わせ" class="headerlink" title="よくあるお問い合わせ"></a>よくあるお問い合わせ</h2><hr>
+<p><font color="DeepSkyBlue">Q</font> : MS アカウントを利用すると、制限の画面が表示されますが、回避策はありませんか？</p>
+<p><font color="red">A</font> : MS アカウントを許可する場合には、以下をテナント制限の許可するリストに追加します。</p>
+<p>(“Restrict-Access-To-Tenants” ヘッダーに含まれるようにします)</p>
+<p>microsoftservices.onmicrosoft.com</p>
+<p>MSARealms.onmicrosoft.com</p>
+<p><font color="DeepSkyBlue">Q</font> : 制限されるのは Office 365 だけですか？</p>
+<p><font color="red">A</font>  : いいえ。</p>
+<p>以下の認証エンドポイントを使用する、すべてのサービスが制限されます。</p>
+<p>login.microsoftonline.com</p>
+<p>login.windows.net</p>
+<p>login.microsoft.com</p>
+<p>例えば Azure ポータル、EA ポータルにアクセスする際も制限されます。</p>
+<p>また、ゲストユーザーの場合、招待されたテナントではなく、管理元のテナントで認証が行われるため、ゲストユーザーの招待元テナントも、テナント制限で許可する必要があります。</p>
+<p><font color="DeepSkyBlue">Q</font> : (クライアントですが)、テナント制限によってアクセスできないテナントにアクセスできるようにしてほしい。</p>
+<p><font color="red">A</font> : 接続元のクライアントが利用するプロキシサーバーの設定変更が必要です。</p>
+<p>プロキシ サーバーを管理している IT 部門へ申請をあげるなどで、テナント制限の許可するリストに該当のテナントを追加してもらってください。</p>
+<p><font color="DeepSkyBlue">Q</font> : Azure AD 側での設定変更は必要ですか？</p>
+<p><font color="red">A</font> : いいえ。</p>
+<p>プロキシの設定のみで、テナント制限が機能します。</p>
+<p><font color="DeepSkyBlue">Q</font> : “Restrict-Access-To-Tenants” に、ワイルドカードは利用できますか？</p>
+<p><font color="red">A</font> : いいえ。</p>
+<p>テナント名かテナント ID を不足なく、入力する必要がございます。</p>
+<p><font color="DeepSkyBlue">Q</font> : テナント制限で許可をすることができるテナント数に上限はありますか？</p>
+<p><font color="red">A</font> : テナント制限にて、許可をするテナント数自体には上限は設けられていません。</p>
+<p>しかし、ヘッダーの長さの上限 (MaxFieldLength) と、リクエストとヘッダーを含めた合計のサイズの上限 (MaxRequestBytes) があるため、多数のディレクトリを追加する場合、この上限を超えないように注意が必要です。</p>
+<p>※ テナント名の平均を 30 文字 (30 バイト) とすると、ヘッダーにはテナント名を約 2,000 個追加できます。</p>
+<p>MaxFieldLength の最大値: 65534 バイト (6K バイト)</p>
+<p>MaxRequestBytes 最大値: 16777216バイト (16M バイト)</p>
+<p>上記内容が、皆様のご参考になれば幸甚です。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jpazureid.github.io/2018/09/13/azure-active-directory/tenant-restriction/" data-id="cjth3hid3000wv0ytbsui2xg0" class="article-share-link">共有</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Azure-AD/">Azure AD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Tenant-Restrictions/">Tenant Restrictions</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-azure-active-directory/roles-and-administrators" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2018/08/23/azure-active-directory/roles-and-administrators/" class="article-date">
+  <time datetime="2018-08-22T15:00:00.000Z" itemprop="datePublished">2018-08-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2018/08/23/azure-active-directory/roles-and-administrators/">Azure AD におけるロール管理の新しい方法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Azure-AD-におけるロール管理の新しい方法"><a href="#Azure-AD-におけるロール管理の新しい方法" class="headerlink" title="Azure AD におけるロール管理の新しい方法"></a>Azure AD におけるロール管理の新しい方法</h3><p>こんにちは、Azure &amp; Identity サポート チームの栗井です。</p>
+<p>本記事は、2018年7月末に公開された A new way to manage roles and administrators in Azure AD を元にしています。<br>これまで、 Azure AD の全体管理者などのロールを割り当てられているユーザー一覧を取得することができなかったのですが、最近の更新により、簡単に確認できるようになりました。<br>元記事を参考に、ユーザーへのディレクトリロールの新しい割り当て・管理方法について、画面キャプチャを含めてご紹介します。</p>
+<p>ユーザの役割の確認や管理者権限の割り当てを、これまでより簡単におこなうことができます。</p>
+<p>以下が、新しい機能の特徴です。</p>
+<ul>
+<li>ビルトイン (既定) のディレクトリロールの一覧と、それぞれの詳細を確認可能</li>
+<li>役割の管理や設定がより簡単に</li>
+<li>関連ドキュメントへのリンク追加</li>
+</ul>
+<p>言い換えますと 「全体管理者は何人いるのか？」「このユーザーに割り当てられているのは何の役割か？」がすぐ分かるようになりました。</p>
+<img src="/blog/2018/08/23/azure-active-directory/roles-and-administrators/roles-and-administrators.png">
+<p>概要画面から、新機能「ロールと管理者」がご利用できます</p>
+<h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>ビルトイン ディレクトリ ロールの一覧とそれぞれの簡単な説明は 「ロールと管理者」をクリックすることで確認できます。これも最近追加されました Azure AD と連携するアプリケーションの管理を目的とした新しいロールも含まれます。</p>
+<p>現在サインインして操作を実施しているユーザー自身に何かしらのロールが割り当てられている場合、画面上部に表示されます。「ロール」をクリックすると、自身に割り当てられているロールと、それぞれの概要の一覧を確認できます。</p>
+<img src="/blog/2018/08/23/azure-active-directory/roles-and-administrators/list-administrators.png">
+<p>「ロールと管理者」下の、各ロールと説明の一覧</p>
+<p>また、ロールの行をクリックすると、そのロールに割り当てられているユーザーの一覧が確認できます。</p>
+<img src="/blog/2018/08/23/azure-active-directory/roles-and-administrators/role-member.png">
+<p>ロールに割り当てられているユーザー(メンバー)一覧</p>
+<p>各ロールによりどのようなことができるのかという質問をよく頂きますが、それぞれのロールに何の権限があるのか、その詳細を一覧でみられるようになりました。同じ画面で、関連記事のリンクも見ることができます。ロールを最大限有効に使うためにぜひご活用ください。<br>画像に示すように、ブレードの「説明」をクリックするとこの画面が見られます。もしくはロールの一覧画面から、各行の右側にある「・・・」をクリックをすることでも、同じ画面に辿り着くことができます。</p>
+<p>あるロールに割り当てられているユーザの一覧に加えて、その逆引きである「あるユーザーに割り当てられているロールの一覧」を見ることができるようになりました。同じ画面から、ユーザーに新たなロールを追加することができます。<br>詳細は <a href="https://docs.microsoft.com/en-us/azure/active-directory/users-groups-roles/directory-assign-admin-roles" target="_blank" rel="noopener">Assigning administrator roles in Azure Active Directory</a>をご参照ください (英語ドキュメント)。</p>
+<img src="/blog/2018/08/23/azure-active-directory/roles-and-administrators/add-role.png">
+<p>ユーザーに割り当てられているロールの一覧と、「ロールの追加」ボタン</p>
+<p>一人のユーザーに複数の特権ロール (privileged roles) を割り当てることも可能です。<br>既に割り当てられているものは表示されません。</p>
+<img src="/blog/2018/08/23/azure-active-directory/roles-and-administrators/user-role.png">
+<p>割り当て可能なロールの一覧</p>
+<h2 id="Azure-AD-PIM-での更新"><a href="#Azure-AD-PIM-での更新" class="headerlink" title="Azure AD PIM での更新"></a>Azure AD PIM での更新</h2><p>より細やかな権限管理は Azure AD Privileged Identity Management (PIM) で可能です。 Azure AD PIM の管理ブレードにも「ロールと管理者」へのリンクがあります。</p>
+<img src="/blog/2018/08/23/azure-active-directory/roles-and-administrators/pim-link.png">
+<p>Privileged Identity Management 画面から「ロールと管理者」へのリンク</p>
+<p>もし組織で PIM を有効にしていなくても、「PIMで管理」をクリックすれば、管理者保護のためにPIMをどのように活用できるか確認できます。無料のトライアルもご利用可能です。</p>
+<img src="/blog/2018/08/23/azure-active-directory/roles-and-administrators/pim.png">
+<p>「PIM」で管理から、Privileged Identity Managementの情報が閲覧できます。</p>
+<p>上記内容が少しでも参考となりますと幸いです。<br>製品動作に関する正式な見解や回答については、お客様環境などを十分に把握したうえでサポート部門より提供させていただきますので、ぜひ弊社サポート サービスをご利用ください。</p>
+<p>※本情報の内容（添付文書、リンク先などを含む）は、作成日時点でのものであり、予告なく変更される場合があります。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jpazureid.github.io/2018/08/23/azure-active-directory/roles-and-administrators/" data-id="cjth3hid2000uv0yt50k1acv2" class="article-share-link">共有</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Azure-AD/">Azure AD</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-azure-active-directory-connect/how-to-upgrade" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2018/08/10/azure-active-directory-connect/how-to-upgrade/" class="article-date">
+  <time datetime="2018-08-09T15:00:00.000Z" itemprop="datePublished">2018-08-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2018/08/10/azure-active-directory-connect/how-to-upgrade/">Azure AD Connect アップグレード手順</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>こんにちは。 Azure Identity サポートの谷です。</p>
+<p>Azure AD Connect (AADC) のアップグレード手順をご紹介いたします。AADC の更新バージョンのリリース頻度は高く、この 3 カ月でも 3 回更新バージョンがリリースされています。更新には、既知の不具合やセキュリティに関する修正に加えて機能強化も含まれています。そのため、できるだけ安定して AADC を運用いただくうえで弊社としての推奨は以下となります。</p>
+<ul>
+<li>最新バージョンの利用</li>
+<li>最低でも 6 カ月毎に最新バージョンへのアップグレード</li>
+</ul>
+<p>Azure AD Connect: バージョンのリリース履歴<br><a href="https://docs.microsoft.com/ja-jp/azure/active-directory/connect/active-directory-aadconnect-version-history" target="_blank" rel="noopener">https://docs.microsoft.com/ja-jp/azure/active-directory/connect/active-directory-aadconnect-version-history</a></p>
+<p>なお、サポートという観点では、リリースされている全てのバージョンの AADC が現在サポート対象となります。特定のバージョンの AADC をサポート終了する場合にはアップグレードを実施いただくために十分な期間を設け、ご案内いたしますので、ご安心ください。</p>
+<p>(トラブルシューティングなどの中で古いバージョンをご利用されている場合に切り分けのためのバージョンアップをお願いする、より詳細な調査をするためにも、まずアップグレードをお願いするという可能性があることについては予めご承知おきください)</p>
+<h2 id="アップグレードの流れ"><a href="#アップグレードの流れ" class="headerlink" title="アップグレードの流れ"></a>アップグレードの流れ</h2><h3 id="AADC-1-台構成の場合"><a href="#AADC-1-台構成の場合" class="headerlink" title="AADC 1 台構成の場合"></a>AADC 1 台構成の場合</h3><ol>
+<li>バージョンアップ前にサーバーの健全性確認</li>
+<li>設定情報 / ルールのバックアップ</li>
+<li>アップグレード</li>
+</ol>
+<h3 id="AADC-2-台以上の構成の場合"><a href="#AADC-2-台以上の構成の場合" class="headerlink" title="AADC 2 台以上の構成の場合"></a>AADC 2 台以上の構成の場合</h3><p>1 台構成の場合と同様でも構いませんが、より慎重に行う場合には、バージョンアップ時に片方ずつステージング モードに切り替え、同期処理に影響を与えないように実施することも可能です。この場合には、下記の流れで実施します。</p>
+<ol>
+<li>バージョンアップ前に両サーバーの健全性確認</li>
+<li>設定情報 / ルールのバックアップ</li>
+<li>1 台目アップグレード</li>
+<li>ステージングモードの切り替え</li>
+<li>アップグレード後の動作確認</li>
+<li>2 台目のアップグレード</li>
+<li>ステージングモードの切り替え</li>
+<li>アップグレード後の動作確認</li>
+<li>必要に応じてステージングモードの切り替え</li>
+</ol>
+<h2 id="手順"><a href="#手順" class="headerlink" title="手順"></a>手順</h2><h3 id="健全性確認"><a href="#健全性確認" class="headerlink" title="健全性確認"></a>健全性確認</h3><ol>
+<li>AADC サーバーにてイベント ログ (システム / アプリケーション) にてエラーや警告などの記録がないことを確認します。</li>
+<li>Synchronization Service Manager にて同期処理にて success 以外の記録がないことを確認します。</li>
+</ol>
+<h3 id="設定情報-ルールのバックアップ"><a href="#設定情報-ルールのバックアップ" class="headerlink" title="設定情報 / ルールのバックアップ"></a>設定情報 / ルールのバックアップ</h3><p>バックアップは万が一アップグレードが正常に実施できなかった場合に備えて取得いただくことをお勧めしております。正常にアップグレードが行えた場合には特にバックアップからのリストア等は不要となります。問題が生じた場合、リストア可能なのはルールのみとなります。設定情報は記録情報から手動で設定し直す必要があります。</p>
+<p>&lt;設定情報の記録&gt;</p>
+<ol>
+<li>Synchronization Service Manager を起動します。</li>
+<li>[Connectors] を選択します。</li>
+<li>オンプレミス AD のコネクタを右クリックし、[Properties] をクリックします。</li>
+<li>[Configure Directory Partitions] - [Containers] をクリックします。</li>
+<li>パスワードを入力し、[OK] をクリックします。</li>
+<li>同期対象の OU/コンテナの画面ショットを採取するなどし、情報を記録しておきます。</li>
+<li>[Select Object Types] をクリックします。</li>
+<li>[Show All] にチェックを入れ、全項目が確認できるように画面ショットを採取します。</li>
+<li>[Select Attributes] をクリックします。</li>
+<li>[Show All] にチェックを入れ、全項目が確認できるように画面ショットを採取します。</li>
+<li>デスクトップなどにある [Azure AD Connect] を実行し、構成ウィザードを開きます。</li>
+<li>[構成] をクリックします。</li>
+<li>[現在の構成を表示する] をクリックして、[次へ] をクリックします。</li>
+<li>全項目が確認できるように画面ショットを採取します。</li>
+</ol>
+<p>&lt;同期ルールのエクスポート&gt;</p>
+<ol>
+<li>スタート画面より Synchronization Rules Editor を起動します。</li>
+<li>全ルールを選択し、[Export] をクリックします。出力されたファイルを保存します (PS1 という拡張子で保存します。)<br>例) sync_rule.ps1</li>
+<li>[Direction] より [Outbound] を選択します。</li>
+<li>全ルールを選択し、[Export] をクリックします。出力されたファイルを保存します (PS1 という拡張子で保存します。)</li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jpazureid.github.io/2018/08/10/azure-active-directory-connect/how-to-upgrade/" data-id="cjth3hid70014v0ytipu51rbr" class="article-share-link">共有</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/AAD-Connect/">AAD Connect</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-azure-active-directory/about-rbac" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2018/08/09/azure-active-directory/about-rbac/" class="article-date">
+  <time datetime="2018-08-08T15:00:00.000Z" itemprop="datePublished">2018-08-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2018/08/09/azure-active-directory/about-rbac/">RBAC のスコープについて</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="RBAC-のスコープについて"><a href="#RBAC-のスコープについて" class="headerlink" title="RBAC のスコープについて"></a>RBAC のスコープについて</h3><p>こんにちは、Azure &amp; Identity サポート チームの坂井です。</p>
+<p>今回は ロールベースのアクセス制御 (RBAC) について紹介します。<br>Azure の各種リソースに対するアクセス制御 (IAM) とも呼ばれ、リソースに対して実行できること、そのユーザーがアクセスできる領域を管理するのに役立ちます。</p>
+<p>RBAC の設定ポイントとしては、3 つあります。</p>
+<ul>
+<li>セキュリティ プリンシパル</li>
+</ul>
+<p>権限を付与する対象を表します。ユーザー、グループ、サービス プリンシパルに設定可能です-</p>
+<ul>
+<li>ロール (権限) 定義</li>
+</ul>
+<p>組み込みロールやカスタム ロールから、付与したい権限の種類を決定します</p>
+<ul>
+<li>Scope (スコープ)</li>
+</ul>
+<p>権限が適用される範囲を決定します(サブスクリプション &gt; リソース グループ &gt; リソース)</p>
+<p>サブスクリプション全体に対して権限を付与すると、リソース グループ、リソースへと権限が継承されます<br>ここからは “スコープ” について具体例をもとに、紹介します。</p>
+<h2 id="シナリオ-1-サブスクリプション単位"><a href="#シナリオ-1-サブスクリプション単位" class="headerlink" title="シナリオ 1 : サブスクリプション単位"></a>シナリオ 1 : サブスクリプション単位</h2><p>【設定内容】 ： サブスクリプション A には「所有者」権限、サブスクリプション B には権限の付与なし</p>
+<p>【設定結果】 ： ユーザーは、サブスクリプション A のすべての操作が可能ですが、サブスクリプション B を参照することもできません。</p>
+<p>【設定手順】 ： [サブスクリプション] - [サブスクリプション A ] - [アクセス制御 (IAM) ] より 「＋追加」</p>
+ <img src="/blog/2018/08/09/azure-active-directory/about-rbac/scenario1.png">
+<p>シナリオ 2 : リソース グループ単位</p>
+<p>【設定内容】 ： リソース グループ 1 には「所有者」権限、リソース グループ 2 には権限の付与なし</p>
+<p>【設定結果】 ： ユーザーは、リソース グループ  1  配下のすべての操作が可能ですが、リソース グループ 2 を参照することもできません。 また、新しいリソース グループの作成など、サブスクリプションのスコープで操作が必要な操作はできません。</p>
+<p>【設定手順】 ： [リソース グループ] - [リソース グループ 1 ] - [アクセス制御 (IAM) ] より 「＋追加」</p>
+<img src="/blog/2018/08/09/azure-active-directory/about-rbac/scenario2.png">
+<p> シナリオ 3 : リソース単位</p>
+<p>【設定内容】 ： リソース a には「所有者」権限、その他権限の付与なし</p>
+<p> 【設定結果】 ： ユーザーは、リソース a のすべての操作が可能ですが、その他リソースの参照や操作はできません。</p>
+<p>【設定手順】 ： [リソース グループ 1 ] - [リソース a ] - [アクセス制御 (IAM) ] より 「＋追加」</p>
+<img src="/blog/2018/08/09/azure-active-directory/about-rbac/scenario3.png">
+<p>シナリオ 4 : 別スコープで、別の権限を付与</p>
+<p>【設定内容】 ： サブスクリプション Aには「所有者」権限、サブスクリプション B のリソース グループ 4 に「閲覧者」の権限を付与</p>
+<p> 【設定結果】 ： ユーザーは、サブスクリプション A のすべての操作が可能です。サブスクリプション B については、リソース グループ 4 の閲覧 (つまり参照) のみ可能です。 このシナリオは、RBAC の設定がひとつのユーザーやグループ オブジェクトに対して、複数のスコープや異なった権限を付与することが可能であることを示します。</p>
+<p>【設定手順】 ： [サブスクリプション] - [サブスクリプション A ] - [アクセス制御 (IAM) ] より 「＋追加」で役割を「所有者」で選択</p>
+<p>   [リソース グループ] - [リソース グループ 4 ] - [アクセス制御(IAM) ] より 「＋追加」で役割を「閲覧者」で選択</p>
+ <img src="/blog/2018/08/09/azure-active-directory/about-rbac/scenario4.png">
+<p>シナリオ 5 : 親スコープからの継承</p>
+<p>【設定内容】 ： サブスクリプション Aには「閲覧者」権限、リソース グループ 2 に「所有者」の権限を付与</p>
+<p> 【設定結果】 ： ユーザーは、サブスクリプション A のすべての参照が可能かつ、リソース グループ 2 配下において、すべての操作が可能です。 </p>
+<p>【設定手順】 ： [サブスクリプション] - [サブスクリプション A ] - [アクセス制御 (IAM) ] より 「＋追加」で役割を「閲覧者」で選択</p>
+<pre><code>[リソース グループ] - [リソース グループ 2 ] - [アクセス制御(IAM) ] より 「＋追加」で役割を「所有者」で選択
+</code></pre><img src="/blog/2018/08/09/azure-active-directory/about-rbac/scenario5.png">
+<p>-補足</p>
+<p>サブスクリプションとリソース グループに与える権限を逆にして、サブスクリプション A には「所有者」権限、リソース グループ 2 に「閲覧者」を付与した場合は、リソース グループ 2 に対しても、より強力な「所有者」の権限が継承されます。</p>
+ <img src="/blog/2018/08/09/azure-active-directory/about-rbac/supplement.png">
+<p>各サブスクリプションが紐づく Azure AD が異なる場合について<br>今回のシナリオはすべて、サブスクリプション A と サブスクリプション B が同じ Azure AD に紐づいている前提です。</p>
+<p>もし、サブスクリプション A - Azure AD 1、サブスクリプション B - Azure AD 2 というようにそれぞれのサブスクリプションが別の Azure AD に紐づいている場合は、設定やリソースを操作するためにはディレクトリの切り替えを実施する必要があります。</p>
+ <img src="/blog/2018/08/09/azure-active-directory/about-rbac/directory-switching.png">
+<p>また、サブスクリプションの権限と Azure AD の権限は異なりますので、サブスクリプションに対して「所有者」の権限を付与しても、Azure AD 上のユーザー作成・削除、パスワード変更などの管理者操作が行えるわけではありませんので、その点ご注意ください。</p>
+<p>こちらについては、リンクのブログでも紹介しておりますので、合わせてご参照ください。</p>
+<p>上記内容が少しでも皆様の参考となりますと幸いです。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jpazureid.github.io/2018/08/09/azure-active-directory/about-rbac/" data-id="cjth3hicd0003v0ytzw2xswbi" class="article-share-link">共有</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Azure-AD/">Azure AD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/RBAC/">RBAC</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <span class="page-number current">1</span><a class="page-number" href="/blog/page/2/">2</a><a class="page-number" href="/blog/page/3/">3</a><a class="extend next" rel="next" href="/blog/page/2/">次へ &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">タグ</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/AAD-Connect/">AAD Connect</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/AD-FS/">AD FS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/AD-Sync/">AD Sync</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Azure-AD/">Azure AD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Azure-AD-Application-Proxy/">Azure AD Application Proxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Azure-AD-B2B/">Azure AD B2B</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Azure-AD-Directory-Rolls/">Azure AD Directory Rolls</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Azure-AD-License/">Azure AD License</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Conditional-Access/">Conditional Access</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/ExpressRoute/">ExpressRoute</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Hard-match/">Hard match</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Hybrid-Azure-AD-Join/">Hybrid Azure AD Join</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Intune/">Intune</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/MFA/">MFA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/PowerShell/">PowerShell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/RBAC/">RBAC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Security/">Security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Sgin-in-log/">Sgin-in log</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Smart-lockout/">Smart lockout</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Subscription/">Subscription</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Tenant-Restrictions/">Tenant Restrictions</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/UPN/">UPN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Windows-Defender-ATP/">Windows Defender ATP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Workplace-Join/">Workplace Join</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">タグクラウド</h3>
+    <div class="widget tagcloud">
+      <a href="/blog/tags/AAD-Connect/" style="font-size: 14px;">AAD Connect</a> <a href="/blog/tags/AD-FS/" style="font-size: 18px;">AD FS</a> <a href="/blog/tags/AD-Sync/" style="font-size: 10px;">AD Sync</a> <a href="/blog/tags/Azure-AD/" style="font-size: 20px;">Azure AD</a> <a href="/blog/tags/Azure-AD-Application-Proxy/" style="font-size: 10px;">Azure AD Application Proxy</a> <a href="/blog/tags/Azure-AD-B2B/" style="font-size: 14px;">Azure AD B2B</a> <a href="/blog/tags/Azure-AD-Directory-Rolls/" style="font-size: 10px;">Azure AD Directory Rolls</a> <a href="/blog/tags/Azure-AD-License/" style="font-size: 10px;">Azure AD License</a> <a href="/blog/tags/Conditional-Access/" style="font-size: 16px;">Conditional Access</a> <a href="/blog/tags/ExpressRoute/" style="font-size: 10px;">ExpressRoute</a> <a href="/blog/tags/Hard-match/" style="font-size: 10px;">Hard match</a> <a href="/blog/tags/Hybrid-Azure-AD-Join/" style="font-size: 10px;">Hybrid Azure AD Join</a> <a href="/blog/tags/Intune/" style="font-size: 12px;">Intune</a> <a href="/blog/tags/MFA/" style="font-size: 10px;">MFA</a> <a href="/blog/tags/PowerShell/" style="font-size: 10px;">PowerShell</a> <a href="/blog/tags/RBAC/" style="font-size: 12px;">RBAC</a> <a href="/blog/tags/Security/" style="font-size: 12px;">Security</a> <a href="/blog/tags/Sgin-in-log/" style="font-size: 10px;">Sgin-in log</a> <a href="/blog/tags/Smart-lockout/" style="font-size: 10px;">Smart lockout</a> <a href="/blog/tags/Subscription/" style="font-size: 10px;">Subscription</a> <a href="/blog/tags/Tenant-Restrictions/" style="font-size: 10px;">Tenant Restrictions</a> <a href="/blog/tags/UPN/" style="font-size: 10px;">UPN</a> <a href="/blog/tags/Windows-Defender-ATP/" style="font-size: 10px;">Windows Defender ATP</a> <a href="/blog/tags/Workplace-Join/" style="font-size: 10px;">Workplace Join</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">アーカイブ</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/02/">二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2018/12/">十二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2018/11/">十一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2018/10/">十月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2018/08/">八月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2018/07/">七月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2018/06/">六月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2018/05/">五月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2018/04/">四月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2018/02/">二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2018/01/">一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2017/12/">十二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2017/10/">十月 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最近の投稿</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2019/02/04/azure-active-directory/how-to-get-sign-in-logs/">Azure AD サインイン ログ取得方法まとめ</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2018/12/12/azure-active-directory/last-signin-reports/">PowerShell にて全ユーザーの最終サインイン日時を一括で取得する方法</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2018/11/01/azure-active-directory/create-subscription-error/">サブスクリプション作成時のエラー「アカウントが Azure サブスクリプションに関連付けられないディレクトリに属しています。別のアカウントでサインインしてください」</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2018/10/15/azure-active-directory/mfa-reset/">多要素認証 (MFA) のリセット手順</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2018/09/27/azure-active-directory/conditional-access-basuc/">条件付きアクセスの基本的な考え方</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 Azure Identity Support Japan<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/blog/" class="mobile-nav-link">Home</a>
+  
+    <a href="/blog/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css">
+  <script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/blog/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
