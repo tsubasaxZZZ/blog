@@ -68,6 +68,221 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-azure-active-directory/add-modify-delete-directory" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2018/01/16/azure-active-directory/add-modify-delete-directory/" class="article-date">
+  <time datetime="2018-01-15T15:00:00.000Z" itemprop="datePublished">2018-01-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2018/01/16/azure-active-directory/add-modify-delete-directory/">Azure AD の追加・変更・削除</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>こんにちは、Azure &amp; Identity サポート チームの坂井です。</p>
+<p>今回は下記の 3 つについて紹介します。</p>
+<ul>
+<li>Azure AD の追加手順</li>
+<li>Azure AD の変更手順</li>
+<li>Azure AD の削除手順</li>
+</ul>
+<p>まずは、簡単に Azure AD について説明します。</p>
+<p>Azure AD とは、Azure や Office 365 などの Microsoft クラウド サービスに組織がサインアップしたときに作成されます (もう少し平易な言い方をすると、 Office 365 など Azure AD が必須のサービスの新規利用を開始した時点で自動的に作成されます)。Azure AD に所属しているユーザーは、その Azure AD に紐づいているクラウドサービスを利用することが可能です。</p>
+<img src="/blog/2018/01/16/azure-active-directory/add-modify-delete-directory/user-access-o365-subscription.png">
+<h2 id="Azure-AD-の追加手順"><a href="#Azure-AD-の追加手順" class="headerlink" title="Azure AD の追加手順"></a>Azure AD の追加手順</h2><p>冒頭で、クラウドサービスにサインアップした際に作成されると書きましたが、Azure AD を個別に追加することも可能です。下記の手順で、Azure AD Free (無料) を作成できます</p>
+<p>&lt;手順&gt;</p>
+<ol>
+<li><a href="https://portal.azure.com" target="_blank" rel="noopener">https://portal.azure.com</a> より、管理者アカウントでサインインします</li>
+<li>ポータル画面左上のナビゲーションの [Azure Active Directory] をクリックします</li>
+<li>表示された画面の右下より  [ディレクトリの作成] をクリックします</li>
+<li><p>[ディレクトリの作成] 画面の下記の項目に入力します</p>
+<ul>
+<li>組織名：任意の組織名を入力</li>
+<li>初期ドメイン名：&lt;組織&gt;のドメイン名を入力</li>
+<li>“国/リージョン” を選択</li>
+</ul>
+</li>
+<li><p>[作成] をクリックします</p>
+</li>
+<li>作成が完了すると、”新しいディレクトリを管理するにはここをクリックします” が表示するので、クリックします</li>
+<li>新しく作成したディレクトリの画面に切り替わります</li>
+</ol>
+<p>作成操作を行ったユーザーが新しく作成した Azure AD ディレクトリ (テナント) の管理者となります。</p>
+<h2 id="Azure-AD-の変更手順"><a href="#Azure-AD-の変更手順" class="headerlink" title="Azure AD の変更手順"></a>Azure AD の変更手順</h2><p>Azure AD ディレクトリは必ず xxxxx.onmicrosoft.com という名前を持ちますが、このドメイン名を後から変更することはできません。そのため、 Azure AD のディレクトリのドメイン名を例えば contoso.onmicrosoft.com にしたい場合は、上記の「Azure AD の追加手順」の手順に従い、Azure AD を新規に作成する必要があります。</p>
+<p>なお、Azure AD の組織名 (よく ”既定のディレクトリ” と表示されている名称) については下記の手順で変更可能です。</p>
+<p>&lt;手順&gt;</p>
+<ol>
+<li><a href="https://portal.azure.com" target="_blank" rel="noopener">https://portal.azure.com</a> より、管理者アカウントでサインインします</li>
+<li>ポータル画面左上のナビゲーションの [Azure Active Directory] をクリックします</li>
+<li>[プロパティ] をクリックします</li>
+<li><p>[名前] の項目に新しい組織名を入力します。</p>
+<p> 例：既定のディレクトリ –&gt; コントソ株式会社</p>
+</li>
+<li><p>[保存] を押します。</p>
+</li>
+<li>少し時間を空けて再度サインインすると、名前が変更されます。</li>
+</ol>
+<p>また、ご利用の Azure サブスクリプションを新規で作成した Azure AD に紐づけたいというような要件がある場合には、サブスクリプションの譲渡とディレクトリの変更の 2 つの方法があります。 </p>
+<h2 id="Azure-AD-の削除手順"><a href="#Azure-AD-の削除手順" class="headerlink" title="Azure AD の削除手順"></a>Azure AD の削除手順</h2><p>手動で作成した Azure AD については削除が可能です。ディレクトリを削除するためには、いくつか前提条件があります。</p>
+<p>&lt;ディレクトリ削除の前提条件&gt;</p>
+<ul>
+<li>Azure のご契約時に自動的に作成されたディレクトリ (既定のディレクトリ) ではない</li>
+<li>ディレクトリにユーザーが存在しない</li>
+<li>連携するアプリケーションが存在しない</li>
+<li>サブスクリプションが紐づいていない</li>
+<li>など</li>
+</ul>
+<p>&lt;手順&gt;</p>
+<ol>
+<li><a href="https://portal.azure.com" target="_blank" rel="noopener">https://portal.azure.com</a> より、管理者アカウントでサインインします</li>
+<li>ポータル画面左上のナビゲーションの [Azure Active Directory] をクリックします</li>
+<li>[ディレクトリの削除] をクリックします</li>
+<li>前提条件のチェック完了後に [削除] をクリックします</li>
+</ol>
+<p>削除時に前提条件のチェックが走るため、すべての条件をクリアすることで削除が可能となります。前提条件に抵触している場合は、下記のように ! の警告が表示され削除が完了しません。</p>
+<img src="/blog/2018/01/16/azure-active-directory/add-modify-delete-directory/confirm-delete-directory.png">
+<p>なお、Azure のサインアップ時に自動作成された Azure AD  (既定のディレクトリ) やセルフサインアップテナント については削除が想定されていません。そのディレクトリはもう利用することはないが、ユーザーが Azure ポータルにサインインしたときにディレクトリが表示されるので煩わしいという場合には、そのディレクトリからユーザーを削除する方法で対応が可能です。</p>
+<p>これにより該当のアカウントでサインインしてもディレクトリは見えなくなりますので、ディレクトリを削除した場合と同等の効果が得られます。</p>
+<p>&lt;手順&gt;</p>
+<ol>
+<li><a href="https://portal.azure.com" target="_blank" rel="noopener">https://portal.azure.com</a> より、管理者アカウントでサインインします</li>
+<li>ポータル画面左上のナビゲーションの [Azure Active Directory] をクリックします</li>
+<li>[ユーザーとグループ] – [すべてのユーザー] をクリックします</li>
+<li>[＋新しいユーザー] をクリックします</li>
+<li><p>ユーザー名を入力し、ロールでは「全体管理者」を選択します</p>
+<p> 例) 削除対象のディレクトリ名が contoso.onmicrosoft.com の場合: <a href="mailto:temp@conotoso.onmicrosoft.com" target="_blank" rel="noopener">temp@conotoso.onmicrosoft.com</a></p>
+</li>
+<li><p>手順 5. で作成した全体管理者のアカウントで <a href="https://portal.azure.com" target="_blank" rel="noopener">https://portal.azure.com</a> にサインインします</p>
+</li>
+<li>[すべてのユーザー] まで移動して、本アカウント以外をこのディレクトリから削除します</li>
+</ol>
+<p>削除されたユーザーで、ディレクトリが見えない状態になっているかどうかを確認します。</p>
+<h2 id="補足"><a href="#補足" class="headerlink" title="補足"></a>補足</h2><p>複数の Azure AD は完全に独立したリソースとして管理されます。そのため、Azure AD 間の連携が必要なシナリオの場合は、Azure AD B2B の利用をします。B2B については下記の記事を合わせてご参照ください。</p>
+<p>Azure AD B2B とは<br><a href="https://blogs.technet.microsoft.com/jpazureid/2017/12/12/about-azure-ad-b2b/" target="_blank" rel="noopener">https://blogs.technet.microsoft.com/jpazureid/2017/12/12/about-azure-ad-b2b/</a></p>
+<p>上記内容が少しでも皆様の参考となりますと幸いです。</p>
+<p>※本情報の内容（添付文書、リンク先などを含む）は、作成日時点でのものであり、予告なく変更される場合があります。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jpazureid.github.io/2018/01/16/azure-active-directory/add-modify-delete-directory/" data-id="cjtjpbjmy00074cyt4rosznsh" class="article-share-link">共有</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Azure-AD/">Azure AD</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-azure-active-directory/access-restriction-azure-portal" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2017/12/29/azure-active-directory/access-restriction-azure-portal/" class="article-date">
+  <time datetime="2017-12-28T15:00:00.000Z" itemprop="datePublished">2017-12-29</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2017/12/29/azure-active-directory/access-restriction-azure-portal/">Azure ポータルへのアクセス制限</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>こんにちは、Azure &amp; Identity サポート チームの坂井です。</p>
+<p>今回は、一般ユーザーに対して Azure ポータルへのアクセスを制限する方法について紹介します。</p>
+<p>クラシック ポータル (旧ポータル) ではログインする際に Azure のサブスクリプションを保持していることが前提となっていました。一方 Azure ポータル (<a href="https://portal.azure.com" target="_blank" rel="noopener">https://portal.azure.com</a>) には、サブスクリプションの有無によらず、ログインすることが可能です。この動作変更により、より多くのユーザーが簡単に Azure に対してアクセスできるようになっています。</p>
+<p>Azure ポータルからは、そのログインしたユーザーが所属する Azure AD ディレクトリにアクセスすることができ、このとき Azure AD に対しての管理者権限を持たない一般ユーザーであっても、既定では Azure AD に登録されているユーザー一覧を参照できるようになっています。ご利用状況によっては、このことがセキュリティ上好ましくない場合もあると思います。</p>
+<h2 id="Azure-ポータルへのアクセスを制限する方法"><a href="#Azure-ポータルへのアクセスを制限する方法" class="headerlink" title="Azure ポータルへのアクセスを制限する方法"></a>Azure ポータルへのアクセスを制限する方法</h2><p>Azure ポータル自体へのアクセスを限られたユーザーのみに制限する方法については、条件付きアクセスの機能を利用する必要があります。条件付きアクセスの機能を利用するためには Azure AD Premium (P1 or P2) のライセンスが制御対象のユーザー分必要となります。</p>
+<p>なお、 後述します Azure AD へのアクセスを制限する方法 (ユーザーの一覧を見えなくする) であれば、ライセンスは不要です。</p>
+<p>&lt;手順&gt;</p>
+<ol>
+<li>Azure ポータル (<a href="https://portal.azure.com" target="_blank" rel="noopener">https://portal.azure.com</a>) に管理者のアカウントでアクセスします。</li>
+<li>セキュリティの [条件付きアクセス] – [ポリシー] の順にクリックします。</li>
+<li>上部 [＋新しいポリシー] をクリックします。</li>
+<li>[名前] にポリシーの名前を入力します。</li>
+<li><p>ポリシーを割り当てるユーザーまたはグループを選択します。</p>
+<p> この時、全ての管理者に割り当てないようにしてください。全ての管理者がポリシーの制限を受け、Azure にアクセスすることができなくなり、設定解除もできなくなるというお問い合わせを過去に複数いただいております。</p>
+</li>
+<li><p>[クラウド アプリ] では 「アプリを選択」 にチェックを入れます。</p>
+</li>
+<li>[選択] をクリックし、[Microsoft Azure Management] アプリケーションを検索し、選択します。</li>
+<li>[クラウド アプリ] のブレードに戻るので、[完了] をクリックします。</li>
+<li>[条件] – [場所] をクリックし、構成で [はい] を選択します。</li>
+<li>対象 で「すべての場所」を選択します。</li>
+<li>Azure ポータルに戻って、[完了] を 2 回 クリックします。</li>
+<li>アクセス制御 の [許可] で「アクセスのブロック」を選択して、[選択] をクリックします。</li>
+<li>即時ポリシーを有効化する場合には、ポリシーの有効化で [オン] を選択し、[作成] をクリックします。</li>
+</ol>
+<p>該当ユーザーで Azure ポータルへアクセスすると下記の画面が表示され、アクセスがブロックされます。</p>
+<img src="/blog/2017/12/29/azure-active-directory/access-restriction-azure-portal/access-restricted.png">
+<h2 id="Azure-AD-へのアクセスを制限する方法"><a href="#Azure-AD-へのアクセスを制限する方法" class="headerlink" title="Azure AD へのアクセスを制限する方法"></a>Azure AD へのアクセスを制限する方法</h2><p>Azure AD の管理者権限（全体管理者または制限付き管理者）を与えられていないユーザーによる ポータル内 [Azure Active Directory] へのアクセスを制限する方法です。</p>
+<p>&lt;手順&gt;</p>
+<ol>
+<li>全体管理者として Azure ポータル（<a href="http://portal.azure.com）にサインインします。" target="_blank" rel="noopener">http://portal.azure.com）にサインインします。</a></li>
+<li>左側のメニューから [Azure Active Directory] をクリックします。</li>
+<li>表示されたメニューから [ユーザーとグループ] をクリックします。</li>
+<li>表示されたメニューから [ユーザー設定] をクリックします。</li>
+<li>右側の下記の項目がございますので、[はい] を選択します。</li>
+<li>[管理ポータル] - [Azure AD 管理ポータルへのアクセスを制限する]<br>上にある [保存] をクリックします。</li>
+</ol>
+<p>※ 上記 5. で [はい] を選択することで管理者以外の一般ユーザーは、Azure ポータル内での [Azure Active Directory] にアクセスしようとすると、下記の画面が表示されアクセス権がなくなります。</p>
+<img src="/blog/2017/12/29/azure-active-directory/access-restriction-azure-portal/no-access.png">
+<p>上記設定は、Azure ポータル上のアクセス制限になるため、設定完了後も PowerShell を使用すれば、ユーザーの一覧は参照できます。その対処策となる設定についても下記にご案内させていただきます。</p>
+<p>&lt;手順&gt;</p>
+<p>この作業を実施するためには、Azure AD 用の PowerShell (Azure AD v1 の PowerShell) を利用する必要がありますが、 PowerShell を利用する際には Microsoft アカウントではなく、組織アカウントでの全体管理者が必要です (Azure AD の PowerShell についてはリンクも参照ください)。</p>
+<ol>
+<li><p>PowerShell を開き、下記のコマンドで全体管理者で Azure AD に接続します。</p>
+ <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Connect-MsolService</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>下記コマンドで他のユーザー及びグループの情報を取得させないように設定します。</p>
+ <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-MsolCompanySettings -UsersPermissionToReadOtherUsersEnabled <span class="literal">$false</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>下記コマンドで他のユーザー及びグループの情報を取得させないように設定されたか確認します。</p>
+ <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Get-MsolCompanyInformation | fl UsersPermissionToReadOtherUsersEnabled</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="補足"><a href="#補足" class="headerlink" title="補足"></a>補足</h2><p>外部から追加した Guest ユーザーについては既定で Azure AD へのアクセスが制限されています<br>(Guest と Member の違いについては、こちらのリンクを参照ください)。</p>
+<p>Azure ポータルへのログインを条件付きアクセスを利用して制限していない場合でも、 Azure AD 以外の項目、例えば仮想マシンなどのリソースに対しては、サブスクリプションの権限を明示的に付与しない限りは、各ユーザーは参照することもできませんのでご安心ください。</p>
+<p>上記内容が少しでも皆様の参考となりますと幸いです。</p>
+<p>※ 本情報の内容（添付文書、リンク先などを含む）は、作成日時点でのものであり、予告なく変更される場合があります。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jpazureid.github.io/2017/12/29/azure-active-directory/access-restriction-azure-portal/" data-id="cjtjpbjmu00044cytwt5hy10d" class="article-share-link">共有</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Azure-AD/">Azure AD</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-active-directory-federation-service/kmsi-not-shown-wia" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/blog/2017/12/14/active-directory-federation-service/kmsi-not-shown-wia/" class="article-date">
@@ -147,7 +362,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jpazureid.github.io/2017/12/14/active-directory-federation-service/kmsi-not-shown-wia/" data-id="cjth664eb001zt8ytx600q0nh" class="article-share-link">共有</a>
+      <a data-url="https://jpazureid.github.io/2017/12/14/active-directory-federation-service/kmsi-not-shown-wia/" data-id="cjtjpbjoq002h4cytbqzu9rvh" class="article-share-link">共有</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/AD-FS/">AD FS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Azure-AD/">Azure AD</a></li></ul>
@@ -243,7 +458,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jpazureid.github.io/2017/12/12/azure-active-directory/member-and-guest-user/" data-id="cjth664ds000rt8yti3mypefy" class="article-share-link">共有</a>
+      <a data-url="https://jpazureid.github.io/2017/12/12/azure-active-directory/member-and-guest-user/" data-id="cjtjpbjnj000s4cyt70s9k5ws" class="article-share-link">共有</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Azure-AD-B2B/">Azure AD B2B</a></li></ul>
@@ -313,7 +528,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jpazureid.github.io/2017/12/12/azure-active-directory/what-is-b2b/" data-id="cjth664dy0013t8ytht6rc039" class="article-share-link">共有</a>
+      <a data-url="https://jpazureid.github.io/2017/12/12/azure-active-directory/what-is-b2b/" data-id="cjtjpbjnp00114cytdwr13zzf" class="article-share-link">共有</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Azure-AD-B2B/">Azure AD B2B</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/RBAC/">RBAC</a></li></ul>
@@ -450,7 +665,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jpazureid.github.io/2017/12/04/azure-active-directory/powershell-module/" data-id="cjth664ei0025t8yt5qhdexka" class="article-share-link">共有</a>
+      <a data-url="https://jpazureid.github.io/2017/12/04/azure-active-directory/powershell-module/" data-id="cjtjpbjot002k4cyt2x4diz5a" class="article-share-link">共有</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Azure-AD/">Azure AD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/PowerShell/">PowerShell</a></li></ul>
@@ -529,7 +744,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jpazureid.github.io/2017/12/04/azure-active-directory/qanda-conditional-access/" data-id="cjth664eo0026t8ytf7l6nhvz" class="article-share-link">共有</a>
+      <a data-url="https://jpazureid.github.io/2017/12/04/azure-active-directory/qanda-conditional-access/" data-id="cjtjpbjp4002n4cyt04b2tdns" class="article-share-link">共有</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Azure-AD/">Azure AD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Conditional-Access/">Conditional Access</a></li></ul>
@@ -590,7 +805,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jpazureid.github.io/2017/11/20/azure-active-directory/azuread-access-denied/" data-id="cjth664dl000ct8ytfq4eipdn" class="article-share-link">共有</a>
+      <a data-url="https://jpazureid.github.io/2017/11/20/azure-active-directory/azuread-access-denied/" data-id="cjtjpbjmz00084cyt2lf8ft3q" class="article-share-link">共有</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Azure-AD/">Azure AD</a></li></ul>
@@ -665,7 +880,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jpazureid.github.io/2017/11/04/azure-active-directory/subscription-azure-ad-relationship/" data-id="cjth664eu0027t8ytpt0oroft" class="article-share-link">共有</a>
+      <a data-url="https://jpazureid.github.io/2017/11/04/azure-active-directory/subscription-azure-ad-relationship/" data-id="cjtjpbjpb002o4cytzhiqpx41" class="article-share-link">共有</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Azure-AD/">Azure AD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Subscription/">Subscription</a></li></ul>
@@ -677,10 +892,10 @@
 
 
   
-    <article id="post-azure-active-directory-connect/upn-hard-match" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-azure-active-directory-connect/problem-user-synchronize" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/blog/2017/10/05/azure-active-directory-connect/upn-hard-match/" class="article-date">
-  <time datetime="2017-10-04T15:00:00.000Z" itemprop="datePublished">2017-10-05</time>
+    <a href="/blog/2017/10/24/azure-active-directory-connect/problem-user-synchronize/" class="article-date">
+  <time datetime="2017-10-23T15:00:00.000Z" itemprop="datePublished">2017-10-24</time>
 </a>
     
   </div>
@@ -691,7 +906,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/blog/2017/10/05/azure-active-directory-connect/upn-hard-match/">Azure AD (Office 365) 上のユーザーをオンプレミス Active Directory ユーザーと紐付ける方法</a>
+      <a class="article-title" href="/blog/2017/10/24/azure-active-directory-connect/problem-user-synchronize/">Azure AD Connect でユーザー同期ができない問題</a>
     </h1>
   
 
@@ -699,429 +914,44 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>こんにちは、Azure &amp; Identity サポート チームです。</p>
-<p>今回は Azure AD (Office 365) 上のユーザーをオンプレミス Active Directory ユーザーと紐付ける方法の一つで、ハードマッチと呼ばれる方法についてご紹介します。</p>
-<p>既に Azure AD 上にユーザー アカウントが存在している状態で、そのユーザーを後からオンプレミスの Active Directory (AD) に追加し、同期をおこなうときにその既存のアカウントをそのまま利用したいということがあると思います。</p>
-<p>このようなケースではオンプレミス AD で対象となるアカウントのメール アドレス、または UPN 名を一致させた上で同期をおこなうという手法が一般的には取られます (これをソフトマッチと呼びます)。このソフトマッチができない場合 (UPN 名が異なるアカウントを紐づける必要がある場合など) にはハード マッチと呼ばれる方法で直接的に同期時にオブジェクトの一意性を確保する ID 情報 Immutable ID を紐づけます。</p>
-<p>Azure AD Connect の既定の構成では、オンプレミス AD の ObjectGUID (バージョン 1.1.486.0 以前) あるいは msDS-ConsistencyGuid (バージョン 1.1.524.0 以降) を Base64 でエンコードした値を Immutable ID (source Anchor) として紐づけています。</p>
-<p>以下では Azure AD Connect で ObjectGUID を ImmutableId と紐づける構成とている場合においてハードマッチによる同期をおこなう設定をご紹介します。</p>
-<p>ただし、基本的にはユーザーを紐付ける必要がある場合には、ソフトマッチを利用することを推奨します。</p>
-<p>理由としましては、ハードマッチによるユーザーの紐づけの変更を複数回行った場合などに Azure 上での情報の伝搬がされ終えないうちに新しい情報が伝搬され、Azure を構成するサーバー上での情報に不整合が生じ、問題が発生することが想定されるためであり、過去の実績という観点からもハードマッチを実施したような事例も少ないため、基本的にはハードマッチでの紐づけはできる限りしないことをお勧めします。</p>
-<h2 id="手順"><a href="#手順" class="headerlink" title="手順"></a>手順</h2><ol>
-<li>オンプレミス AD にて Base64 でエンコードされた ObjectGUID を確認します</li>
-<li>Azure AD 上で ImmutableId が設定されてないことを確認します</li>
-<li>Azure AD 上のアカウントに ImmutableId を手動で設定します</li>
-<li>手動で差分ディレクトリ同期を実施します</li>
-</ol>
-<ul>
-<li>4 を除き、同期処理が止まっている状態で作業をご実施ください。同期処理が止まっていないと紐づけしたいオンプレミス AD のアカウントが同期されてしまい、Immutable ID を紐づけできません。</li>
+        <p>こんにちは、Azure &amp; Identity サポート チームの後藤です。</p>
+<p>今回は Azure AD Connect サーバーでユーザー同期に問題が生じているケースについて取得する情報をご紹介します。<br>なお、この情報は “ユーザー同期トラブル” に特化していますので、併せて別途紹介しています Azure AD Connect の全般情報の採取もお願いします。</p>
+<p>&lt;採取情報&gt;<br>1.オンプレミス Active Directory に格納されるユーザー オブジェクト情報<br>2.Azure AD Connect サーバー上のユーザー オブジェクト情報<br>3.Synchronization Service Manager のエラー画面ショット<br>4.イベントログ<br>5.エラーログの出力結果</p>
+<p>&lt;取得手順&gt;</p>
+<h1 id="オンプレミス-Active-Directory-に格納されるユーザー-オブジェクト情報"><a href="#オンプレミス-Active-Directory-に格納されるユーザー-オブジェクト情報" class="headerlink" title="オンプレミス Active Directory に格納されるユーザー オブジェクト情報"></a>オンプレミス Active Directory に格納されるユーザー オブジェクト情報</h1><p>同期できないという問題が一部のオブジェクトで生じている場合には、正常に同期が完了しているユーザーと同期に問題が生じているものについて少なくとも 1 つずつを任意に選択の上、取得ください。</p>
+<p>1-1. ドメイン コントローラーにて管理者権限でコマンド プロンプトを開きます。<br>1-2. 以下のコマンドをそれぞれのオブジェクトに対して実行します。</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ldifde.exe -f &lt;出力ファイル名&gt; -t <span class="number">3268</span> -d &lt;同期できないユーザーの DN 名&gt; -p subtree</span><br></pre></td></tr></table></figure>
+<p>ユーザーの DN 名は、その対象がユーザーの場合であれば、コマンドで dsquery user -name &lt;ユーザー名&gt; で確認できます。</p>
+<p>例えば contoso.com ドメインの OU1 という OU に所属している user1 というアカウントの場合には、 dsquery user -name user1 のコマンドの結果、次のように表示されます。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;CN=user1,OU=OU1,DC=contoso,DC=com&quot;</span><br></pre></td></tr></table></figure>
+<p>この場合に c:\user1_ad.txt に出力するコマンドは次のようになります。</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ldifde.exe -f c:\user1_ad.txt -t <span class="number">3268</span> -d "CN=user1,OU=OU1,DC=contoso,DC=com" -p subtree</span><br></pre></td></tr></table></figure>
+<p>1-3. 出力されたファイルを保存します。</p>
+<h1 id="2-Azure-AD-Connect-サーバー上のオブジェクト情報"><a href="#2-Azure-AD-Connect-サーバー上のオブジェクト情報" class="headerlink" title="2.Azure AD Connect サーバー上のオブジェクト情報"></a>2.Azure AD Connect サーバー上のオブジェクト情報</h1><ul>
+<li>1 の手順で ldifde コマンドにて取得したオブジェクトと同オブジェクトについて採取します。</li>
 </ul>
-<h3 id="1-オンプレミス-AD-にて-Base64-でエンコードされた-ObjectGUID-を確認"><a href="#1-オンプレミス-AD-にて-Base64-でエンコードされた-ObjectGUID-を確認" class="headerlink" title="1. オンプレミス AD にて Base64 でエンコードされた ObjectGUID を確認"></a>1. オンプレミス AD にて Base64 でエンコードされた ObjectGUID を確認</h3><p>オンプレミス上の紐づけ対象のアカウントの GUID 情報を取得します。</p>
-<ol>
-<li>オンプレミス Active Directory の任意の DC 上で [管理ツール] - [Active Directory ユーザーとコンピューター] を開きます。</li>
-<li>メニューから [表示] - [拡張機能] にチェックを入れます。</li>
-<li>該当ユーザー アカウントのプロパティを開きます。</li>
-<li>[属性エディター] タブを開き、”distinguishedName” 値を選択し、[表示] をクリックします。</li>
-<li>distinguishedName 値 (以下、DN 値) の内容をコピーします。</li>
-<li>コマンド プロンプト (PowerShell でも可) を起動し、以下のコマンドを実行します。</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ldifde -f c:\ ldifde_user.txt -d &quot;手順 5. でコピーした内容&quot; -p subtree</span><br></pre></td></tr></table></figure>
-<p>コマンド例：</p>
-<img src="/blog/2017/10/05/azure-active-directory-connect/upn-hard-match/hardmatch_11.png">
-<p>1-7. 出力されたファイルを開き、ObjectGUID の値を確認します。<br>出力結果例：</p>
-<img src="/blog/2017/10/05/azure-active-directory-connect/upn-hard-match/hardmatch_2.png">
-<h2 id="2-Azure-AD-上で-ImmutableId-が設定されてないことを確認"><a href="#2-Azure-AD-上で-ImmutableId-が設定されてないことを確認" class="headerlink" title="2. Azure AD 上で ImmutableId が設定されてないことを確認"></a>2. Azure AD 上で ImmutableId が設定されてないことを確認</h2><p>Azure AD の紐づけ対象のアカウントに ImmutableId が設定されていないことを確認します。ImmutableId が設定されている場合には、すでに同期対象となっていることを示します。</p>
-<ol>
-<li>インターネットに接続している任意のコンピューター上で “Windows PowerShell 用 Windows Azure Active Directory モジュール” を管理者として実行します。</li>
-<li>起動した PowerShell にて Connect-MsolService コマンドを実行します。<br>※ 認証ダイアログが表示されますので、管理者ユーザーの資格情報を入力して [OK] ボタンをクリックします。</li>
-<li>下記のコマンドを実行します。</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Get-MsolUser -UserPrincipalName &quot;対象ユーザーの UPN&quot; | fl</span><br></pre></td></tr></table></figure>
-<p>コマンド例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Get-MsolUser -UserPrincipalName &quot;hm_test3@test01.onmicrosoft.com&quot; | fl</span><br></pre></td></tr></table></figure>
-<ol start="4">
-<li>出力されたファイルを開き、ImmutableId の値を確認します。</li>
-</ol>
-<p>出力結果例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ImmutableId                            : （クラウド内ユーザーの場合、空白になります）</span><br><span class="line">UserPrincipalName                      : hm_test3@test01.onmicrosoft.com</span><br></pre></td></tr></table></figure>
-<h3 id="3-ImmutableId-を手動で設定"><a href="#3-ImmutableId-を手動で設定" class="headerlink" title="3. ImmutableId を手動で設定"></a>3. ImmutableId を手動で設定</h3><p>ディレクトリ同期ツールにて、ユーザーの情報を関連付けるには下記の情報を使用します。<br>オンプレミス AD 側：objectGUID<br>Azure AD 側：ImmutableId</p>
-<ol>
-<li>インターネットに接続している任意のコンピューター上で “Windows PowerShell 用 Windows Azure Active Directory モジュール” を管理者として実行します。</li>
-<li>起動した PowerShell にて Connect-MsolService コマンドを実行します。<br>※認証ダイアログが表示されますので、管理者ユーザーの資格情報を入力して [OK] ボタンをクリックします。</li>
-<li>下記のコマンドを実行します。</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-MsolUser -UserPrincipalName &lt;対象ユーザーの UPN&gt; -ImmutableId &lt;オンプレ AD ユーザーの  Base64 エンコードされた objectGUID 値&gt;</span><br></pre></td></tr></table></figure>
-<p>コマンド実行例：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-MsolUser -UserPrincipalName hm_test3@test01.onmicrosoft.com -ImmutableId 2/9JCtHr0EmH+hL07o11vA==</span><br></pre></td></tr></table></figure>
-<p>3-4. 下記のコマンドを実行します。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Get-MsolUser -UserPrincipalName &quot;対象ユーザーの UPN&quot; | fl</span><br></pre></td></tr></table></figure>
-<p>コマンド例：</p>
-<img src="/blog/2017/10/05/azure-active-directory-connect/upn-hard-match/hardmatch_3.png">
-<h3 id="4-手動で差分ディレクトリ同期を実施"><a href="#4-手動で差分ディレクトリ同期を実施" class="headerlink" title="4. 手動で差分ディレクトリ同期を実施"></a>4. 手動で差分ディレクトリ同期を実施</h3><p>※2016 年 2 月に公開された新しいバージョン（1.1.105.0 以上）の Azure AD Connectを使用した手順をご案内いたします。</p>
-<ol>
-<li>ディレクトリ同期サーバーに管理者権限でログインします。</li>
-<li>管理者の PowerShell を起動して、以下のコマンドを実行します。</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Start-ADSyncSyncCycle -PolicyType Delta</span><br></pre></td></tr></table></figure>
-<p>*今回ご紹介しているケースのように Azure AD Connect が構成済みである場合は上記コマンドで差分同期をすることとなります。</p>
-<ol start="3">
-<li>Office 管理ポータルで作業対象ユーザーの [同期の種類] が [クラウド] から [Active Directory ] に変わったことを確認します。</li>
-</ol>
-<p>「コミュニティにおけるマイクロソフト社員による発言やコメントは、マイクロソフトの正式な見解またはコメントではありません。」</p>
+<p>2-1. 既定で “C:\Program Files\Microsoft Azure AD Sync\UIShell” にあります “miisclient.exe” を実行し、[Synchronization Service Manager] を開きます。</p>
+<p>2-2. 画面上部の [Metaverse Search] ボタンを押します。<br>2-3. 画面上部の [Scope by Objects Type] から、[person]を選びます。</p>
+<p>あまりにも多くのユーザーが [Search Results] として出力され、さらに細かい条件を指定する場合は、[Attribute] に属性を指定し、[Operator]に “Equal” や “Starts with(前方一致) “を選択し、[Value] に検索するユーザーのキーワードをご指定ください。</p>
+<p>2-4. 表示された ユーザーをダブルクリックします。<br>2-5. [Metaverse Object Properties]の画面をひろげ、 [Attributes] タブの設定全体が見えるようにした上で画面キャプチャを取得します。（画面が切れる場合は、スクロールなどして全体の情報を採取します）<br>2-6. [Connectors]タブを選択します。<br>2-7. [Distinguished Name] にAzure AD とオンプレAD の二つの表示を確認します。<br>2-8. 一方の [Distinguished Name] 設定を選択します。<br>2-9. 表示された [Connector Space Object Properties] の設定全体が見えるように画面キャプチャを取得します。<br>2-10 [Close] を押し、先ほど選択しなかった、もう一方の [Connector Space Object Properties] についても画面キャプチャを取得します。</p>
+<h1 id="3-Synchronization-Service-Manager-のエラー画面ショット"><a href="#3-Synchronization-Service-Manager-のエラー画面ショット" class="headerlink" title="3.Synchronization Service Manager のエラー画面ショット"></a>3.Synchronization Service Manager のエラー画面ショット</h1><p>Azure AD Connect の Synchronization Service Manager にてエラーが発生しているか確認し、エラーが生じている場合にはその画面情報を取得します。</p>
+<p>確認する箇所は[Operations] を選択して、[Status]が success でないものについて、画面右下のリンクをクリックしたときのすべての画面ショットを採取します。</p>
+<h1 id="4-イベント-ログ"><a href="#4-イベント-ログ" class="headerlink" title="4.イベント ログ"></a>4.イベント ログ</h1><p>Azure AD Connect サーバーに管理者権限でサインインし、作業を実施ください。</p>
+<p>4-1. コマンド プロンプトを管理者として起動して、以下の 2 つのコマンドを実行します。</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wevtutil epl system <span class="variable">%UserProfile%</span>\desktop\SysEvent.evtx</span><br><span class="line">wevtutil epl Application <span class="variable">%UserProfile%</span>\desktop\AppEvent.evtx</span><br></pre></td></tr></table></figure>
+<p>4-2. デスクトップに作成された evtx 形式のイベント ログを採取します。</p>
+<h1 id="エラーログの出力確認"><a href="#エラーログの出力確認" class="headerlink" title="エラーログの出力確認"></a>エラーログの出力確認</h1><p>Azure AD Connect 上でコマンドプロンプトを管理者権限で実行します。<br>&lt;C:\Program Files\Microsoft Azure AD Sync\Bin&gt; にある、csexport.exe  を使用して、以下の 4 つのコマンドを実行します。</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">csexport.exe "&lt;コネクター スペース名(Azure AD)&gt;" error_YYYYMMDD_1.xml /f:e </span><br><span class="line"> </span><br><span class="line">csexport.exe "&lt;コネクター スペース名(Azure AD)&gt;" error_YYYYMMDD_2.xml /f:i</span><br><span class="line"> </span><br><span class="line">csexport.exe "&lt;コネクター スペース名(オンプレ AD)&gt;" error_YYYYMMDD_3.xml /f:e </span><br><span class="line"> </span><br><span class="line">csexport.exe "&lt;コネクター スペース名(オンプレ AD)&gt;" error_YYYYMMDD_4.xml /f:i</span><br></pre></td></tr></table></figure>
+<p>※コネクター スペース名については、Synchronization Service Manager [Operations]の [Name] に表示された名前です。</p>
+<p>「コミュニティにおけるマイクロソフト社員による発言やコメントは、マイクロソフトの正式な見解またはコメントではありません。」<br>※本情報の内容（添付文書、リンク先などを含む）は、作成日時点でのものであり、予告なく変更される場合があります。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jpazureid.github.io/2017/10/05/azure-active-directory-connect/upn-hard-match/" data-id="cjth664df0005t8yth5415eyl" class="article-share-link">共有</a>
+      <a data-url="https://jpazureid.github.io/2017/10/24/azure-active-directory-connect/problem-user-synchronize/" data-id="cjtjpbjnr00144cyt29i3xfap" class="article-share-link">共有</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/AAD-Connect/">AAD Connect</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Hard-match/">Hard match</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/UPN/">UPN</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-active-directory-federation-service/update-ssl-server-certificate" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2017/10/03/active-directory-federation-service/update-ssl-server-certificate/" class="article-date">
-  <time datetime="2017-10-02T15:00:00.000Z" itemprop="datePublished">2017-10-03</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2017/10/03/active-directory-federation-service/update-ssl-server-certificate/">AD FS の証明書更新手順 (SSLサーバー証明書)</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>皆様、こんにちは。Azure &amp; Identity サポート担当の竹村です。</p>
-<p>今回は、比較的多くのお客様からお問合せをいただく、AD FS の証明書更新手順をご紹介します。本エントリでは SSL サーバー証明書 (サービス通信証明書) の手順をご紹介し、次回にトークン署名証明書、トークン暗号化証明書についてもご案内したいと思います。</p>
-<p>対象リリース: Windows Server 2012 R2 (AD FS 3.0)</p>
-<p>以下の流れで更新作業を行います。</p>
-<h2 id="手順の概要"><a href="#手順の概要" class="headerlink" title="手順の概要"></a>手順の概要</h2><ol>
-<li>証明書の取得</li>
-<li>SSL サーバー証明書、ルート証明書、中間証明書のインストール</li>
-<li>SSL サーバー証明書のアクセス権設定</li>
-<li>AD FS のサービス通信証明書へ SSL サーバー証明書を設定</li>
-<li>AD FS の SSL サーバー証明書を更新</li>
-<li>WAP サーバーを再構成</li>
-</ol>
-<p>それぞれの詳細を後述致します。</p>
-<h2 id="1-証明書の取得"><a href="#1-証明書の取得" class="headerlink" title="1. 証明書の取得"></a>1. 証明書の取得</h2><p>ご利用になる認証機関から SSL サーバー証明書とルート証明書、中間証明書を取得します。<br>認証機関によって CSR 作成・送信、証明書受領手順が異なるため、手順は省略します。</p>
-<h2 id="2-SSL-サーバー証明書、ルート証明書、中間証明書のインストール"><a href="#2-SSL-サーバー証明書、ルート証明書、中間証明書のインストール" class="headerlink" title="2. SSL サーバー証明書、ルート証明書、中間証明書のインストール"></a>2. SSL サーバー証明書、ルート証明書、中間証明書のインストール</h2><p>ご利用になる認証機関から取得した SSL サーバー証明書、ルート証明書、中間証明書を以下手順でインストールします。</p>
-<p>※ インポートする中間証明書の有無や数は、ご利用の認証機関によって異なります。</p>
-<p>全 AD FS サーバー、全 WAP サーバーにて以下を実施します。</p>
-<ol>
-<li><p>[スタート] - [ファイル名を指定して実行] から certlm.msc と入力し、[OK] をクリックします。</p>
-</li>
-<li><p>画面左側から以下のストアを展開します。</p>
-<p> [証明書 (ローカル コンピューター)] - [信頼されたルート証明機関] - [証明書]</p>
-</li>
-<li><p>[証明書] を右クリックし、[すべてのタスク] - [インポート] を選択し、ウィザードに従って SSL サーバー証明書の発行元証明機関のルート証明書をインストールします。</p>
-</li>
-<li><p>続けて、画面左側から以下のストアを展開します。</p>
-<p> [証明書 (ローカル コンピューター)] - [中間証明機関] - [証明書]</p>
-</li>
-<li><p>[証明書] を右クリックし、[すべてのタスク] - [インポート] を選択し、ウィザードに従って SSL サーバー証明書の発行元証明機関の中間証明書をインストールします。</p>
-</li>
-<li><p>続けて、画面左側から以下のストアを展開します。<br>[証明書 (ローカル コンピューター)] - [個人] - [証明書]</p>
-</li>
-<li><p>[証明書] を右クリックし、[すべてのタスク] - [インポート] を選択し、ウィザードに従って SSL サーバー証明書をインストールします。</p>
-</li>
-</ol>
-<h2 id="3-SSL-サーバー証明書のアクセス権設定"><a href="#3-SSL-サーバー証明書のアクセス権設定" class="headerlink" title="3. SSL サーバー証明書のアクセス権設定"></a>3. SSL サーバー証明書のアクセス権設定</h2><p>証明書に、AD FS サービス アカウントに必要なアクセス許可を付与します。<br>全 AD FS サーバーにて以下を実施します。</p>
-<ol>
-<li><p>[スタート] - [ファイル名を指定して実行] から certlm.msc と入力し、[OK] をクリックします。</p>
-</li>
-<li><p>画面左側から以下のストアを展開します。</p>
-<p> [証明書 (ローカル コンピューター)] - [個人] - [証明書]</p>
-</li>
-<li><p>中央から、手順 2. でインストールした SSL サーバー証明書を右クリックして、[すべてのタスク] - [秘密キーの管理] をクリックします。</p>
-<p> ※ もし [秘密キーの管理] を実行できない場合は、次のコマンドを実行してください。    このコマンドを実行することにより、個人ストアのすべての証明書のキーの関連付けの修復、または証明書プロパティやキーのセキュリティ記述子の更新を行います。</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">certutil -repairstore my *</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>NT SERVICE\ADFSSRV と NT SERVICE\DRS (場所はローカル) を [追加] して、各アカウントには、少なくとも読み取りアクセス許可を付与します。</p>
-<p> ※ NT SERVICE\DRS アカウントが存在しない場合には、NT SERVICE\ADFSSRV にのみアクセス許可を付与します。</p>
-</li>
-</ol>
-<h2 id="4-AD-FS-のサービス通信証明書へ-SSL-サーバー証明書を設定"><a href="#4-AD-FS-のサービス通信証明書へ-SSL-サーバー証明書を設定" class="headerlink" title="4. AD FS のサービス通信証明書へ SSL サーバー証明書を設定"></a>4. AD FS のサービス通信証明書へ SSL サーバー証明書を設定</h2><p>AD FS のサービス通信証明書へ SSL サーバー証明書を設定します。プライマリ AD FS サーバーにて以下を実施します。</p>
-<ol>
-<li><p>スタート画面などから [AD FS の管理] コンソールを開きます。</p>
-</li>
-<li><p>画面左側から [AD FS] - [サービス] - [証明書] を右クリックし、 [サービス通信証明書の設定] をクリックします。</p>
-</li>
-<li><p>証明書の選択画面から手順 2. でインストールした SSL サーバー証明書を選択します。</p>
-</li>
-<li><p>[OK] をクリックします。</p>
-<p> ※ 警告が表示されましたら、[OK] をクリックします。</p>
-</li>
-</ol>
-<h2 id="5-AD-FS-の-SSL-サーバー証明書を更新"><a href="#5-AD-FS-の-SSL-サーバー証明書を更新" class="headerlink" title="5. AD FS の SSL サーバー証明書を更新"></a>5. AD FS の SSL サーバー証明書を更新</h2><p>AD FS の SSL サーバー証明書を更新します。全 AD FS サーバーにて以下を実施します。</p>
-<ol>
-<li><p>[スタート] - [ファイル名を指定して実行] から certlm.msc と入力し、[OK] をクリックします。</p>
-</li>
-<li><p>画面左側から以下のストアを展開します。</p>
-<p> [証明書 (ローカル コンピューター)] - [個人] - [証明書]</p>
-</li>
-<li><p>中央から、手順 2. でインストールした SSL サーバー証明書をダブル クリックします。</p>
-</li>
-<li><p>[詳細] タブをクリックします。</p>
-</li>
-<li><p>[拇印] の値をメモします。</p>
-</li>
-<li><p>PowerShell を管理者として起動します。</p>
-</li>
-<li><p>起動した PowerShell で以下のコマンドを実行して SSL サーバー証明書を更新します。</p>
- <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-AdfsSslCertificate -Thumbprint</span><br></pre></td></tr></table></figure>
-<p> 例えば、手順 5-5. でメモした拇印が “aa bb cc dd ee” の場合、スペースを除いて以下のようになります。</p>
- <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-AdfsSslCertificate -Thumbprint aabbccddee</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h2 id="6-WAP-サーバーを再構成"><a href="#6-WAP-サーバーを再構成" class="headerlink" title="6. WAP サーバーを再構成"></a>6. WAP サーバーを再構成</h2><p>WAP サーバーを再構成します。全 WAP サーバーにて以下を実施します。</p>
-<ol>
-<li><p>レジストリ エディターを開きます。</p>
-</li>
-<li><p>[HKEY_LOCAL_MACHINE\Software\Microsoft\ADFS] を選択します。</p>
-</li>
-<li><p>[ProxyConfigurationStatus] をダブル クリックします。</p>
-</li>
-<li><p>[値のデータ] を 1 にして [OK] をクリックします。</p>
-</li>
-<li><p>スタート画面などから [リモート アクセス管理] コンソールを開きます。</p>
-</li>
-<li><p>画面左側から [構成] - [Web Application Proxy] をクリックします。</p>
-</li>
-<li><p>画面中央から [Web アプリケーション プロキシ構成ウィザードの実行] をクリックします。</p>
-</li>
-<li><p>初期構成時と同様に、WAP サーバーを構成します。</p>
-<p> ※ [AD FS プロキシの証明書] 画面では、手順 2. でインストールした SSL サーバー証明書を選択します。</p>
-</li>
-</ol>
-<blockquote>
-<p>(注意) WAPサーバーの再構成を行う際には、hosts ファイルでフェデレーションサービス名がプライマリ AD FS サーバーに名前解決されるように設定ください。<br>AD FS サーバーとWAPサーバーとの間にロードバランサーが存在するような環境の場合、明示的にプライマリ AD FS サーバーに対して接続されるように設定しておきませんと、再構成に失敗することがございます。</p>
-</blockquote>
-<p>手順は以上の通りとなります。上記手順は過去にも同様のお問い合わせをお受けした際、多くのお客様にご案内しております実績のある手順となっておりますので、ご参考いただけますと幸いです。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://jpazureid.github.io/2017/10/03/active-directory-federation-service/update-ssl-server-certificate/" data-id="cjth664d50001t8yt8918pkuj" class="article-share-link">共有</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/AD-FS/">AD FS</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-active-directory-federation-service/update-token-certificate" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2017/10/03/active-directory-federation-service/update-token-certificate/" class="article-date">
-  <time datetime="2017-10-02T15:00:00.000Z" itemprop="datePublished">2017-10-03</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2017/10/03/active-directory-federation-service/update-token-certificate/">AD FS の証明書更新手順（トークン署名証明書、トークン暗号化解除証明書）</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>皆様、こんにちは。Azure &amp; Identity サポート担当の竹村です。</p>
-<p>前回に引き続き、本エントリではトークン署名証明書、トークン暗号化解除証明書の更新手順をご紹介いたします。</p>
-<p>トークン署名証明書、トークン暗号化解除証明書は AD FS が発行する自己証明書であり、既定では1年に1回自動的に新しい証明書の作成、更新処理が行われます。これを、<a href="https://blogs.technet.microsoft.com/jpntsblog/2016/10/13/ad-fs-%E3%81%AE%E8%87%AA%E5%8B%95%E8%A8%BC%E6%98%8E%E6%9B%B8%E3%83%AD%E3%83%BC%E3%83%AB%E3%82%AA%E3%83%BC%E3%83%90%E3%83%BC%E6%A9%9F%E8%83%BD%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/" target="_blank" rel="noopener">自動ロールオーバー機能</a> と呼びます。</p>
-<p>自動ロールオーバー機能は、具体的には以下のように動作します。</p>
-<ol>
-<li>有効期限が切れる 20 日前に、セカンダリのトークン署名/トークン暗号化解除証明書を作成します。</li>
-<li>上記 1 でセカンダリの証明書が作成されてから 5 日後に、セカンダリの新しい証明書がプライマリとなり、実際に利用されるようになります。</li>
-</ol>
-<p>※ この 5 日間の間に、証明書利用者信頼に新しい証明書を登録する必要があります。</p>
-<p>※ 2019/02/14 追記: 証明書利用者信頼にアップロードされるのはトークン署名証明書ですが、トークン暗号化解除証明書につきましても認証の際に利用されますので、有効期限が切れますと認証に失敗します。トークン署名証明書だけでなく、トークン暗号化解除証明書につきましても有効期限内での更新が必要です。</p>
-<p>ここでは、これらの証明書を手動で更新する手順をご案内いたします。また、補足として証明書の有効期限を既定の 1年 から変更する方法についても併せてご紹介いたします。</p>
-<p>対象リリース: Windows Server 2012 R2 (AD FS 3.0)</p>
-<h2 id="更新手順"><a href="#更新手順" class="headerlink" title="更新手順"></a>更新手順</h2><p>以下の流れで更新作業を行います。</p>
-<p>&lt;手順の概要&gt;</p>
-<ol>
-<li>セカンダリのトークン署名/トークン暗号化解除証明書を作成</li>
-<li>証明書利用者信頼 (Office 365) の証明書情報を更新</li>
-<li>セカンダリのトークン署名/トークン暗号化解除証明書をプライマリに昇格</li>
-<li>Active Directory Federation Services サービスを再起動</li>
-</ol>
-<p>それぞれの詳細を後述致します。</p>
-<h3 id="1-セカンダリのトークン署名-トークン暗号化解除証明書を作成"><a href="#1-セカンダリのトークン署名-トークン暗号化解除証明書を作成" class="headerlink" title="1. セカンダリのトークン署名/トークン暗号化解除証明書を作成"></a>1. セカンダリのトークン署名/トークン暗号化解除証明書を作成</h3><p>トークン署名/トークン暗号化解除証明書を更新するためには、現在使用されているプライマリのトークン署名/トークン暗号化解除証明書の有効期限が切れる前に、セカンダリのトークン署名/トークン暗号化解除証明書を作成致します。</p>
-<p>このセカンダリのトークン署名/トークン暗号化解除証明書は、既定では、プライマリのトークン署名/トークン暗号化解除証明書の有効期限が切れる 20 日前に、AD FS によって自動で作成されます。</p>
-<p>セカンダリのトークン署名/トークン暗号化解除証明書が作成されているか否かは、以下の手順で確認致します。</p>
-<ol>
-<li>プライマリ AD FS サーバーでスタート画面などから [AD FS の管理] コンソールを開きます。</li>
-<li>画面左側から [AD FS] - [サービス] - [証明書] を選択します。</li>
-<li><p>画面中央から、トークン署名/トークン暗号化解除証明書のセカンダリが存在するか確認します。</p>
-<p> セカンダリのトークン署名/トークン暗号化解除証明書は、AD FS による自動作成を待たずに、手動で作成することも可能です。<br> もし、セカンダリのトークン署名/トークン暗号化解除証明書が作成されていない際には、自動で作成されるのを待つか、以下の手順で手動で作成します。</p>
-</li>
-<li><p>プライマリ AD FS サーバーで PowerShell を管理者として起動します。</p>
-</li>
-<li><p>起動した PowerShell で以下のコマンドを実行してセカンダリのトークン署名/トークン暗号化解除証明書を作成します。</p>
- <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Update-ADFSCertificate</span><br></pre></td></tr></table></figure>
-<p> ※ このコマンドを実行するためには、<a href="https://blogs.technet.microsoft.com/jpntsblog/2016/10/13/ad-fs-%E3%81%AE%E8%87%AA%E5%8B%95%E8%A8%BC%E6%98%8E%E6%9B%B8%E3%83%AD%E3%83%BC%E3%83%AB%E3%82%AA%E3%83%BC%E3%83%90%E3%83%BC%E6%A9%9F%E8%83%BD%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/" target="_blank" rel="noopener">自動ロールオーバー機能</a> が有効である必要がございます。無効の場合には、事前に以下のコマンドを実行し、有効にしてください。</p>
- <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-ADFSProperties -AutoCertificateRollover <span class="literal">$true</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>上記 1-1. から 1-3. の手順で、セカンダリが作成されていることを確認します。</p>
-</li>
-</ol>
-<p>以上でセカンダリのトークン署名/トークン暗号化解除証明書作成手順は終了です。<br>次のステップに進みます。</p>
-<h3 id="2-証明書利用者信頼-Office-365-の証明書情報を更新"><a href="#2-証明書利用者信頼-Office-365-の証明書情報を更新" class="headerlink" title="2. 証明書利用者信頼 (Office 365) の証明書情報を更新"></a>2. 証明書利用者信頼 (Office 365) の証明書情報を更新</h3><p>新しいトークン署名証明書を作成いたしましたら、証明書利用者信頼にその新しい証明書を登録する必要があります。セカンダリのトークン署名/トークン暗号化解除証明書が作成されてから 5 日以内に、証明書利用者信頼に新しい証明書を登録する必要があります。これは、セカンダリのトークン署名/トークン暗号化解除証明書が作成されてから 5 日後にプライマリに昇格されて、実際に使用されるようになるためです。</p>
-<p>ここでは、例として Office 365 の場合の手順をご案内します (Office 365以外の場合には、実際に利用されている証明書利用者信頼ごとに手順をご確認ください)。</p>
-<ol>
-<li>プライマリ AD FS サーバーでスタート画面などから [Windows PowerShell 用 Windows Azure Active Directory モジュール] を管理者として起動します。</li>
-<li><p>起動した PowerShell で以下のコマンドを実行し、Office 365 に接続します。</p>
- <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Connect-MsolService</span><br></pre></td></tr></table></figure>
-<p> 資格情報の入力を求められるので、管理者アカウントの情報を入力します。</p>
-</li>
-<li><p>続けて、以下のコマンドを実行して現在の証明書情報を調べて、更新が必要か確認します。</p>
- <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Get-MsolFederationProperty -DomainName</span><br></pre></td></tr></table></figure>
-<p> このコマンドで得られる結果から “Source : ADFS Server” と、”Source : Microsoft Office 365” のブロックを比較します。この 2 つのブロックの情報が異なる場合は、引き続き下記の手順に従って更新を行う必要があります。</p>
-</li>
-<li><p>続けて、以下のコマンドを実行して Office 365 の証明書情報を更新します。</p>
- <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Update-MSOLFederatedDomain -DomainName</span><br></pre></td></tr></table></figure>
-<p> ※ 複数のトップレベル ドメインをサポートしている場合は、代わりに以下コマンドを実行します。</p>
- <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Update-MSOLFederatedDomain -DomainName -SupportMultipleDomain</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>上記 3. の手順で再度確認を行います。</p>
-</li>
-</ol>
-<p>以上で Office 365 の証明書情報更新手順は終了です。<br>次のステップに進みます。</p>
-<h3 id="3-セカンダリのトークン署名-トークン暗号化解除証明書をプライマリに昇格"><a href="#3-セカンダリのトークン署名-トークン暗号化解除証明書をプライマリに昇格" class="headerlink" title="3. セカンダリのトークン署名/トークン暗号化解除証明書をプライマリに昇格"></a>3. セカンダリのトークン署名/トークン暗号化解除証明書をプライマリに昇格</h3><p>※ この手順以降、手順 4. が完了するまで、正しく認証ができない場合があります。手順 4. まで続けて実行してください。</p>
-<p>手順 1. で自動、または手動でセカンダリのトークン署名/トークン暗号化解除証明書が作成されてから 5 日後に、AD FS によって自動でセカンダリがプライマリに昇格されます。それ以降、AD FS では、この新しいプライマリのトークン署名/トークン暗号化解除証明書が使用されるようになります。そのため、上述の手順 2. は、セカンダリの証明書が作成されてから 5 日以内に行う必要があります。</p>
-<p>この AD FS によるプライマリへの自動昇格を待たずに、手動で昇格することも可能です。その手順は、以下になります。</p>
-<ol>
-<li>プライマリ AD FS サーバー で PowerShell を管理者として起動します。</li>
-<li><p>起動した PowerShell で以下のコマンドを実行して自動ロールオーバー機能を無効化します。</p>
- <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-ADFSProperties -AutoCertificateRollover <span class="literal">$false</span></span><br></pre></td></tr></table></figure>
-<p> ※ すでに無効化されている場合は、このコマンドの実行は不要です。</p>
-</li>
-<li><p>スタート画面などから [AD FS の管理] コンソールを開き、画面左側から [AD FS] - [サービス] - [証明書] を選択します。</p>
-</li>
-<li>画面中央から、プライマリに昇格したいセカンダリのトークン署名/トークン暗号化解除証明書を右クリックし、[プライマリとして設定] を選択します。</li>
-<li>警告が表示される場合は [はい] をクリックします。</li>
-<li><p>続けて、PowerShell で以下のコマンドを実行して自動ロールオーバー機能を有効に戻します。</p>
- <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-ADFSProperties -AutoCertificateRollover <span class="literal">$true</span></span><br></pre></td></tr></table></figure>
-<p> ※ 無効化された状態で運用をされる場合は、このコマンドの実行は不要です。</p>
-<p> 以下の手順でセカンダリのトークン署名/トークン暗号化解除証明書が自動、もしくは手動でプライマリに昇格されていることを確認致します。</p>
-</li>
-<li><p>プライマリ AD FS サーバーでスタート画面などから [AD FS の管理] コンソールを開きます。</p>
-</li>
-<li>画面左側から [AD FS] - [サービス] - [証明書] を選択します。</li>
-<li>画面中央から、トークン署名/トークン暗号化解除証明書のプライマリとセカンダリが入れ替わっていることを確認します。</li>
-</ol>
-<p>以上でセカンダリのトークン署名/トークン暗号化解除証明書をプライマリに昇格する手順は終了です。次のステップに進みます。</p>
-<h3 id="4-Active-Directory-Federation-Services-を再起動"><a href="#4-Active-Directory-Federation-Services-を再起動" class="headerlink" title="4. Active Directory Federation Services を再起動"></a>4. Active Directory Federation Services を再起動</h3><p>手順 3. の後、トークン署名/トークン暗号化解除証明書の入れ替えが各 AD FS サーバーに反映されるまで、10 分ほど待った後、各 AD FS サーバーの Active Directory Federation Services を再起動致します。各 AD FS サーバーで以下の手順を行い、Active Directory Federation Services を再起動致します。</p>
-<ol>
-<li>スタート画面などから [サービス] コンソールを開きます。</li>
-<li>[Active Directory Federation Services] を右クリックし、[再起動] を選択します。</li>
-</ol>
-<p>以上で Active Directory Federation Services の再起動手順は終了です。</p>
-<h2 id="補足"><a href="#補足" class="headerlink" title="補足"></a>補足</h2><p>以下について補足をさせて頂きます。トークン署名/トークン暗号化解除証明書の更新に際しまして、ご参考になれば幸いです。</p>
-<ol>
-<li>トークン署名/トークン暗号化解除証明書の有効期間を延ばす手順</li>
-<li>自動ロールオーバー機能を無効化する手順</li>
-<li>セカンダリのトークン署名/トークン暗号化解除証明書を削除する手順</li>
-</ol>
-<p>それぞれの詳細を後述致します。</p>
-<h3 id="1-トークン署名-トークン暗号化解除証明書の有効期間を変更する手順"><a href="#1-トークン署名-トークン暗号化解除証明書の有効期間を変更する手順" class="headerlink" title="1. トークン署名/トークン暗号化解除証明書の有効期間を変更する手順"></a>1. トークン署名/トークン暗号化解除証明書の有効期間を変更する手順</h3><p>既定では、トークン署名/トークン暗号化解除証明書の有効期間は 1 年です。以下の手順に沿って、トークン署名/トークン暗号化解除証明書の有効期間を変更することで、次回以降作成される証明書に反映されます。</p>
-<p>なお、この手順は現行の証明書の期間を変更するものではなく、この設定以降に作成される証明書の有効期間を変更するものとなります。そのため、トークン署名/トークン暗号化解除証明書の有効期間を変更する際には、最初にこの手順を実施していただいた後に証明書の更新作業を行ってください。</p>
-<ol>
-<li>プライマリ AD FS サーバー で PowerShell を管理者として起動します。</li>
-<li><p>起動した PowerShell で以下のコマンドを実行して有効期間を設定します。</p>
- <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-AdfsProperties -CertificateDuration</span><br></pre></td></tr></table></figure>
-<p> 例えば、およそ 10 年 (3650日) に設定する場合は以下のようになります。</p>
- <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-AdfsProperties -CertificateDuration <span class="number">3650</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>弊社内部情報より、最長で 50 年の設定を行っても問題ないことを確認しております。</p>
-<h3 id="2-自動ロールオーバー機能を無効化する手順"><a href="#2-自動ロールオーバー機能を無効化する手順" class="headerlink" title="2. 自動ロールオーバー機能を無効化する手順"></a>2. 自動ロールオーバー機能を無効化する手順</h3><p>先述のとおり、自動ロールオーバー機能は既定で以下のように動作します。</p>
-<ul>
-<li>現在使用されているプライマリのトークン署名/トークン暗号化解除証明書の有効期限が切れる 20 日前に、新証明書をセカンダリとして作成する</li>
-<li>セカンダリのトークン署名/トークン暗号化解除証明書が作成されてから 5 日後に、プライマリ (旧証明書) とセカンダリ (新証明書) を入れ替える</li>
-</ul>
-<p>そのため、各証明書の有効期限に合わせて(既定では 1年ごとに) 新しい証明書を証明書利用者信頼に登録する作業を行っていただく必要がございます。</p>
-<p>※ 証明書利用者信頼の中には、AD FS からフェデレーションメタデータを受信できるネットワーク環境であれば、自動的に更新作業が行われるものもございます。</p>
-<p>上述 1 の証明書の有効期限を変更する手順と併せて、自動ロールオーバー機能を無効にしていただくことで、各作業を、各証明書の有効期限が切れるまでにお客様の任意のタイミングで進めていただくことができます。自動ロールオーバー機能を無効にする方法は以下になります。</p>
-<ol>
-<li>プライマリ AD FS サーバー で PowerShell を管理者として起動します。</li>
-<li><p>起動した PowerShell で以下のコマンドを実行して自動ロールオーバー機能を無効化します。</p>
- <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-ADFSProperties -AutoCertificateRollover <span class="literal">$false</span></span><br></pre></td></tr></table></figure>
-<p> なお、自動ロールオーバー機能を有効に戻す場合は、以下のコマンドを実行します。</p>
- <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-ADFSProperties -AutoCertificateRollover <span class="literal">$true</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h3 id="3-セカンダリのトークン署名-トークン暗号化解除証明書を削除する手順"><a href="#3-セカンダリのトークン署名-トークン暗号化解除証明書を削除する手順" class="headerlink" title="3. セカンダリのトークン署名/トークン暗号化解除証明書を削除する手順"></a>3. セカンダリのトークン署名/トークン暗号化解除証明書を削除する手順</h3><p>トークン署名/トークン暗号化解除証明書の更新作業を行っていただいた後、元々プライマリであった証明書がセカンダリとして残ります。以下の手順に沿って、このセカンダリの証明書を削除することが可能です。</p>
-<p>なお、このセカンダリの証明書は残っていても AD FS の動作などに影響を及ぼすものではございません。</p>
-<ol>
-<li>プライマリ AD FS サーバー で PowerShell を管理者として起動します。</li>
-<li><p>起動した PowerShell で以下のコマンドを実行して現在の証明書情報を確認します。</p>
- <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Get-AdfsCertificate</span><br></pre></td></tr></table></figure>
-<p> CertificateType の値が Token-Signing になっていて IsPrimary の値が False になっているブロックがセカンダリのトークン署名証明書の情報ブロックです (例)。</p>
- <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Certificate : [Subject]</span><br><span class="line">CN=ADFS Signing - adfs.test.com</span><br><span class="line">[Issuer]</span><br><span class="line">CN=ADFS Signing - adfs.test.com</span><br><span class="line">[Serial Number]</span><br><span class="line">1E841605620028AC4FB542149E31A4A7</span><br><span class="line">[Not Before]</span><br><span class="line">2017/10/11 15:09:47</span><br><span class="line">[Not After]</span><br><span class="line">2057/10/01 15:09:47</span><br><span class="line">[Thumbprint]</span><br><span class="line">41D3FE9CB98FA89BE0899904B3B227DECB8A512A</span><br><span class="line">CertificateType : Token-Signing ★&lt;&lt;&lt;</span><br><span class="line">IsPrimary : False ★&lt;&lt;&lt;</span><br><span class="line">StoreLocation : CurrentUser</span><br><span class="line">StoreName : My</span><br><span class="line">Thumbprint : 41D3FE9CB98FA89BE0899904B3B227DECB8A512A ★&lt;&lt;&lt;</span><br></pre></td></tr></table></figure>
-<p> ※ 念のため、AD FS 管理ツールからセカンダリのトークン署名証明書をダブルクリックし、[詳細] タブの「拇印」が Thumbprint と一致していることを確認します。</p>
-</li>
-</ol>
-<pre><code>CertificateType の値が Token-Decrypting になっていて IsPrimary の値が False になっているブロックがセカンダリのトークン暗号化解除証明書の情報ブロックです (例)。
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Certificate : [Subject]</span><br><span class="line">CN=ADFS Encryption - adfs.test.com</span><br><span class="line">[Issuer]</span><br><span class="line">CN=ADFS Encryption - adfs.test.com</span><br><span class="line">[Serial Number]</span><br><span class="line">3E79CAA431F92DB6454084FEA1AE9995</span><br><span class="line">[Not Before]</span><br><span class="line">2017/10/11 15:09:47</span><br><span class="line">[Not After]</span><br><span class="line">2057/10/01 15:09:47</span><br><span class="line">[Thumbprint]</span><br><span class="line">57CA6410E8C213DC14645AEBCCDEF0481FC8C641</span><br><span class="line">CertificateType : Token-Decrypting ★&lt;&lt;&lt;</span><br><span class="line">IsPrimary : False ★&lt;&lt;&lt;</span><br><span class="line">StoreLocation : CurrentUser</span><br><span class="line">StoreName : My</span><br><span class="line">Thumbprint : 57CA6410E8C213DC14645AEBCCDEF0481FC8C641 ★&lt;&lt;&lt;</span><br></pre></td></tr></table></figure>
-
-※ 念のため、AD FS 管理ツールからセカンダリのトークン暗号化解除証明書をダブルクリックし、[詳細] タブの「拇印」が Thumbprint と一致していることを確認します。
-</code></pre><ol start="3">
-<li><p>続けて、PowerShell で以下のコマンドを実行して自動ロールオーバー機能を無効化します。</p>
- <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-ADFSProperties -AutoCertificateRollover <span class="literal">$false</span></span><br></pre></td></tr></table></figure>
-<p> ※ すでに無効化されている場合はこのコマンドの実行は不要です。</p>
-</li>
-<li><p>上記 2. で確認した結果を元に、PowerShell で以下のコマンドを実行してセカンダリのトークン署名証明書を削除します。</p>
- <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Remove-AdfsCertificate -Thumbprint 【削除する証明書の拇印】 -CertificateType Token-Signing</span><br></pre></td></tr></table></figure>
-<p> 上記 2 の例ですと、以下のコマンドを実行します。</p>
- <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Remove-AdfsCertificate -Thumbprint <span class="number">41</span>D3FE9CB98FA89BE0899904B3B227DECB8A512A -CertificateType Token-Signing</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>上記 2. で確認した結果を元に、PowerShell で以下のコマンドを実行してセカンダリのトークン暗号化解除証明書を削除します。</p>
- <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Remove-AdfsCertificate -Thumbprint 【削除する証明書の拇印】 -CertificateType Token-Decrypting</span><br></pre></td></tr></table></figure>
-<p> 上記 2 の例ですと、以下のコマンドを実行します。</p>
- <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Remove-AdfsCertificate -Thumbprint <span class="number">57</span>CA6410E8C213DC14645AEBCCDEF0481FC8C641 -CertificateType Token-Decrypting</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>続けて、PowerShell で以下のコマンドを実行して自動ロールオーバー機能を有効に戻します。</p>
- <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-ADFSProperties -AutoCertificateRollover <span class="literal">$true</span></span><br></pre></td></tr></table></figure>
-<p> ※ 無効化された状態で運用をされる場合はこのコマンドの実行は不要です。</p>
-</li>
-</ol>
-<p>手順は以上の通りとなります。<br>上記手順は過去にも同様のお問い合わせをお受けした際、多くのお客様にご案内しております実績のある手順となっておりますので、ご参考いただけますと幸いです。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://jpazureid.github.io/2017/10/03/active-directory-federation-service/update-token-certificate/" data-id="cjth664f6002rt8ytjhjz1syv" class="article-share-link">共有</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/AD-FS/">AD FS</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/AAD-Connect/">AAD Connect</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/サポート/">サポート</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/情報採取/">情報採取</a></li></ul>
 
     </footer>
   </div>
@@ -1134,7 +964,7 @@
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/blog/page/2/">&laquo; 戻る</a><a class="page-number" href="/blog/">1</a><a class="page-number" href="/blog/page/2/">2</a><span class="page-number current">3</span>
+    <a class="extend prev" rel="prev" href="/blog/page/2/">&laquo; 戻る</a><a class="page-number" href="/blog/">1</a><a class="page-number" href="/blog/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/blog/page/4/">4</a><a class="extend next" rel="next" href="/blog/page/4/">次へ &raquo;</a>
   </nav>
 
 </section>
@@ -1148,7 +978,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">タグ</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/AAD-Connect/">AAD Connect</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/AD-FS/">AD FS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/AD-Sync/">AD Sync</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Azure-AD/">Azure AD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Azure-AD-Application-Proxy/">Azure AD Application Proxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Azure-AD-B2B/">Azure AD B2B</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Azure-AD-Directory-Rolls/">Azure AD Directory Rolls</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Azure-AD-License/">Azure AD License</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Conditional-Access/">Conditional Access</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/ExpressRoute/">ExpressRoute</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Hard-match/">Hard match</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Hybrid-Azure-AD-Join/">Hybrid Azure AD Join</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Intune/">Intune</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/MFA/">MFA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/PowerShell/">PowerShell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/RBAC/">RBAC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Security/">Security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Sgin-in-log/">Sgin-in log</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Smart-lockout/">Smart lockout</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Subscription/">Subscription</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Tenant-Restrictions/">Tenant Restrictions</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/UPN/">UPN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Windows-Defender-ATP/">Windows Defender ATP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Workplace-Join/">Workplace Join</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/AAD-Connect/">AAD Connect</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/AD-FS/">AD FS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/AD-Sync/">AD Sync</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Azure-AD/">Azure AD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Azure-AD-Application-Proxy/">Azure AD Application Proxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Azure-AD-B2B/">Azure AD B2B</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Azure-AD-Directory-Rolls/">Azure AD Directory Rolls</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Azure-AD-License/">Azure AD License</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/CBA/">CBA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Conditional-Access/">Conditional Access</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/ExpressRoute/">ExpressRoute</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Hard-match/">Hard match</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Hybrid-Azure-AD-Join/">Hybrid Azure AD Join</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Intune/">Intune</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/MFA/">MFA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/PowerShell/">PowerShell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/RBAC/">RBAC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Security/">Security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Sgin-in-log/">Sgin-in log</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Smart-lockout/">Smart lockout</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Subscription/">Subscription</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Tenant-Restrictions/">Tenant Restrictions</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/UPN/">UPN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Windows-Defender-ATP/">Windows Defender ATP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Workplace-Join/">Workplace Join</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/サポート/">サポート</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/トラブルシューティング/">トラブルシューティング</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/情報採取/">情報採取</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/証明書認証/">証明書認証</a></li></ul>
     </div>
   </div>
 
@@ -1158,7 +988,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">タグクラウド</h3>
     <div class="widget tagcloud">
-      <a href="/blog/tags/AAD-Connect/" style="font-size: 14px;">AAD Connect</a> <a href="/blog/tags/AD-FS/" style="font-size: 18px;">AD FS</a> <a href="/blog/tags/AD-Sync/" style="font-size: 10px;">AD Sync</a> <a href="/blog/tags/Azure-AD/" style="font-size: 20px;">Azure AD</a> <a href="/blog/tags/Azure-AD-Application-Proxy/" style="font-size: 10px;">Azure AD Application Proxy</a> <a href="/blog/tags/Azure-AD-B2B/" style="font-size: 14px;">Azure AD B2B</a> <a href="/blog/tags/Azure-AD-Directory-Rolls/" style="font-size: 10px;">Azure AD Directory Rolls</a> <a href="/blog/tags/Azure-AD-License/" style="font-size: 10px;">Azure AD License</a> <a href="/blog/tags/Conditional-Access/" style="font-size: 16px;">Conditional Access</a> <a href="/blog/tags/ExpressRoute/" style="font-size: 10px;">ExpressRoute</a> <a href="/blog/tags/Hard-match/" style="font-size: 10px;">Hard match</a> <a href="/blog/tags/Hybrid-Azure-AD-Join/" style="font-size: 10px;">Hybrid Azure AD Join</a> <a href="/blog/tags/Intune/" style="font-size: 12px;">Intune</a> <a href="/blog/tags/MFA/" style="font-size: 10px;">MFA</a> <a href="/blog/tags/PowerShell/" style="font-size: 10px;">PowerShell</a> <a href="/blog/tags/RBAC/" style="font-size: 12px;">RBAC</a> <a href="/blog/tags/Security/" style="font-size: 12px;">Security</a> <a href="/blog/tags/Sgin-in-log/" style="font-size: 10px;">Sgin-in log</a> <a href="/blog/tags/Smart-lockout/" style="font-size: 10px;">Smart lockout</a> <a href="/blog/tags/Subscription/" style="font-size: 10px;">Subscription</a> <a href="/blog/tags/Tenant-Restrictions/" style="font-size: 10px;">Tenant Restrictions</a> <a href="/blog/tags/UPN/" style="font-size: 10px;">UPN</a> <a href="/blog/tags/Windows-Defender-ATP/" style="font-size: 10px;">Windows Defender ATP</a> <a href="/blog/tags/Workplace-Join/" style="font-size: 10px;">Workplace Join</a>
+      <a href="/blog/tags/AAD-Connect/" style="font-size: 16.67px;">AAD Connect</a> <a href="/blog/tags/AD-FS/" style="font-size: 18.33px;">AD FS</a> <a href="/blog/tags/AD-Sync/" style="font-size: 10px;">AD Sync</a> <a href="/blog/tags/Azure-AD/" style="font-size: 20px;">Azure AD</a> <a href="/blog/tags/Azure-AD-Application-Proxy/" style="font-size: 10px;">Azure AD Application Proxy</a> <a href="/blog/tags/Azure-AD-B2B/" style="font-size: 13.33px;">Azure AD B2B</a> <a href="/blog/tags/Azure-AD-Directory-Rolls/" style="font-size: 10px;">Azure AD Directory Rolls</a> <a href="/blog/tags/Azure-AD-License/" style="font-size: 10px;">Azure AD License</a> <a href="/blog/tags/CBA/" style="font-size: 10px;">CBA</a> <a href="/blog/tags/Conditional-Access/" style="font-size: 15px;">Conditional Access</a> <a href="/blog/tags/ExpressRoute/" style="font-size: 10px;">ExpressRoute</a> <a href="/blog/tags/Hard-match/" style="font-size: 10px;">Hard match</a> <a href="/blog/tags/Hybrid-Azure-AD-Join/" style="font-size: 10px;">Hybrid Azure AD Join</a> <a href="/blog/tags/Intune/" style="font-size: 11.67px;">Intune</a> <a href="/blog/tags/MFA/" style="font-size: 10px;">MFA</a> <a href="/blog/tags/PowerShell/" style="font-size: 10px;">PowerShell</a> <a href="/blog/tags/RBAC/" style="font-size: 11.67px;">RBAC</a> <a href="/blog/tags/Security/" style="font-size: 11.67px;">Security</a> <a href="/blog/tags/Sgin-in-log/" style="font-size: 10px;">Sgin-in log</a> <a href="/blog/tags/Smart-lockout/" style="font-size: 10px;">Smart lockout</a> <a href="/blog/tags/Subscription/" style="font-size: 10px;">Subscription</a> <a href="/blog/tags/Tenant-Restrictions/" style="font-size: 10px;">Tenant Restrictions</a> <a href="/blog/tags/UPN/" style="font-size: 10px;">UPN</a> <a href="/blog/tags/Windows-Defender-ATP/" style="font-size: 10px;">Windows Defender ATP</a> <a href="/blog/tags/Workplace-Join/" style="font-size: 10px;">Workplace Join</a> <a href="/blog/tags/サポート/" style="font-size: 11.67px;">サポート</a> <a href="/blog/tags/トラブルシューティング/" style="font-size: 11.67px;">トラブルシューティング</a> <a href="/blog/tags/情報採取/" style="font-size: 11.67px;">情報採取</a> <a href="/blog/tags/証明書認証/" style="font-size: 10px;">証明書認証</a>
     </div>
   </div>
 
@@ -1192,11 +1022,11 @@
           </li>
         
           <li>
-            <a href="/blog/2018/10/15/azure-active-directory/mfa-reset/">多要素認証 (MFA) のリセット手順</a>
+            <a href="/blog/2018/11/01/active-directory-federation-service/adfs-cba-ts/">証明書認証のトラブルシューティング</a>
           </li>
         
           <li>
-            <a href="/blog/2018/09/27/azure-active-directory/conditional-access-basuc/">条件付きアクセスの基本的な考え方</a>
+            <a href="/blog/2018/10/15/azure-active-directory/mfa-reset/">多要素認証 (MFA) のリセット手順</a>
           </li>
         
       </ul>

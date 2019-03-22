@@ -68,6 +68,95 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-azure-active-directory/about-rbac" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2018/08/09/azure-active-directory/about-rbac/" class="article-date">
+  <time datetime="2018-08-08T15:00:00.000Z" itemprop="datePublished">2018-08-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2018/08/09/azure-active-directory/about-rbac/">RBAC のスコープについて</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="RBAC-のスコープについて"><a href="#RBAC-のスコープについて" class="headerlink" title="RBAC のスコープについて"></a>RBAC のスコープについて</h3><p>こんにちは、Azure &amp; Identity サポート チームの坂井です。</p>
+<p>今回は ロールベースのアクセス制御 (RBAC) について紹介します。<br>Azure の各種リソースに対するアクセス制御 (IAM) とも呼ばれ、リソースに対して実行できること、そのユーザーがアクセスできる領域を管理するのに役立ちます。</p>
+<p>RBAC の設定ポイントとしては、3 つあります。</p>
+<ul>
+<li>セキュリティ プリンシパル</li>
+</ul>
+<p>権限を付与する対象を表します。ユーザー、グループ、サービス プリンシパルに設定可能です-</p>
+<ul>
+<li>ロール (権限) 定義</li>
+</ul>
+<p>組み込みロールやカスタム ロールから、付与したい権限の種類を決定します</p>
+<ul>
+<li>Scope (スコープ)</li>
+</ul>
+<p>権限が適用される範囲を決定します(サブスクリプション &gt; リソース グループ &gt; リソース)</p>
+<p>サブスクリプション全体に対して権限を付与すると、リソース グループ、リソースへと権限が継承されます<br>ここからは “スコープ” について具体例をもとに、紹介します。</p>
+<h2 id="シナリオ-1-サブスクリプション単位"><a href="#シナリオ-1-サブスクリプション単位" class="headerlink" title="シナリオ 1 : サブスクリプション単位"></a>シナリオ 1 : サブスクリプション単位</h2><p>【設定内容】 ： サブスクリプション A には「所有者」権限、サブスクリプション B には権限の付与なし</p>
+<p>【設定結果】 ： ユーザーは、サブスクリプション A のすべての操作が可能ですが、サブスクリプション B を参照することもできません。</p>
+<p>【設定手順】 ： [サブスクリプション] - [サブスクリプション A ] - [アクセス制御 (IAM) ] より 「＋追加」</p>
+ <img src="/blog/2018/08/09/azure-active-directory/about-rbac/scenario1.png">
+<p>シナリオ 2 : リソース グループ単位</p>
+<p>【設定内容】 ： リソース グループ 1 には「所有者」権限、リソース グループ 2 には権限の付与なし</p>
+<p>【設定結果】 ： ユーザーは、リソース グループ  1  配下のすべての操作が可能ですが、リソース グループ 2 を参照することもできません。 また、新しいリソース グループの作成など、サブスクリプションのスコープで操作が必要な操作はできません。</p>
+<p>【設定手順】 ： [リソース グループ] - [リソース グループ 1 ] - [アクセス制御 (IAM) ] より 「＋追加」</p>
+<img src="/blog/2018/08/09/azure-active-directory/about-rbac/scenario2.png">
+<p> シナリオ 3 : リソース単位</p>
+<p>【設定内容】 ： リソース a には「所有者」権限、その他権限の付与なし</p>
+<p> 【設定結果】 ： ユーザーは、リソース a のすべての操作が可能ですが、その他リソースの参照や操作はできません。</p>
+<p>【設定手順】 ： [リソース グループ 1 ] - [リソース a ] - [アクセス制御 (IAM) ] より 「＋追加」</p>
+<img src="/blog/2018/08/09/azure-active-directory/about-rbac/scenario3.png">
+<p>シナリオ 4 : 別スコープで、別の権限を付与</p>
+<p>【設定内容】 ： サブスクリプション Aには「所有者」権限、サブスクリプション B のリソース グループ 4 に「閲覧者」の権限を付与</p>
+<p> 【設定結果】 ： ユーザーは、サブスクリプション A のすべての操作が可能です。サブスクリプション B については、リソース グループ 4 の閲覧 (つまり参照) のみ可能です。 このシナリオは、RBAC の設定がひとつのユーザーやグループ オブジェクトに対して、複数のスコープや異なった権限を付与することが可能であることを示します。</p>
+<p>【設定手順】 ： [サブスクリプション] - [サブスクリプション A ] - [アクセス制御 (IAM) ] より 「＋追加」で役割を「所有者」で選択</p>
+<p>   [リソース グループ] - [リソース グループ 4 ] - [アクセス制御(IAM) ] より 「＋追加」で役割を「閲覧者」で選択</p>
+ <img src="/blog/2018/08/09/azure-active-directory/about-rbac/scenario4.png">
+<p>シナリオ 5 : 親スコープからの継承</p>
+<p>【設定内容】 ： サブスクリプション Aには「閲覧者」権限、リソース グループ 2 に「所有者」の権限を付与</p>
+<p> 【設定結果】 ： ユーザーは、サブスクリプション A のすべての参照が可能かつ、リソース グループ 2 配下において、すべての操作が可能です。 </p>
+<p>【設定手順】 ： [サブスクリプション] - [サブスクリプション A ] - [アクセス制御 (IAM) ] より 「＋追加」で役割を「閲覧者」で選択</p>
+<pre><code>[リソース グループ] - [リソース グループ 2 ] - [アクセス制御(IAM) ] より 「＋追加」で役割を「所有者」で選択
+</code></pre><img src="/blog/2018/08/09/azure-active-directory/about-rbac/scenario5.png">
+<p>-補足</p>
+<p>サブスクリプションとリソース グループに与える権限を逆にして、サブスクリプション A には「所有者」権限、リソース グループ 2 に「閲覧者」を付与した場合は、リソース グループ 2 に対しても、より強力な「所有者」の権限が継承されます。</p>
+ <img src="/blog/2018/08/09/azure-active-directory/about-rbac/supplement.png">
+<p>各サブスクリプションが紐づく Azure AD が異なる場合について<br>今回のシナリオはすべて、サブスクリプション A と サブスクリプション B が同じ Azure AD に紐づいている前提です。</p>
+<p>もし、サブスクリプション A - Azure AD 1、サブスクリプション B - Azure AD 2 というようにそれぞれのサブスクリプションが別の Azure AD に紐づいている場合は、設定やリソースを操作するためにはディレクトリの切り替えを実施する必要があります。</p>
+ <img src="/blog/2018/08/09/azure-active-directory/about-rbac/directory-switching.png">
+<p>また、サブスクリプションの権限と Azure AD の権限は異なりますので、サブスクリプションに対して「所有者」の権限を付与しても、Azure AD 上のユーザー作成・削除、パスワード変更などの管理者操作が行えるわけではありませんので、その点ご注意ください。</p>
+<p>こちらについては、リンクのブログでも紹介しておりますので、合わせてご参照ください。</p>
+<p>上記内容が少しでも皆様の参考となりますと幸いです。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jpazureid.github.io/2018/08/09/azure-active-directory/about-rbac/" data-id="cjtjpbjms00034cyty11hrriu" class="article-share-link">共有</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Azure-AD/">Azure AD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/RBAC/">RBAC</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-azure-active-directory/expressroute-support" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/blog/2018/07/19/azure-active-directory/expressroute-support/" class="article-date">
@@ -117,7 +206,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jpazureid.github.io/2018/07/19/azure-active-directory/expressroute-support/" data-id="cjth664dq000lt8ytqoglx8xy" class="article-share-link">共有</a>
+      <a data-url="https://jpazureid.github.io/2018/07/19/azure-active-directory/expressroute-support/" data-id="cjtjpbjne000k4cytwrhrtjz2" class="article-share-link">共有</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Azure-AD/">Azure AD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/ExpressRoute/">ExpressRoute</a></li></ul>
@@ -246,7 +335,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jpazureid.github.io/2018/06/29/azure-active-directory/zero-trust-network/" data-id="cjth664gb0032t8ytyxereys6" class="article-share-link">共有</a>
+      <a data-url="https://jpazureid.github.io/2018/06/29/azure-active-directory/zero-trust-network/" data-id="cjtjpbjrj003l4cytp35mymz5" class="article-share-link">共有</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Azure-AD/">Azure AD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Azure-AD-Application-Proxy/">Azure AD Application Proxy</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Conditional-Access/">Conditional Access</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Intune/">Intune</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Security/">Security</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Windows-Defender-ATP/">Windows Defender ATP</a></li></ul>
@@ -302,10 +391,70 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jpazureid.github.io/2018/05/23/azure-active-directory/b2b-invitation/" data-id="cjth664do000ht8ytfhybkz5x" class="article-share-link">共有</a>
+      <a data-url="https://jpazureid.github.io/2018/05/23/azure-active-directory/b2b-invitation/" data-id="cjtjpbjn4000c4cytp2p6prac" class="article-share-link">共有</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Azure-AD-B2B/">Azure AD B2B</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-azure-active-directory/ios-accounts" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2018/05/16/azure-active-directory/ios-accounts/" class="article-date">
+  <time datetime="2018-05-15T15:00:00.000Z" itemprop="datePublished">2018-05-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2018/05/16/azure-active-directory/ios-accounts/">Office 365 へのアクセスで iOS Accounts 登録のメッセージが表示され接続できない</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>こんにちは。Azure ID チームの三浦です。<br>今回は iOS から Office 365 に ActiveSyncなどで接続する際に iOS Accounts 登録に関する画面が表示されて利用できない事象への対応方法をご紹介します。</p>
+<p>iOS 11 以降では  Office 365 が利用している Azure AD (以降 AAD) に iOS Accounts というアプリケーションを登録し、そのアプリケーションを介して Office 365 への接続をおこない、ユーザーのデータを利用します。</p>
+<p>テナントの既定の設定では、各ユーザーがテナント上に格納された自身のデータにアクセスすることを許可していますので、自動的に iOS Accounts というアプリケーションが登録され、そのアプリケーションに対して自身のデータへのアクセスを許可することができますが、 Office 365 の AAD で [ユーザーはアプリが自身の代わりに会社のデータにアクセスすることを許可できます] が “いいえ” の場合には、それができず、管理者による承認を必要とします。</p>
+<p>結果として、 ユーザーが ActiveSync の構成などを実施するタイミングで、次のような画面が iOS 上に表示され、 Office 365 を利用できないという問題が発生します。<br><img src="/blog/2018/05/16/azure-active-directory/ios-accounts/ios-accounts2.jpg"></p>
+<p>####対応策:<br>AAD の設定で [ユーザーはアプリが自身の代わりに会社のデータにアクセスすることを許可できます] を “はい” にするという方法で対応できますが、これはテナント全体に対する設定であり、その他のアプリケーションにも設定が適用されます。</p>
+  <img src="/blog/2018/05/16/azure-active-directory/ios-accounts/enterpriseApp.png">
+<p>個別に iOS Accounts だけ許可するためには AAD の全体管理者がユーザーの代わりに iOS Accounts アプリがユーザーデータを使用することを承諾するという方法をとります。<br>具体的な手順は次のとおりですが、この設定は、全体管理者が行う必要がありますので、事前に全体管理者のアカウントをご用意ください。</p>
+<ol>
+<li><p>iOS で設定を開き、 [パスワードとアカウント] から [アカウントを追加] を行います。</p>
+</li>
+<li><p>Exchange を選択し、メール欄に テナントの全体管理者のアカウントの UPN (ユーザー名) を入力します。</p>
+</li>
+<li><p>確認画面で、[サインイン] をクリックします。</p>
+</li>
+<li><p>パスワードを入力し、 [サインイン] をクリックします。</p>
+</li>
+<li><p>次のような画面が表示されますので、 “組織の代理として同意する” のチェックを付与し、[承諾] をクリックします。</p>
+
+</li>
+</ol>
+<p>この作業が完了すると Azure AD に iOS Accounts というアプリケーションが登録され、管理者による同意が完了した状態となりますので、他のユーザーのメール セットアップもできるようになります。<br>この設定は、組織のすべてのユーザーに適用されるため、以降はユーザーにメッセージは表示されません。</p>
+<p>以上です。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jpazureid.github.io/2018/05/16/azure-active-directory/ios-accounts/" data-id="cjtjpbjnh000n4cytx7mibz2x" class="article-share-link">共有</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Azure-AD/">Azure AD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/トラブルシューティング/">トラブルシューティング</a></li></ul>
 
     </footer>
   </div>
@@ -401,7 +550,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jpazureid.github.io/2018/04/23/azure-active-directory-connect/auto-upgrade-issue/" data-id="cjth664ec0020t8ytqnxhrdzf" class="article-share-link">共有</a>
+      <a data-url="https://jpazureid.github.io/2018/04/23/azure-active-directory-connect/auto-upgrade-issue/" data-id="cjtjpbjpk002q4cytxqx4yzcx" class="article-share-link">共有</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/AAD-Connect/">AAD Connect</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/AD-Sync/">AD Sync</a></li></ul>
@@ -561,7 +710,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jpazureid.github.io/2018/03/19/azure-active-directory/password-sprey-attack/" data-id="cjth664f7002st8ytm5jz8d8p" class="article-share-link">共有</a>
+      <a data-url="https://jpazureid.github.io/2018/03/19/azure-active-directory/password-sprey-attack/" data-id="cjtjpbjqm003a4cyt275olymo" class="article-share-link">共有</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/AD-FS/">AD FS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Azure-AD/">Azure AD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/MFA/">MFA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Security/">Security</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Smart-lockout/">Smart lockout</a></li></ul>
@@ -642,7 +791,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jpazureid.github.io/2018/02/28/azure-active-directory/azure-ad-purchase/" data-id="cjth664dh0007t8ytrstiswa9" class="article-share-link">共有</a>
+      <a data-url="https://jpazureid.github.io/2018/02/28/azure-active-directory/azure-ad-purchase/" data-id="cjtjpbjmw00054cyt1ysv88u6" class="article-share-link">共有</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Azure-AD-License/">Azure AD License</a></li></ul>
@@ -676,7 +825,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="はじめに"><a href="#はじめに" class="headerlink" title="はじめに"></a>はじめに</h2><p>クレーム ルールと条件付きアクセスは、両者ともに指定した条件に応じて認証アクセスの制御を行うことができます。例えば、多要素認証を発生させるための条件設定は、クレーム ルールでも条件付きアクセスでも可能です。</p>
+        <p>こんにちは、Azure &amp; Identity サポート チームの坂井です。</p>
+<p>今回は AD FS を利用したクレーム ルールとAzure AD を利用した条件付きアクセスについて比較します。これまで AD FS のクレーム ルールでアクセス制御を実施しているが、条件付きアクセスの機能にも興味をお持ちの方も多いかと思います。今後の運用においてクレーム ルールと条件付きアクセスのどちらで運用を行うか検討するにあたり少しでも本記事がお役に立ちましたら幸いです。</p>
+<h2 id="はじめに"><a href="#はじめに" class="headerlink" title="はじめに"></a>はじめに</h2><p>クレーム ルールと条件付きアクセスは、両者ともに指定した条件に応じて認証アクセスの制御を行うことができます。例えば、多要素認証を発生させるための条件設定は、クレーム ルールでも条件付きアクセスでも可能です。</p>
 <p>それぞれを利用する際に必要な前提条件は次のとおりです。</p>
 <ul>
 <li><p>クレーム ルール</p>
@@ -777,7 +928,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jpazureid.github.io/2018/01/30/active-directory-federation-service/claim-rule-conditional-access/" data-id="cjth664d00000t8ytx8z4gri4" class="article-share-link">共有</a>
+      <a data-url="https://jpazureid.github.io/2018/01/30/active-directory-federation-service/claim-rule-conditional-access/" data-id="cjtjpbjmh00004cyt7cmqvgjc" class="article-share-link">共有</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/AD-FS/">AD FS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Conditional-Access/">Conditional Access</a></li></ul>
@@ -947,225 +1098,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jpazureid.github.io/2018/01/25/azure-active-directory/device-based-access-control/" data-id="cjth664ed0022t8ytmyrfhj3k" class="article-share-link">共有</a>
+      <a data-url="https://jpazureid.github.io/2018/01/25/azure-active-directory/device-based-access-control/" data-id="cjtjpbjor002i4cytd7bjafzh" class="article-share-link">共有</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/AD-FS/">AD FS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Azure-AD/">Azure AD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Conditional-Access/">Conditional Access</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Hybrid-Azure-AD-Join/">Hybrid Azure AD Join</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Intune/">Intune</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Workplace-Join/">Workplace Join</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-azure-active-directory/add-modify-delete-directory" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2018/01/16/azure-active-directory/add-modify-delete-directory/" class="article-date">
-  <time datetime="2018-01-15T15:00:00.000Z" itemprop="datePublished">2018-01-16</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2018/01/16/azure-active-directory/add-modify-delete-directory/">Azure AD の追加・変更・削除</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>こんにちは、Azure &amp; Identity サポート チームの坂井です。</p>
-<p>今回は下記の 3 つについて紹介します。</p>
-<ul>
-<li>Azure AD の追加手順</li>
-<li>Azure AD の変更手順</li>
-<li>Azure AD の削除手順</li>
-</ul>
-<p>まずは、簡単に Azure AD について説明します。</p>
-<p>Azure AD とは、Azure や Office 365 などの Microsoft クラウド サービスに組織がサインアップしたときに作成されます (もう少し平易な言い方をすると、 Office 365 など Azure AD が必須のサービスの新規利用を開始した時点で自動的に作成されます)。Azure AD に所属しているユーザーは、その Azure AD に紐づいているクラウドサービスを利用することが可能です。</p>
-<img src="/blog/2018/01/16/azure-active-directory/add-modify-delete-directory/user-access-o365-subscription.png">
-<h2 id="Azure-AD-の追加手順"><a href="#Azure-AD-の追加手順" class="headerlink" title="Azure AD の追加手順"></a>Azure AD の追加手順</h2><p>冒頭で、クラウドサービスにサインアップした際に作成されると書きましたが、Azure AD を個別に追加することも可能です。下記の手順で、Azure AD Free (無料) を作成できます</p>
-<p>&lt;手順&gt;</p>
-<ol>
-<li><a href="https://portal.azure.com" target="_blank" rel="noopener">https://portal.azure.com</a> より、管理者アカウントでサインインします</li>
-<li>ポータル画面左上のナビゲーションの [Azure Active Directory] をクリックします</li>
-<li>表示された画面の右下より  [ディレクトリの作成] をクリックします</li>
-<li><p>[ディレクトリの作成] 画面の下記の項目に入力します</p>
-<ul>
-<li>組織名：任意の組織名を入力</li>
-<li>初期ドメイン名：&lt;組織&gt;のドメイン名を入力</li>
-<li>“国/リージョン” を選択</li>
-</ul>
-</li>
-<li><p>[作成] をクリックします</p>
-</li>
-<li>作成が完了すると、”新しいディレクトリを管理するにはここをクリックします” が表示するので、クリックします</li>
-<li>新しく作成したディレクトリの画面に切り替わります</li>
-</ol>
-<p>作成操作を行ったユーザーが新しく作成した Azure AD ディレクトリ (テナント) の管理者となります。</p>
-<h2 id="Azure-AD-の変更手順"><a href="#Azure-AD-の変更手順" class="headerlink" title="Azure AD の変更手順"></a>Azure AD の変更手順</h2><p>Azure AD ディレクトリは必ず xxxxx.onmicrosoft.com という名前を持ちますが、このドメイン名を後から変更することはできません。そのため、 Azure AD のディレクトリのドメイン名を例えば contoso.onmicrosoft.com にしたい場合は、上記の「Azure AD の追加手順」の手順に従い、Azure AD を新規に作成する必要があります。</p>
-<p>なお、Azure AD の組織名 (よく ”既定のディレクトリ” と表示されている名称) については下記の手順で変更可能です。</p>
-<p>&lt;手順&gt;</p>
-<ol>
-<li><a href="https://portal.azure.com" target="_blank" rel="noopener">https://portal.azure.com</a> より、管理者アカウントでサインインします</li>
-<li>ポータル画面左上のナビゲーションの [Azure Active Directory] をクリックします</li>
-<li>[プロパティ] をクリックします</li>
-<li><p>[名前] の項目に新しい組織名を入力します。</p>
-<p> 例：既定のディレクトリ –&gt; コントソ株式会社</p>
-</li>
-<li><p>[保存] を押します。</p>
-</li>
-<li>少し時間を空けて再度サインインすると、名前が変更されます。</li>
-</ol>
-<p>また、ご利用の Azure サブスクリプションを新規で作成した Azure AD に紐づけたいというような要件がある場合には、サブスクリプションの譲渡とディレクトリの変更の 2 つの方法があります。 </p>
-<h2 id="Azure-AD-の削除手順"><a href="#Azure-AD-の削除手順" class="headerlink" title="Azure AD の削除手順"></a>Azure AD の削除手順</h2><p>手動で作成した Azure AD については削除が可能です。ディレクトリを削除するためには、いくつか前提条件があります。</p>
-<p>&lt;ディレクトリ削除の前提条件&gt;</p>
-<ul>
-<li>Azure のご契約時に自動的に作成されたディレクトリ (既定のディレクトリ) ではない</li>
-<li>ディレクトリにユーザーが存在しない</li>
-<li>連携するアプリケーションが存在しない</li>
-<li>サブスクリプションが紐づいていない</li>
-<li>など</li>
-</ul>
-<p>&lt;手順&gt;</p>
-<ol>
-<li><a href="https://portal.azure.com" target="_blank" rel="noopener">https://portal.azure.com</a> より、管理者アカウントでサインインします</li>
-<li>ポータル画面左上のナビゲーションの [Azure Active Directory] をクリックします</li>
-<li>[ディレクトリの削除] をクリックします</li>
-<li>前提条件のチェック完了後に [削除] をクリックします</li>
-</ol>
-<p>削除時に前提条件のチェックが走るため、すべての条件をクリアすることで削除が可能となります。前提条件に抵触している場合は、下記のように ! の警告が表示され削除が完了しません。</p>
-<img src="/blog/2018/01/16/azure-active-directory/add-modify-delete-directory/confirm-delete-directory.png">
-<p>なお、Azure のサインアップ時に自動作成された Azure AD  (既定のディレクトリ) やセルフサインアップテナント については削除が想定されていません。そのディレクトリはもう利用することはないが、ユーザーが Azure ポータルにサインインしたときにディレクトリが表示されるので煩わしいという場合には、そのディレクトリからユーザーを削除する方法で対応が可能です。</p>
-<p>これにより該当のアカウントでサインインしてもディレクトリは見えなくなりますので、ディレクトリを削除した場合と同等の効果が得られます。</p>
-<p>&lt;手順&gt;</p>
-<ol>
-<li><a href="https://portal.azure.com" target="_blank" rel="noopener">https://portal.azure.com</a> より、管理者アカウントでサインインします</li>
-<li>ポータル画面左上のナビゲーションの [Azure Active Directory] をクリックします</li>
-<li>[ユーザーとグループ] – [すべてのユーザー] をクリックします</li>
-<li>[＋新しいユーザー] をクリックします</li>
-<li><p>ユーザー名を入力し、ロールでは「全体管理者」を選択します</p>
-<p> 例) 削除対象のディレクトリ名が contoso.onmicrosoft.com の場合: <a href="mailto:temp@conotoso.onmicrosoft.com" target="_blank" rel="noopener">temp@conotoso.onmicrosoft.com</a></p>
-</li>
-<li><p>手順 5. で作成した全体管理者のアカウントで <a href="https://portal.azure.com" target="_blank" rel="noopener">https://portal.azure.com</a> にサインインします</p>
-</li>
-<li>[すべてのユーザー] まで移動して、本アカウント以外をこのディレクトリから削除します</li>
-</ol>
-<p>削除されたユーザーで、ディレクトリが見えない状態になっているかどうかを確認します。</p>
-<h2 id="補足"><a href="#補足" class="headerlink" title="補足"></a>補足</h2><p>複数の Azure AD は完全に独立したリソースとして管理されます。そのため、Azure AD 間の連携が必要なシナリオの場合は、Azure AD B2B の利用をします。B2B については下記の記事を合わせてご参照ください。</p>
-<p>Azure AD B2B とは<br><a href="https://blogs.technet.microsoft.com/jpazureid/2017/12/12/about-azure-ad-b2b/" target="_blank" rel="noopener">https://blogs.technet.microsoft.com/jpazureid/2017/12/12/about-azure-ad-b2b/</a></p>
-<p>上記内容が少しでも皆様の参考となりますと幸いです。</p>
-<p>※本情報の内容（添付文書、リンク先などを含む）は、作成日時点でのものであり、予告なく変更される場合があります。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://jpazureid.github.io/2018/01/16/azure-active-directory/add-modify-delete-directory/" data-id="cjth664dk000at8yt8nl25jjb" class="article-share-link">共有</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Azure-AD/">Azure AD</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-azure-active-directory/access-restriction-azure-portal" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/blog/2017/12/29/azure-active-directory/access-restriction-azure-portal/" class="article-date">
-  <time datetime="2017-12-28T15:00:00.000Z" itemprop="datePublished">2017-12-29</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/blog/2017/12/29/azure-active-directory/access-restriction-azure-portal/">Azure ポータルへのアクセス制限</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>こんにちは、Azure &amp; Identity サポート チームの坂井です。</p>
-<p>今回は、一般ユーザーに対して Azure ポータルへのアクセスを制限する方法について紹介します。</p>
-<p>クラシック ポータル (旧ポータル) ではログインする際に Azure のサブスクリプションを保持していることが前提となっていました。一方 Azure ポータル (<a href="https://portal.azure.com" target="_blank" rel="noopener">https://portal.azure.com</a>) には、サブスクリプションの有無によらず、ログインすることが可能です。この動作変更により、より多くのユーザーが簡単に Azure に対してアクセスできるようになっています。</p>
-<p>Azure ポータルからは、そのログインしたユーザーが所属する Azure AD ディレクトリにアクセスすることができ、このとき Azure AD に対しての管理者権限を持たない一般ユーザーであっても、既定では Azure AD に登録されているユーザー一覧を参照できるようになっています。ご利用状況によっては、このことがセキュリティ上好ましくない場合もあると思います。</p>
-<h2 id="Azure-ポータルへのアクセスを制限する方法"><a href="#Azure-ポータルへのアクセスを制限する方法" class="headerlink" title="Azure ポータルへのアクセスを制限する方法"></a>Azure ポータルへのアクセスを制限する方法</h2><p>Azure ポータル自体へのアクセスを限られたユーザーのみに制限する方法については、条件付きアクセスの機能を利用する必要があります。条件付きアクセスの機能を利用するためには Azure AD Premium (P1 or P2) のライセンスが制御対象のユーザー分必要となります。</p>
-<p>なお、 後述します Azure AD へのアクセスを制限する方法 (ユーザーの一覧を見えなくする) であれば、ライセンスは不要です。</p>
-<p>&lt;手順&gt;</p>
-<ol>
-<li>Azure ポータル (<a href="https://portal.azure.com" target="_blank" rel="noopener">https://portal.azure.com</a>) に管理者のアカウントでアクセスします。</li>
-<li>セキュリティの [条件付きアクセス] – [ポリシー] の順にクリックします。</li>
-<li>上部 [＋新しいポリシー] をクリックします。</li>
-<li>[名前] にポリシーの名前を入力します。</li>
-<li><p>ポリシーを割り当てるユーザーまたはグループを選択します。</p>
-<p> この時、全ての管理者に割り当てないようにしてください。全ての管理者がポリシーの制限を受け、Azure にアクセスすることができなくなり、設定解除もできなくなるというお問い合わせを過去に複数いただいております。</p>
-</li>
-<li><p>[クラウド アプリ] では 「アプリを選択」 にチェックを入れます。</p>
-</li>
-<li>[選択] をクリックし、[Microsoft Azure Management] アプリケーションを検索し、選択します。</li>
-<li>[クラウド アプリ] のブレードに戻るので、[完了] をクリックします。</li>
-<li>[条件] – [場所] をクリックし、構成で [はい] を選択します。</li>
-<li>対象 で「すべての場所」を選択します。</li>
-<li>Azure ポータルに戻って、[完了] を 2 回 クリックします。</li>
-<li>アクセス制御 の [許可] で「アクセスのブロック」を選択して、[選択] をクリックします。</li>
-<li>即時ポリシーを有効化する場合には、ポリシーの有効化で [オン] を選択し、[作成] をクリックします。</li>
-</ol>
-<p>該当ユーザーで Azure ポータルへアクセスすると下記の画面が表示され、アクセスがブロックされます。</p>
-<img src="/blog/2017/12/29/azure-active-directory/access-restriction-azure-portal/access-restricted.png">
-<h2 id="Azure-AD-へのアクセスを制限する方法"><a href="#Azure-AD-へのアクセスを制限する方法" class="headerlink" title="Azure AD へのアクセスを制限する方法"></a>Azure AD へのアクセスを制限する方法</h2><p>Azure AD の管理者権限（全体管理者または制限付き管理者）を与えられていないユーザーによる ポータル内 [Azure Active Directory] へのアクセスを制限する方法です。</p>
-<p>&lt;手順&gt;</p>
-<ol>
-<li>全体管理者として Azure ポータル（<a href="http://portal.azure.com）にサインインします。" target="_blank" rel="noopener">http://portal.azure.com）にサインインします。</a></li>
-<li>左側のメニューから [Azure Active Directory] をクリックします。</li>
-<li>表示されたメニューから [ユーザーとグループ] をクリックします。</li>
-<li>表示されたメニューから [ユーザー設定] をクリックします。</li>
-<li>右側の下記の項目がございますので、[はい] を選択します。</li>
-<li>[管理ポータル] - [Azure AD 管理ポータルへのアクセスを制限する]<br>上にある [保存] をクリックします。</li>
-</ol>
-<p>※ 上記 5. で [はい] を選択することで管理者以外の一般ユーザーは、Azure ポータル内での [Azure Active Directory] にアクセスしようとすると、下記の画面が表示されアクセス権がなくなります。</p>
-<img src="/blog/2017/12/29/azure-active-directory/access-restriction-azure-portal/no-access.png">
-<p>上記設定は、Azure ポータル上のアクセス制限になるため、設定完了後も PowerShell を使用すれば、ユーザーの一覧は参照できます。その対処策となる設定についても下記にご案内させていただきます。</p>
-<p>&lt;手順&gt;</p>
-<p>この作業を実施するためには、Azure AD 用の PowerShell (Azure AD v1 の PowerShell) を利用する必要がありますが、 PowerShell を利用する際には Microsoft アカウントではなく、組織アカウントでの全体管理者が必要です (Azure AD の PowerShell についてはリンクも参照ください)。</p>
-<ol>
-<li><p>PowerShell を開き、下記のコマンドで全体管理者で Azure AD に接続します。</p>
- <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Connect-MsolService</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>下記コマンドで他のユーザー及びグループの情報を取得させないように設定します。</p>
- <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-MsolCompanySettings -UsersPermissionToReadOtherUsersEnabled <span class="literal">$false</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>下記コマンドで他のユーザー及びグループの情報を取得させないように設定されたか確認します。</p>
- <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Get-MsolCompanyInformation | fl UsersPermissionToReadOtherUsersEnabled</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h2 id="補足"><a href="#補足" class="headerlink" title="補足"></a>補足</h2><p>外部から追加した Guest ユーザーについては既定で Azure AD へのアクセスが制限されています<br>(Guest と Member の違いについては、こちらのリンクを参照ください)。</p>
-<p>Azure ポータルへのログインを条件付きアクセスを利用して制限していない場合でも、 Azure AD 以外の項目、例えば仮想マシンなどのリソースに対しては、サブスクリプションの権限を明示的に付与しない限りは、各ユーザーは参照することもできませんのでご安心ください。</p>
-<p>上記内容が少しでも皆様の参考となりますと幸いです。</p>
-<p>※ 本情報の内容（添付文書、リンク先などを含む）は、作成日時点でのものであり、予告なく変更される場合があります。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="https://jpazureid.github.io/2017/12/29/azure-active-directory/access-restriction-azure-portal/" data-id="cjth664di0008t8ytkahewig9" class="article-share-link">共有</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Azure-AD/">Azure AD</a></li></ul>
 
     </footer>
   </div>
@@ -1178,7 +1114,7 @@
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/blog/">&laquo; 戻る</a><a class="page-number" href="/blog/">1</a><span class="page-number current">2</span><a class="page-number" href="/blog/page/3/">3</a><a class="extend next" rel="next" href="/blog/page/3/">次へ &raquo;</a>
+    <a class="extend prev" rel="prev" href="/blog/">&laquo; 戻る</a><a class="page-number" href="/blog/">1</a><span class="page-number current">2</span><a class="page-number" href="/blog/page/3/">3</a><a class="page-number" href="/blog/page/4/">4</a><a class="extend next" rel="next" href="/blog/page/3/">次へ &raquo;</a>
   </nav>
 
 </section>
@@ -1192,7 +1128,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">タグ</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/AAD-Connect/">AAD Connect</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/AD-FS/">AD FS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/AD-Sync/">AD Sync</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Azure-AD/">Azure AD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Azure-AD-Application-Proxy/">Azure AD Application Proxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Azure-AD-B2B/">Azure AD B2B</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Azure-AD-Directory-Rolls/">Azure AD Directory Rolls</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Azure-AD-License/">Azure AD License</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Conditional-Access/">Conditional Access</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/ExpressRoute/">ExpressRoute</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Hard-match/">Hard match</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Hybrid-Azure-AD-Join/">Hybrid Azure AD Join</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Intune/">Intune</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/MFA/">MFA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/PowerShell/">PowerShell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/RBAC/">RBAC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Security/">Security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Sgin-in-log/">Sgin-in log</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Smart-lockout/">Smart lockout</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Subscription/">Subscription</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Tenant-Restrictions/">Tenant Restrictions</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/UPN/">UPN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Windows-Defender-ATP/">Windows Defender ATP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Workplace-Join/">Workplace Join</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/AAD-Connect/">AAD Connect</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/AD-FS/">AD FS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/AD-Sync/">AD Sync</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Azure-AD/">Azure AD</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Azure-AD-Application-Proxy/">Azure AD Application Proxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Azure-AD-B2B/">Azure AD B2B</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Azure-AD-Directory-Rolls/">Azure AD Directory Rolls</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Azure-AD-License/">Azure AD License</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/CBA/">CBA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Conditional-Access/">Conditional Access</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/ExpressRoute/">ExpressRoute</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Hard-match/">Hard match</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Hybrid-Azure-AD-Join/">Hybrid Azure AD Join</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Intune/">Intune</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/MFA/">MFA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/PowerShell/">PowerShell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/RBAC/">RBAC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Security/">Security</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Sgin-in-log/">Sgin-in log</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Smart-lockout/">Smart lockout</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Subscription/">Subscription</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Tenant-Restrictions/">Tenant Restrictions</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/UPN/">UPN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Windows-Defender-ATP/">Windows Defender ATP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/Workplace-Join/">Workplace Join</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/サポート/">サポート</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/トラブルシューティング/">トラブルシューティング</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/情報採取/">情報採取</a></li><li class="tag-list-item"><a class="tag-list-link" href="/blog/tags/証明書認証/">証明書認証</a></li></ul>
     </div>
   </div>
 
@@ -1202,7 +1138,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">タグクラウド</h3>
     <div class="widget tagcloud">
-      <a href="/blog/tags/AAD-Connect/" style="font-size: 14px;">AAD Connect</a> <a href="/blog/tags/AD-FS/" style="font-size: 18px;">AD FS</a> <a href="/blog/tags/AD-Sync/" style="font-size: 10px;">AD Sync</a> <a href="/blog/tags/Azure-AD/" style="font-size: 20px;">Azure AD</a> <a href="/blog/tags/Azure-AD-Application-Proxy/" style="font-size: 10px;">Azure AD Application Proxy</a> <a href="/blog/tags/Azure-AD-B2B/" style="font-size: 14px;">Azure AD B2B</a> <a href="/blog/tags/Azure-AD-Directory-Rolls/" style="font-size: 10px;">Azure AD Directory Rolls</a> <a href="/blog/tags/Azure-AD-License/" style="font-size: 10px;">Azure AD License</a> <a href="/blog/tags/Conditional-Access/" style="font-size: 16px;">Conditional Access</a> <a href="/blog/tags/ExpressRoute/" style="font-size: 10px;">ExpressRoute</a> <a href="/blog/tags/Hard-match/" style="font-size: 10px;">Hard match</a> <a href="/blog/tags/Hybrid-Azure-AD-Join/" style="font-size: 10px;">Hybrid Azure AD Join</a> <a href="/blog/tags/Intune/" style="font-size: 12px;">Intune</a> <a href="/blog/tags/MFA/" style="font-size: 10px;">MFA</a> <a href="/blog/tags/PowerShell/" style="font-size: 10px;">PowerShell</a> <a href="/blog/tags/RBAC/" style="font-size: 12px;">RBAC</a> <a href="/blog/tags/Security/" style="font-size: 12px;">Security</a> <a href="/blog/tags/Sgin-in-log/" style="font-size: 10px;">Sgin-in log</a> <a href="/blog/tags/Smart-lockout/" style="font-size: 10px;">Smart lockout</a> <a href="/blog/tags/Subscription/" style="font-size: 10px;">Subscription</a> <a href="/blog/tags/Tenant-Restrictions/" style="font-size: 10px;">Tenant Restrictions</a> <a href="/blog/tags/UPN/" style="font-size: 10px;">UPN</a> <a href="/blog/tags/Windows-Defender-ATP/" style="font-size: 10px;">Windows Defender ATP</a> <a href="/blog/tags/Workplace-Join/" style="font-size: 10px;">Workplace Join</a>
+      <a href="/blog/tags/AAD-Connect/" style="font-size: 16.67px;">AAD Connect</a> <a href="/blog/tags/AD-FS/" style="font-size: 18.33px;">AD FS</a> <a href="/blog/tags/AD-Sync/" style="font-size: 10px;">AD Sync</a> <a href="/blog/tags/Azure-AD/" style="font-size: 20px;">Azure AD</a> <a href="/blog/tags/Azure-AD-Application-Proxy/" style="font-size: 10px;">Azure AD Application Proxy</a> <a href="/blog/tags/Azure-AD-B2B/" style="font-size: 13.33px;">Azure AD B2B</a> <a href="/blog/tags/Azure-AD-Directory-Rolls/" style="font-size: 10px;">Azure AD Directory Rolls</a> <a href="/blog/tags/Azure-AD-License/" style="font-size: 10px;">Azure AD License</a> <a href="/blog/tags/CBA/" style="font-size: 10px;">CBA</a> <a href="/blog/tags/Conditional-Access/" style="font-size: 15px;">Conditional Access</a> <a href="/blog/tags/ExpressRoute/" style="font-size: 10px;">ExpressRoute</a> <a href="/blog/tags/Hard-match/" style="font-size: 10px;">Hard match</a> <a href="/blog/tags/Hybrid-Azure-AD-Join/" style="font-size: 10px;">Hybrid Azure AD Join</a> <a href="/blog/tags/Intune/" style="font-size: 11.67px;">Intune</a> <a href="/blog/tags/MFA/" style="font-size: 10px;">MFA</a> <a href="/blog/tags/PowerShell/" style="font-size: 10px;">PowerShell</a> <a href="/blog/tags/RBAC/" style="font-size: 11.67px;">RBAC</a> <a href="/blog/tags/Security/" style="font-size: 11.67px;">Security</a> <a href="/blog/tags/Sgin-in-log/" style="font-size: 10px;">Sgin-in log</a> <a href="/blog/tags/Smart-lockout/" style="font-size: 10px;">Smart lockout</a> <a href="/blog/tags/Subscription/" style="font-size: 10px;">Subscription</a> <a href="/blog/tags/Tenant-Restrictions/" style="font-size: 10px;">Tenant Restrictions</a> <a href="/blog/tags/UPN/" style="font-size: 10px;">UPN</a> <a href="/blog/tags/Windows-Defender-ATP/" style="font-size: 10px;">Windows Defender ATP</a> <a href="/blog/tags/Workplace-Join/" style="font-size: 10px;">Workplace Join</a> <a href="/blog/tags/サポート/" style="font-size: 11.67px;">サポート</a> <a href="/blog/tags/トラブルシューティング/" style="font-size: 11.67px;">トラブルシューティング</a> <a href="/blog/tags/情報採取/" style="font-size: 11.67px;">情報採取</a> <a href="/blog/tags/証明書認証/" style="font-size: 10px;">証明書認証</a>
     </div>
   </div>
 
@@ -1236,11 +1172,11 @@
           </li>
         
           <li>
-            <a href="/blog/2018/10/15/azure-active-directory/mfa-reset/">多要素認証 (MFA) のリセット手順</a>
+            <a href="/blog/2018/11/01/active-directory-federation-service/adfs-cba-ts/">証明書認証のトラブルシューティング</a>
           </li>
         
           <li>
-            <a href="/blog/2018/09/27/azure-active-directory/conditional-access-basuc/">条件付きアクセスの基本的な考え方</a>
+            <a href="/blog/2018/10/15/azure-active-directory/mfa-reset/">多要素認証 (MFA) のリセット手順</a>
           </li>
         
       </ul>
