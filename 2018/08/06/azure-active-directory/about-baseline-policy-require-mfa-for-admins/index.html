@@ -10,17 +10,20 @@
   <title>”Baseline policy: Require MFA for admins” について | Japan Azure Identity Support Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="こんにちは、Azure ID チームの宮林です。今回は下記のとおり、6/22 より Public Preview となった “Baseline policy: Require MFA for admins” についてお知らせいたします。  Baseline security policy for Azure AD admin accounts in public preview! https://">
-<meta name="keywords" content="Azure AD,RBAC">
+<meta name="keywords" content="Conditional Access,Azure AD">
 <meta property="og:type" content="article">
 <meta property="og:title" content="”Baseline policy: Require MFA for admins” について">
-<meta property="og:url" content="https://jpazureid.github.io/2018/08/09/azure-active-directory/about-baseline-policy-require-mfa-for-admins/index.html">
+<meta property="og:url" content="https://jpazureid.github.io/2018/08/06/azure-active-directory/about-baseline-policy-require-mfa-for-admins/index.html">
 <meta property="og:site_name" content="Japan Azure Identity Support Blog">
 <meta property="og:description" content="こんにちは、Azure ID チームの宮林です。今回は下記のとおり、6/22 より Public Preview となった “Baseline policy: Require MFA for admins” についてお知らせいたします。  Baseline security policy for Azure AD admin accounts in public preview! https://">
 <meta property="og:locale" content="ja">
-<meta property="og:updated_time" content="2019-03-22T09:49:56.372Z">
+<meta property="og:image" content="https://jpazureid.github.io/blog/2018/08/06/azure-active-directory/about-baseline-policy-require-mfa-for-admins/Baseline-policy-Require-MFA-for-admins-pic3-1024x237.jpg">
+<meta property="og:image" content="https://jpazureid.github.io/blog/2018/08/06/azure-active-directory/about-baseline-policy-require-mfa-for-admins/Baseline-policy-Require-MFA-for-admins-pic2.jpg">
+<meta property="og:updated_time" content="2019-03-22T09:52:38.154Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="”Baseline policy: Require MFA for admins” について">
 <meta name="twitter:description" content="こんにちは、Azure ID チームの宮林です。今回は下記のとおり、6/22 より Public Preview となった “Baseline policy: Require MFA for admins” についてお知らせいたします。  Baseline security policy for Azure AD admin accounts in public preview! https://">
+<meta name="twitter:image" content="https://jpazureid.github.io/blog/2018/08/06/azure-active-directory/about-baseline-policy-require-mfa-for-admins/Baseline-policy-Require-MFA-for-admins-pic3-1024x237.jpg">
   
     <link rel="alternate" href="/blog/atom.xml" title="Japan Azure Identity Support Blog" type="application/atom+xml">
   
@@ -69,8 +72,8 @@
       <div class="outer">
         <section id="main"><article id="post-azure-active-directory/about-baseline-policy-require-mfa-for-admins" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/blog/2018/08/09/azure-active-directory/about-baseline-policy-require-mfa-for-admins/" class="article-date">
-  <time datetime="2018-08-08T15:00:00.000Z" itemprop="datePublished">2018-08-09</time>
+    <a href="/blog/2018/08/06/azure-active-directory/about-baseline-policy-require-mfa-for-admins/" class="article-date">
+  <time datetime="2018-08-05T15:00:00.000Z" itemprop="datePublished">2018-08-06</time>
 </a>
     
   </div>
@@ -100,6 +103,7 @@
 </ul>
 </li>
 </ul>
+<img src="/blog/2018/08/06/azure-active-directory/about-baseline-policy-require-mfa-for-admins/Baseline-policy-Require-MFA-for-admins-pic3-1024x237.jpg">
 <p>(こちらが対象のポリシーとなります)</p>
 <blockquote>
 <p>“Baseline policy: Require MFA for admins” とは<br>“Baseline policy: Require MFA for admins” は、特権ロールを持つアカウントに対して多要素認証 (MFA : Multi Factor Authentication) を必要とさせるポリシーです。将来的にすべての Azure Active Directory テナントにおいて、既定で有効となるポリシーです。有効化に際して別途、課金が発生することはございません。<br>対象となる特権ロールは以下の 5 つのロールを持つアカウントとなり、下記 5 つのロール以外のユーザーにはこのポリシーは適用されず、影響はありません。</p>
@@ -112,6 +116,7 @@
 </ul>
 </blockquote>
 <p>現時点において “Baseline policy: Require MFA for admins(プレビュー)” の状態は、既定で [将来、ポリシーを自動的に有効化] です。</p>
+<img src="/blog/2018/08/06/azure-active-directory/about-baseline-policy-require-mfa-for-admins/Baseline-policy-Require-MFA-for-admins-pic2.jpg">
 <p>このポリシーが有効になる時期については、ブログ執筆時において皆様にご案内できる情報がありませんが、有効になる時期について情報更新がありましたら、本ブログについても更新を予定しています。</p>
 <h2 id="自動的に有効化-する設定の無効化について"><a href="#自動的に有効化-する設定の無効化について" class="headerlink" title="[自動的に有効化] する設定の無効化について"></a>[自動的に有効化] する設定の無効化について</h2><p>このポリシーを将来、自動的に有効にしたくない場合には、該当のポリシーを今のうちから無効にしてください。以下の手順でポリシーを無効、あるいは、ポリシー自体は有効としておきつつも、特定の管理者のみを除外することが可能です。</p>
 <ol>
@@ -129,10 +134,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jpazureid.github.io/2018/08/09/azure-active-directory/about-baseline-policy-require-mfa-for-admins/" data-id="cjtjvvgtq0003o8ytisk7y6h9" class="article-share-link">共有</a>
+      <a data-url="https://jpazureid.github.io/2018/08/06/azure-active-directory/about-baseline-policy-require-mfa-for-admins/" data-id="cjtjvyw760005dgyt60oxpmwt" class="article-share-link">共有</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Azure-AD/">Azure AD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/RBAC/">RBAC</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Azure-AD/">Azure AD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Conditional-Access/">Conditional Access</a></li></ul>
 
     </footer>
   </div>
@@ -140,19 +145,19 @@
     
 <nav id="article-nav">
   
-    <a href="/blog/2018/08/10/azure-active-directory-connect/how-to-upgrade/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/blog/2018/08/09/azure-active-directory/about-rbac/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">次の記事</strong>
       <div class="article-nav-title">
         
-          Azure AD Connect アップグレード手順
+          RBAC のスコープについて
         
       </div>
     </a>
   
   
-    <a href="/blog/2018/08/09/azure-active-directory/about-rbac/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/blog/2018/07/19/azure-active-directory/expressroute-support/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">前の記事</strong>
-      <div class="article-nav-title">RBAC のスコープについて</div>
+      <div class="article-nav-title">Azure AD の ExpressRoute サポート</div>
     </a>
   
 </nav>
@@ -181,7 +186,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">タグクラウド</h3>
     <div class="widget tagcloud">
-      <a href="/blog/tags/AAD-Connect/" style="font-size: 16.67px;">AAD Connect</a> <a href="/blog/tags/AD-FS/" style="font-size: 18.33px;">AD FS</a> <a href="/blog/tags/AD-Sync/" style="font-size: 10px;">AD Sync</a> <a href="/blog/tags/Azure-AD/" style="font-size: 20px;">Azure AD</a> <a href="/blog/tags/Azure-AD-Application-Proxy/" style="font-size: 10px;">Azure AD Application Proxy</a> <a href="/blog/tags/Azure-AD-B2B/" style="font-size: 13.33px;">Azure AD B2B</a> <a href="/blog/tags/Azure-AD-Directory-Rolls/" style="font-size: 10px;">Azure AD Directory Rolls</a> <a href="/blog/tags/Azure-AD-License/" style="font-size: 10px;">Azure AD License</a> <a href="/blog/tags/CBA/" style="font-size: 10px;">CBA</a> <a href="/blog/tags/Conditional-Access/" style="font-size: 15px;">Conditional Access</a> <a href="/blog/tags/ExpressRoute/" style="font-size: 10px;">ExpressRoute</a> <a href="/blog/tags/Hard-match/" style="font-size: 10px;">Hard match</a> <a href="/blog/tags/Hybrid-Azure-AD-Join/" style="font-size: 10px;">Hybrid Azure AD Join</a> <a href="/blog/tags/Intune/" style="font-size: 11.67px;">Intune</a> <a href="/blog/tags/MFA/" style="font-size: 10px;">MFA</a> <a href="/blog/tags/PowerShell/" style="font-size: 10px;">PowerShell</a> <a href="/blog/tags/RBAC/" style="font-size: 13.33px;">RBAC</a> <a href="/blog/tags/Security/" style="font-size: 11.67px;">Security</a> <a href="/blog/tags/Sgin-in-log/" style="font-size: 10px;">Sgin-in log</a> <a href="/blog/tags/Smart-lockout/" style="font-size: 10px;">Smart lockout</a> <a href="/blog/tags/Subscription/" style="font-size: 10px;">Subscription</a> <a href="/blog/tags/Tenant-Restrictions/" style="font-size: 10px;">Tenant Restrictions</a> <a href="/blog/tags/UPN/" style="font-size: 10px;">UPN</a> <a href="/blog/tags/Windows-Defender-ATP/" style="font-size: 10px;">Windows Defender ATP</a> <a href="/blog/tags/Workplace-Join/" style="font-size: 10px;">Workplace Join</a> <a href="/blog/tags/サポート/" style="font-size: 11.67px;">サポート</a> <a href="/blog/tags/トラブルシューティング/" style="font-size: 11.67px;">トラブルシューティング</a> <a href="/blog/tags/情報採取/" style="font-size: 11.67px;">情報採取</a> <a href="/blog/tags/証明書認証/" style="font-size: 10px;">証明書認証</a>
+      <a href="/blog/tags/AAD-Connect/" style="font-size: 16px;">AAD Connect</a> <a href="/blog/tags/AD-FS/" style="font-size: 18px;">AD FS</a> <a href="/blog/tags/AD-Sync/" style="font-size: 10px;">AD Sync</a> <a href="/blog/tags/Azure-AD/" style="font-size: 20px;">Azure AD</a> <a href="/blog/tags/Azure-AD-Application-Proxy/" style="font-size: 10px;">Azure AD Application Proxy</a> <a href="/blog/tags/Azure-AD-B2B/" style="font-size: 14px;">Azure AD B2B</a> <a href="/blog/tags/Azure-AD-Directory-Rolls/" style="font-size: 10px;">Azure AD Directory Rolls</a> <a href="/blog/tags/Azure-AD-License/" style="font-size: 10px;">Azure AD License</a> <a href="/blog/tags/CBA/" style="font-size: 10px;">CBA</a> <a href="/blog/tags/Conditional-Access/" style="font-size: 16px;">Conditional Access</a> <a href="/blog/tags/ExpressRoute/" style="font-size: 10px;">ExpressRoute</a> <a href="/blog/tags/Hard-match/" style="font-size: 10px;">Hard match</a> <a href="/blog/tags/Hybrid-Azure-AD-Join/" style="font-size: 10px;">Hybrid Azure AD Join</a> <a href="/blog/tags/Intune/" style="font-size: 12px;">Intune</a> <a href="/blog/tags/MFA/" style="font-size: 10px;">MFA</a> <a href="/blog/tags/PowerShell/" style="font-size: 10px;">PowerShell</a> <a href="/blog/tags/RBAC/" style="font-size: 12px;">RBAC</a> <a href="/blog/tags/Security/" style="font-size: 12px;">Security</a> <a href="/blog/tags/Sgin-in-log/" style="font-size: 10px;">Sgin-in log</a> <a href="/blog/tags/Smart-lockout/" style="font-size: 10px;">Smart lockout</a> <a href="/blog/tags/Subscription/" style="font-size: 10px;">Subscription</a> <a href="/blog/tags/Tenant-Restrictions/" style="font-size: 10px;">Tenant Restrictions</a> <a href="/blog/tags/UPN/" style="font-size: 10px;">UPN</a> <a href="/blog/tags/Windows-Defender-ATP/" style="font-size: 10px;">Windows Defender ATP</a> <a href="/blog/tags/Workplace-Join/" style="font-size: 10px;">Workplace Join</a> <a href="/blog/tags/サポート/" style="font-size: 12px;">サポート</a> <a href="/blog/tags/トラブルシューティング/" style="font-size: 12px;">トラブルシューティング</a> <a href="/blog/tags/情報採取/" style="font-size: 12px;">情報採取</a> <a href="/blog/tags/証明書認証/" style="font-size: 10px;">証明書認証</a>
     </div>
   </div>
 
