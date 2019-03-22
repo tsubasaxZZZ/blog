@@ -108,7 +108,75 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jpazureid.github.io/2017/10/24/azure-active-directory-connect/general-information/" data-id="cjtjpbjnv00164cytyghgh9fn" class="article-share-link">共有</a>
+      <a data-url="https://jpazureid.github.io/2017/10/24/azure-active-directory-connect/general-information/" data-id="cjtjvvgv10016o8yth8ygyjt5" class="article-share-link">共有</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/AAD-Connect/">AAD Connect</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/サポート/">サポート</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/情報採取/">情報採取</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-azure-active-directory-connect/problem-user-synchronize" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2017/10/24/azure-active-directory-connect/problem-user-synchronize/" class="article-date">
+  <time datetime="2017-10-23T15:00:00.000Z" itemprop="datePublished">2017-10-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2017/10/24/azure-active-directory-connect/problem-user-synchronize/">Azure AD Connect でユーザー同期ができない問題</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>こんにちは、Azure &amp; Identity サポート チームの後藤です。</p>
+<p>今回は Azure AD Connect サーバーでユーザー同期に問題が生じているケースについて取得する情報をご紹介します。<br>なお、この情報は “ユーザー同期トラブル” に特化していますので、併せて別途紹介しています Azure AD Connect の全般情報の採取もお願いします。</p>
+<p>&lt;採取情報&gt;<br>1.オンプレミス Active Directory に格納されるユーザー オブジェクト情報<br>2.Azure AD Connect サーバー上のユーザー オブジェクト情報<br>3.Synchronization Service Manager のエラー画面ショット<br>4.イベントログ<br>5.エラーログの出力結果</p>
+<p>&lt;取得手順&gt;</p>
+<h1 id="オンプレミス-Active-Directory-に格納されるユーザー-オブジェクト情報"><a href="#オンプレミス-Active-Directory-に格納されるユーザー-オブジェクト情報" class="headerlink" title="オンプレミス Active Directory に格納されるユーザー オブジェクト情報"></a>オンプレミス Active Directory に格納されるユーザー オブジェクト情報</h1><p>同期できないという問題が一部のオブジェクトで生じている場合には、正常に同期が完了しているユーザーと同期に問題が生じているものについて少なくとも 1 つずつを任意に選択の上、取得ください。</p>
+<p>1-1. ドメイン コントローラーにて管理者権限でコマンド プロンプトを開きます。<br>1-2. 以下のコマンドをそれぞれのオブジェクトに対して実行します。</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ldifde.exe -f &lt;出力ファイル名&gt; -t <span class="number">3268</span> -d &lt;同期できないユーザーの DN 名&gt; -p subtree</span><br></pre></td></tr></table></figure>
+<p>ユーザーの DN 名は、その対象がユーザーの場合であれば、コマンドで dsquery user -name &lt;ユーザー名&gt; で確認できます。</p>
+<p>例えば contoso.com ドメインの OU1 という OU に所属している user1 というアカウントの場合には、 dsquery user -name user1 のコマンドの結果、次のように表示されます。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;CN=user1,OU=OU1,DC=contoso,DC=com&quot;</span><br></pre></td></tr></table></figure>
+<p>この場合に c:\user1_ad.txt に出力するコマンドは次のようになります。</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ldifde.exe -f c:\user1_ad.txt -t <span class="number">3268</span> -d "CN=user1,OU=OU1,DC=contoso,DC=com" -p subtree</span><br></pre></td></tr></table></figure>
+<p>1-3. 出力されたファイルを保存します。</p>
+<h1 id="2-Azure-AD-Connect-サーバー上のオブジェクト情報"><a href="#2-Azure-AD-Connect-サーバー上のオブジェクト情報" class="headerlink" title="2.Azure AD Connect サーバー上のオブジェクト情報"></a>2.Azure AD Connect サーバー上のオブジェクト情報</h1><ul>
+<li>1 の手順で ldifde コマンドにて取得したオブジェクトと同オブジェクトについて採取します。</li>
+</ul>
+<p>2-1. 既定で “C:\Program Files\Microsoft Azure AD Sync\UIShell” にあります “miisclient.exe” を実行し、[Synchronization Service Manager] を開きます。</p>
+<p>2-2. 画面上部の [Metaverse Search] ボタンを押します。<br>2-3. 画面上部の [Scope by Objects Type] から、[person]を選びます。</p>
+<p>あまりにも多くのユーザーが [Search Results] として出力され、さらに細かい条件を指定する場合は、[Attribute] に属性を指定し、[Operator]に “Equal” や “Starts with(前方一致) “を選択し、[Value] に検索するユーザーのキーワードをご指定ください。</p>
+<p>2-4. 表示された ユーザーをダブルクリックします。<br>2-5. [Metaverse Object Properties]の画面をひろげ、 [Attributes] タブの設定全体が見えるようにした上で画面キャプチャを取得します。（画面が切れる場合は、スクロールなどして全体の情報を採取します）<br>2-6. [Connectors]タブを選択します。<br>2-7. [Distinguished Name] にAzure AD とオンプレAD の二つの表示を確認します。<br>2-8. 一方の [Distinguished Name] 設定を選択します。<br>2-9. 表示された [Connector Space Object Properties] の設定全体が見えるように画面キャプチャを取得します。<br>2-10 [Close] を押し、先ほど選択しなかった、もう一方の [Connector Space Object Properties] についても画面キャプチャを取得します。</p>
+<h1 id="3-Synchronization-Service-Manager-のエラー画面ショット"><a href="#3-Synchronization-Service-Manager-のエラー画面ショット" class="headerlink" title="3.Synchronization Service Manager のエラー画面ショット"></a>3.Synchronization Service Manager のエラー画面ショット</h1><p>Azure AD Connect の Synchronization Service Manager にてエラーが発生しているか確認し、エラーが生じている場合にはその画面情報を取得します。</p>
+<p>確認する箇所は[Operations] を選択して、[Status]が success でないものについて、画面右下のリンクをクリックしたときのすべての画面ショットを採取します。</p>
+<h1 id="4-イベント-ログ"><a href="#4-イベント-ログ" class="headerlink" title="4.イベント ログ"></a>4.イベント ログ</h1><p>Azure AD Connect サーバーに管理者権限でサインインし、作業を実施ください。</p>
+<p>4-1. コマンド プロンプトを管理者として起動して、以下の 2 つのコマンドを実行します。</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">wevtutil epl system <span class="variable">%UserProfile%</span>\desktop\SysEvent.evtx</span><br><span class="line">wevtutil epl Application <span class="variable">%UserProfile%</span>\desktop\AppEvent.evtx</span><br></pre></td></tr></table></figure>
+<p>4-2. デスクトップに作成された evtx 形式のイベント ログを採取します。</p>
+<h1 id="エラーログの出力確認"><a href="#エラーログの出力確認" class="headerlink" title="エラーログの出力確認"></a>エラーログの出力確認</h1><p>Azure AD Connect 上でコマンドプロンプトを管理者権限で実行します。<br>&lt;C:\Program Files\Microsoft Azure AD Sync\Bin&gt; にある、csexport.exe  を使用して、以下の 4 つのコマンドを実行します。</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">csexport.exe "&lt;コネクター スペース名(Azure AD)&gt;" error_YYYYMMDD_1.xml /f:e </span><br><span class="line"> </span><br><span class="line">csexport.exe "&lt;コネクター スペース名(Azure AD)&gt;" error_YYYYMMDD_2.xml /f:i</span><br><span class="line"> </span><br><span class="line">csexport.exe "&lt;コネクター スペース名(オンプレ AD)&gt;" error_YYYYMMDD_3.xml /f:e </span><br><span class="line"> </span><br><span class="line">csexport.exe "&lt;コネクター スペース名(オンプレ AD)&gt;" error_YYYYMMDD_4.xml /f:i</span><br></pre></td></tr></table></figure>
+<p>※コネクター スペース名については、Synchronization Service Manager [Operations]の [Name] に表示された名前です。</p>
+<p>「コミュニティにおけるマイクロソフト社員による発言やコメントは、マイクロソフトの正式な見解またはコメントではありません。」<br>※本情報の内容（添付文書、リンク先などを含む）は、作成日時点でのものであり、予告なく変更される場合があります。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jpazureid.github.io/2017/10/24/azure-active-directory-connect/problem-user-synchronize/" data-id="cjtjvvgv30019o8yt0gsoiovw" class="article-share-link">共有</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/AAD-Connect/">AAD Connect</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/サポート/">サポート</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/情報採取/">情報採取</a></li></ul>
@@ -215,7 +283,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jpazureid.github.io/2017/10/05/azure-active-directory-connect/upn-hard-match/" data-id="cjtjpbjnz001a4cytz4k6ne9l" class="article-share-link">共有</a>
+      <a data-url="https://jpazureid.github.io/2017/10/05/azure-active-directory-connect/upn-hard-match/" data-id="cjtjvvgv6001eo8ytpsa8kex3" class="article-share-link">共有</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/AAD-Connect/">AAD Connect</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/Hard-match/">Hard match</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/UPN/">UPN</a></li></ul>
@@ -360,7 +428,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jpazureid.github.io/2017/10/03/active-directory-federation-service/update-ssl-server-certificate/" data-id="cjtjpbjmn00014cythdm7yr0y" class="article-share-link">共有</a>
+      <a data-url="https://jpazureid.github.io/2017/10/03/active-directory-federation-service/update-ssl-server-certificate/" data-id="cjtjvvgtk0001o8ytril2c0x2" class="article-share-link">共有</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/AD-FS/">AD FS</a></li></ul>
@@ -561,7 +629,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jpazureid.github.io/2017/10/03/active-directory-federation-service/update-token-certificate/" data-id="cjtjpbjqk00394cyt8430golb" class="article-share-link">共有</a>
+      <a data-url="https://jpazureid.github.io/2017/10/03/active-directory-federation-service/update-token-certificate/" data-id="cjtjvvgwv003do8ytruloqem3" class="article-share-link">共有</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/blog/tags/AD-FS/">AD FS</a></li></ul>
@@ -601,7 +669,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">タグクラウド</h3>
     <div class="widget tagcloud">
-      <a href="/blog/tags/AAD-Connect/" style="font-size: 16.67px;">AAD Connect</a> <a href="/blog/tags/AD-FS/" style="font-size: 18.33px;">AD FS</a> <a href="/blog/tags/AD-Sync/" style="font-size: 10px;">AD Sync</a> <a href="/blog/tags/Azure-AD/" style="font-size: 20px;">Azure AD</a> <a href="/blog/tags/Azure-AD-Application-Proxy/" style="font-size: 10px;">Azure AD Application Proxy</a> <a href="/blog/tags/Azure-AD-B2B/" style="font-size: 13.33px;">Azure AD B2B</a> <a href="/blog/tags/Azure-AD-Directory-Rolls/" style="font-size: 10px;">Azure AD Directory Rolls</a> <a href="/blog/tags/Azure-AD-License/" style="font-size: 10px;">Azure AD License</a> <a href="/blog/tags/CBA/" style="font-size: 10px;">CBA</a> <a href="/blog/tags/Conditional-Access/" style="font-size: 15px;">Conditional Access</a> <a href="/blog/tags/ExpressRoute/" style="font-size: 10px;">ExpressRoute</a> <a href="/blog/tags/Hard-match/" style="font-size: 10px;">Hard match</a> <a href="/blog/tags/Hybrid-Azure-AD-Join/" style="font-size: 10px;">Hybrid Azure AD Join</a> <a href="/blog/tags/Intune/" style="font-size: 11.67px;">Intune</a> <a href="/blog/tags/MFA/" style="font-size: 10px;">MFA</a> <a href="/blog/tags/PowerShell/" style="font-size: 10px;">PowerShell</a> <a href="/blog/tags/RBAC/" style="font-size: 11.67px;">RBAC</a> <a href="/blog/tags/Security/" style="font-size: 11.67px;">Security</a> <a href="/blog/tags/Sgin-in-log/" style="font-size: 10px;">Sgin-in log</a> <a href="/blog/tags/Smart-lockout/" style="font-size: 10px;">Smart lockout</a> <a href="/blog/tags/Subscription/" style="font-size: 10px;">Subscription</a> <a href="/blog/tags/Tenant-Restrictions/" style="font-size: 10px;">Tenant Restrictions</a> <a href="/blog/tags/UPN/" style="font-size: 10px;">UPN</a> <a href="/blog/tags/Windows-Defender-ATP/" style="font-size: 10px;">Windows Defender ATP</a> <a href="/blog/tags/Workplace-Join/" style="font-size: 10px;">Workplace Join</a> <a href="/blog/tags/サポート/" style="font-size: 11.67px;">サポート</a> <a href="/blog/tags/トラブルシューティング/" style="font-size: 11.67px;">トラブルシューティング</a> <a href="/blog/tags/情報採取/" style="font-size: 11.67px;">情報採取</a> <a href="/blog/tags/証明書認証/" style="font-size: 10px;">証明書認証</a>
+      <a href="/blog/tags/AAD-Connect/" style="font-size: 16.67px;">AAD Connect</a> <a href="/blog/tags/AD-FS/" style="font-size: 18.33px;">AD FS</a> <a href="/blog/tags/AD-Sync/" style="font-size: 10px;">AD Sync</a> <a href="/blog/tags/Azure-AD/" style="font-size: 20px;">Azure AD</a> <a href="/blog/tags/Azure-AD-Application-Proxy/" style="font-size: 10px;">Azure AD Application Proxy</a> <a href="/blog/tags/Azure-AD-B2B/" style="font-size: 13.33px;">Azure AD B2B</a> <a href="/blog/tags/Azure-AD-Directory-Rolls/" style="font-size: 10px;">Azure AD Directory Rolls</a> <a href="/blog/tags/Azure-AD-License/" style="font-size: 10px;">Azure AD License</a> <a href="/blog/tags/CBA/" style="font-size: 10px;">CBA</a> <a href="/blog/tags/Conditional-Access/" style="font-size: 15px;">Conditional Access</a> <a href="/blog/tags/ExpressRoute/" style="font-size: 10px;">ExpressRoute</a> <a href="/blog/tags/Hard-match/" style="font-size: 10px;">Hard match</a> <a href="/blog/tags/Hybrid-Azure-AD-Join/" style="font-size: 10px;">Hybrid Azure AD Join</a> <a href="/blog/tags/Intune/" style="font-size: 11.67px;">Intune</a> <a href="/blog/tags/MFA/" style="font-size: 10px;">MFA</a> <a href="/blog/tags/PowerShell/" style="font-size: 10px;">PowerShell</a> <a href="/blog/tags/RBAC/" style="font-size: 13.33px;">RBAC</a> <a href="/blog/tags/Security/" style="font-size: 11.67px;">Security</a> <a href="/blog/tags/Sgin-in-log/" style="font-size: 10px;">Sgin-in log</a> <a href="/blog/tags/Smart-lockout/" style="font-size: 10px;">Smart lockout</a> <a href="/blog/tags/Subscription/" style="font-size: 10px;">Subscription</a> <a href="/blog/tags/Tenant-Restrictions/" style="font-size: 10px;">Tenant Restrictions</a> <a href="/blog/tags/UPN/" style="font-size: 10px;">UPN</a> <a href="/blog/tags/Windows-Defender-ATP/" style="font-size: 10px;">Windows Defender ATP</a> <a href="/blog/tags/Workplace-Join/" style="font-size: 10px;">Workplace Join</a> <a href="/blog/tags/サポート/" style="font-size: 11.67px;">サポート</a> <a href="/blog/tags/トラブルシューティング/" style="font-size: 11.67px;">トラブルシューティング</a> <a href="/blog/tags/情報採取/" style="font-size: 11.67px;">情報採取</a> <a href="/blog/tags/証明書認証/" style="font-size: 10px;">証明書認証</a>
     </div>
   </div>
 
