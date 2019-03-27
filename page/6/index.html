@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  <!-- this tag should remove when publish production  -->
+  <meta name="”robots”" content="”noindex”">
+  
+
+  
+  <title>Japan Azure Identity Support Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="日本マイクロソフトの Azure Active Directory と AD FS に関するサポート情報のブログです。">
+<meta name="keywords" content="Azure,Azure AD,Identity,AD FS">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Japan Azure Identity Support Blog">
+<meta property="og:url" content="https://jpazureid.github.io/page/6/index.html">
+<meta property="og:site_name" content="Japan Azure Identity Support Blog">
+<meta property="og:description" content="日本マイクロソフトの Azure Active Directory と AD FS に関するサポート情報のブログです。">
+<meta property="og:locale" content="ja">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Japan Azure Identity Support Blog">
+<meta name="twitter:description" content="日本マイクロソフトの Azure Active Directory と AD FS に関するサポート情報のブログです。">
+  
+    <link rel="alternate" href="../../atom.xml" title="Japan Azure Identity Support Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="../../css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="../../index.html" id="logo">Japan Azure Identity Support Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="../../index.html">Home</a>
+        
+          <a class="main-nav-link" href="../../archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="../../atom.xml" title="RSSフィード"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="検索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://jpazureid.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-active-directory-federation-service/update-ssl-server-certificate" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="../../2017/10/03/active-directory-federation-service/update-ssl-server-certificate/" class="article-date">
+  <time datetime="2017-10-02T15:00:00.000Z" itemprop="datePublished">2017-10-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="../../2017/10/03/active-directory-federation-service/update-ssl-server-certificate/">AD FS の証明書更新手順 (SSLサーバー証明書)</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>皆様、こんにちは。Azure &amp; Identity サポート担当の竹村です。</p>
+<p>今回は、比較的多くのお客様からお問合せをいただく、AD FS の証明書更新手順をご紹介します。本エントリでは SSL サーバー証明書 (サービス通信証明書) の手順をご紹介し、次回にトークン署名証明書、トークン暗号化証明書についてもご案内したいと思います。</p>
+<p>対象リリース: Windows Server 2012 R2 (AD FS 3.0)</p>
+<p>以下の流れで更新作業を行います。</p>
+<h2 id="手順の概要"><a href="#手順の概要" class="headerlink" title="手順の概要"></a>手順の概要</h2><ol>
+<li>証明書の取得</li>
+<li>SSL サーバー証明書、ルート証明書、中間証明書のインストール</li>
+<li>SSL サーバー証明書のアクセス権設定</li>
+<li>AD FS のサービス通信証明書へ SSL サーバー証明書を設定</li>
+<li>AD FS の SSL サーバー証明書を更新</li>
+<li>WAP サーバーを再構成</li>
+</ol>
+<p>それぞれの詳細を後述致します。</p>
+<h2 id="1-証明書の取得"><a href="#1-証明書の取得" class="headerlink" title="1. 証明書の取得"></a>1. 証明書の取得</h2><p>ご利用になる認証機関から SSL サーバー証明書とルート証明書、中間証明書を取得します。<br>認証機関によって CSR 作成・送信、証明書受領手順が異なるため、手順は省略します。</p>
+<h2 id="2-SSL-サーバー証明書、ルート証明書、中間証明書のインストール"><a href="#2-SSL-サーバー証明書、ルート証明書、中間証明書のインストール" class="headerlink" title="2. SSL サーバー証明書、ルート証明書、中間証明書のインストール"></a>2. SSL サーバー証明書、ルート証明書、中間証明書のインストール</h2><p>ご利用になる認証機関から取得した SSL サーバー証明書、ルート証明書、中間証明書を以下手順でインストールします。</p>
+<p>※ インポートする中間証明書の有無や数は、ご利用の認証機関によって異なります。</p>
+<p>全 AD FS サーバー、全 WAP サーバーにて以下を実施します。</p>
+<ol>
+<li><p>[スタート] - [ファイル名を指定して実行] から certlm.msc と入力し、[OK] をクリックします。</p>
+</li>
+<li><p>画面左側から以下のストアを展開します。</p>
+<p> [証明書 (ローカル コンピューター)] - [信頼されたルート証明機関] - [証明書]</p>
+</li>
+<li><p>[証明書] を右クリックし、[すべてのタスク] - [インポート] を選択し、ウィザードに従って SSL サーバー証明書の発行元証明機関のルート証明書をインストールします。</p>
+</li>
+<li><p>続けて、画面左側から以下のストアを展開します。</p>
+<p> [証明書 (ローカル コンピューター)] - [中間証明機関] - [証明書]</p>
+</li>
+<li><p>[証明書] を右クリックし、[すべてのタスク] - [インポート] を選択し、ウィザードに従って SSL サーバー証明書の発行元証明機関の中間証明書をインストールします。</p>
+</li>
+<li><p>続けて、画面左側から以下のストアを展開します。<br>[証明書 (ローカル コンピューター)] - [個人] - [証明書]</p>
+</li>
+<li><p>[証明書] を右クリックし、[すべてのタスク] - [インポート] を選択し、ウィザードに従って SSL サーバー証明書をインストールします。</p>
+</li>
+</ol>
+<h2 id="3-SSL-サーバー証明書のアクセス権設定"><a href="#3-SSL-サーバー証明書のアクセス権設定" class="headerlink" title="3. SSL サーバー証明書のアクセス権設定"></a>3. SSL サーバー証明書のアクセス権設定</h2><p>証明書に、AD FS サービス アカウントに必要なアクセス許可を付与します。<br>全 AD FS サーバーにて以下を実施します。</p>
+<ol>
+<li><p>[スタート] - [ファイル名を指定して実行] から certlm.msc と入力し、[OK] をクリックします。</p>
+</li>
+<li><p>画面左側から以下のストアを展開します。</p>
+<p> [証明書 (ローカル コンピューター)] - [個人] - [証明書]</p>
+</li>
+<li><p>中央から、手順 2. でインストールした SSL サーバー証明書を右クリックして、[すべてのタスク] - [秘密キーの管理] をクリックします。</p>
+<p> ※ もし [秘密キーの管理] を実行できない場合は、次のコマンドを実行してください。    このコマンドを実行することにより、個人ストアのすべての証明書のキーの関連付けの修復、または証明書プロパティやキーのセキュリティ記述子の更新を行います。</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">certutil -repairstore my *</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>NT SERVICE\ADFSSRV と NT SERVICE\DRS (場所はローカル) を [追加] して、各アカウントには、少なくとも読み取りアクセス許可を付与します。</p>
+<p> ※ NT SERVICE\DRS アカウントが存在しない場合には、NT SERVICE\ADFSSRV にのみアクセス許可を付与します。</p>
+</li>
+</ol>
+<h2 id="4-AD-FS-のサービス通信証明書へ-SSL-サーバー証明書を設定"><a href="#4-AD-FS-のサービス通信証明書へ-SSL-サーバー証明書を設定" class="headerlink" title="4. AD FS のサービス通信証明書へ SSL サーバー証明書を設定"></a>4. AD FS のサービス通信証明書へ SSL サーバー証明書を設定</h2><p>AD FS のサービス通信証明書へ SSL サーバー証明書を設定します。プライマリ AD FS サーバーにて以下を実施します。</p>
+<ol>
+<li><p>スタート画面などから [AD FS の管理] コンソールを開きます。</p>
+</li>
+<li><p>画面左側から [AD FS] - [サービス] - [証明書] を右クリックし、 [サービス通信証明書の設定] をクリックします。</p>
+</li>
+<li><p>証明書の選択画面から手順 2. でインストールした SSL サーバー証明書を選択します。</p>
+</li>
+<li><p>[OK] をクリックします。</p>
+<p> ※ 警告が表示されましたら、[OK] をクリックします。</p>
+</li>
+</ol>
+<h2 id="5-AD-FS-の-SSL-サーバー証明書を更新"><a href="#5-AD-FS-の-SSL-サーバー証明書を更新" class="headerlink" title="5. AD FS の SSL サーバー証明書を更新"></a>5. AD FS の SSL サーバー証明書を更新</h2><p>AD FS の SSL サーバー証明書を更新します。全 AD FS サーバーにて以下を実施します。</p>
+<ol>
+<li><p>[スタート] - [ファイル名を指定して実行] から certlm.msc と入力し、[OK] をクリックします。</p>
+</li>
+<li><p>画面左側から以下のストアを展開します。</p>
+<p> [証明書 (ローカル コンピューター)] - [個人] - [証明書]</p>
+</li>
+<li><p>中央から、手順 2. でインストールした SSL サーバー証明書をダブル クリックします。</p>
+</li>
+<li><p>[詳細] タブをクリックします。</p>
+</li>
+<li><p>[拇印] の値をメモします。</p>
+</li>
+<li><p>PowerShell を管理者として起動します。</p>
+</li>
+<li><p>起動した PowerShell で以下のコマンドを実行して SSL サーバー証明書を更新します。</p>
+ <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-AdfsSslCertificate -Thumbprint</span><br></pre></td></tr></table></figure>
+<p> 例えば、手順 5-5. でメモした拇印が “aa bb cc dd ee” の場合、スペースを除いて以下のようになります。</p>
+ <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-AdfsSslCertificate -Thumbprint aabbccddee</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="6-WAP-サーバーを再構成"><a href="#6-WAP-サーバーを再構成" class="headerlink" title="6. WAP サーバーを再構成"></a>6. WAP サーバーを再構成</h2><p>WAP サーバーを再構成します。全 WAP サーバーにて以下を実施します。</p>
+<ol>
+<li><p>レジストリ エディターを開きます。</p>
+</li>
+<li><p>[HKEY_LOCAL_MACHINE\Software\Microsoft\ADFS] を選択します。</p>
+</li>
+<li><p>[ProxyConfigurationStatus] をダブル クリックします。</p>
+</li>
+<li><p>[値のデータ] を 1 にして [OK] をクリックします。</p>
+</li>
+<li><p>スタート画面などから [リモート アクセス管理] コンソールを開きます。</p>
+</li>
+<li><p>画面左側から [構成] - [Web Application Proxy] をクリックします。</p>
+</li>
+<li><p>画面中央から [Web アプリケーション プロキシ構成ウィザードの実行] をクリックします。</p>
+</li>
+<li><p>初期構成時と同様に、WAP サーバーを構成します。</p>
+<p> ※ [AD FS プロキシの証明書] 画面では、手順 2. でインストールした SSL サーバー証明書を選択します。</p>
+</li>
+</ol>
+<blockquote>
+<p>(注意) WAPサーバーの再構成を行う際には、hosts ファイルでフェデレーションサービス名がプライマリ AD FS サーバーに名前解決されるように設定ください。<br>AD FS サーバーとWAPサーバーとの間にロードバランサーが存在するような環境の場合、明示的にプライマリ AD FS サーバーに対して接続されるように設定しておきませんと、再構成に失敗することがございます。</p>
+</blockquote>
+<p>手順は以上の通りとなります。上記手順は過去にも同様のお問い合わせをお受けした際、多くのお客様にご案内しております実績のある手順となっておりますので、ご参考いただけますと幸いです。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jpazureid.github.io/2017/10/03/active-directory-federation-service/update-ssl-server-certificate/" data-id="cjtqwo5s00007e4ytzs37hs3d" class="article-share-link">共有</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/AD-FS/">AD FS</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-active-directory-federation-service/update-token-certificate" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="../../2017/10/03/active-directory-federation-service/update-token-certificate/" class="article-date">
+  <time datetime="2017-10-02T15:00:00.000Z" itemprop="datePublished">2017-10-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="../../2017/10/03/active-directory-federation-service/update-token-certificate/">AD FS の証明書更新手順（トークン署名証明書、トークン暗号化解除証明書）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>皆様、こんにちは。Azure &amp; Identity サポート担当の竹村です。</p>
+<p>前回に引き続き、本エントリではトークン署名証明書、トークン暗号化解除証明書の更新手順をご紹介いたします。</p>
+<p>トークン署名証明書、トークン暗号化解除証明書は AD FS が発行する自己証明書であり、既定では1年に1回自動的に新しい証明書の作成、更新処理が行われます。これを、<a href="https://blogs.technet.microsoft.com/jpntsblog/2016/10/13/ad-fs-%E3%81%AE%E8%87%AA%E5%8B%95%E8%A8%BC%E6%98%8E%E6%9B%B8%E3%83%AD%E3%83%BC%E3%83%AB%E3%82%AA%E3%83%BC%E3%83%90%E3%83%BC%E6%A9%9F%E8%83%BD%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/" target="_blank" rel="noopener">自動ロールオーバー機能</a> と呼びます。</p>
+<p>自動ロールオーバー機能は、具体的には以下のように動作します。</p>
+<ol>
+<li>有効期限が切れる 20 日前に、セカンダリのトークン署名/トークン暗号化解除証明書を作成します。</li>
+<li>上記 1 でセカンダリの証明書が作成されてから 5 日後に、セカンダリの新しい証明書がプライマリとなり、実際に利用されるようになります。</li>
+</ol>
+<p>※ この 5 日間の間に、証明書利用者信頼に新しい証明書を登録する必要があります。</p>
+<p>※ 2019/02/14 追記: 証明書利用者信頼にアップロードされるのはトークン署名証明書ですが、トークン暗号化解除証明書につきましても認証の際に利用されますので、有効期限が切れますと認証に失敗します。トークン署名証明書だけでなく、トークン暗号化解除証明書につきましても有効期限内での更新が必要です。</p>
+<p>ここでは、これらの証明書を手動で更新する手順をご案内いたします。また、補足として証明書の有効期限を既定の 1年 から変更する方法についても併せてご紹介いたします。</p>
+<p>対象リリース: Windows Server 2012 R2 (AD FS 3.0)</p>
+<h2 id="更新手順"><a href="#更新手順" class="headerlink" title="更新手順"></a>更新手順</h2><p>以下の流れで更新作業を行います。</p>
+<p>&lt;手順の概要&gt;</p>
+<ol>
+<li>セカンダリのトークン署名/トークン暗号化解除証明書を作成</li>
+<li>証明書利用者信頼 (Office 365) の証明書情報を更新</li>
+<li>セカンダリのトークン署名/トークン暗号化解除証明書をプライマリに昇格</li>
+<li>Active Directory Federation Services サービスを再起動</li>
+</ol>
+<p>それぞれの詳細を後述致します。</p>
+<h3 id="1-セカンダリのトークン署名-トークン暗号化解除証明書を作成"><a href="#1-セカンダリのトークン署名-トークン暗号化解除証明書を作成" class="headerlink" title="1. セカンダリのトークン署名/トークン暗号化解除証明書を作成"></a>1. セカンダリのトークン署名/トークン暗号化解除証明書を作成</h3><p>トークン署名/トークン暗号化解除証明書を更新するためには、現在使用されているプライマリのトークン署名/トークン暗号化解除証明書の有効期限が切れる前に、セカンダリのトークン署名/トークン暗号化解除証明書を作成致します。</p>
+<p>このセカンダリのトークン署名/トークン暗号化解除証明書は、既定では、プライマリのトークン署名/トークン暗号化解除証明書の有効期限が切れる 20 日前に、AD FS によって自動で作成されます。</p>
+<p>セカンダリのトークン署名/トークン暗号化解除証明書が作成されているか否かは、以下の手順で確認致します。</p>
+<ol>
+<li>プライマリ AD FS サーバーでスタート画面などから [AD FS の管理] コンソールを開きます。</li>
+<li>画面左側から [AD FS] - [サービス] - [証明書] を選択します。</li>
+<li><p>画面中央から、トークン署名/トークン暗号化解除証明書のセカンダリが存在するか確認します。</p>
+<p> セカンダリのトークン署名/トークン暗号化解除証明書は、AD FS による自動作成を待たずに、手動で作成することも可能です。<br> もし、セカンダリのトークン署名/トークン暗号化解除証明書が作成されていない際には、自動で作成されるのを待つか、以下の手順で手動で作成します。</p>
+</li>
+<li><p>プライマリ AD FS サーバーで PowerShell を管理者として起動します。</p>
+</li>
+<li><p>起動した PowerShell で以下のコマンドを実行してセカンダリのトークン署名/トークン暗号化解除証明書を作成します。</p>
+ <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Update-ADFSCertificate</span><br></pre></td></tr></table></figure>
+<p> ※ このコマンドを実行するためには、<a href="https://blogs.technet.microsoft.com/jpntsblog/2016/10/13/ad-fs-%E3%81%AE%E8%87%AA%E5%8B%95%E8%A8%BC%E6%98%8E%E6%9B%B8%E3%83%AD%E3%83%BC%E3%83%AB%E3%82%AA%E3%83%BC%E3%83%90%E3%83%BC%E6%A9%9F%E8%83%BD%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6/" target="_blank" rel="noopener">自動ロールオーバー機能</a> が有効である必要がございます。無効の場合には、事前に以下のコマンドを実行し、有効にしてください。</p>
+ <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-ADFSProperties -AutoCertificateRollover <span class="literal">$true</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>上記 1-1. から 1-3. の手順で、セカンダリが作成されていることを確認します。</p>
+</li>
+</ol>
+<p>以上でセカンダリのトークン署名/トークン暗号化解除証明書作成手順は終了です。<br>次のステップに進みます。</p>
+<h3 id="2-証明書利用者信頼-Office-365-の証明書情報を更新"><a href="#2-証明書利用者信頼-Office-365-の証明書情報を更新" class="headerlink" title="2. 証明書利用者信頼 (Office 365) の証明書情報を更新"></a>2. 証明書利用者信頼 (Office 365) の証明書情報を更新</h3><p>新しいトークン署名証明書を作成いたしましたら、証明書利用者信頼にその新しい証明書を登録する必要があります。セカンダリのトークン署名/トークン暗号化解除証明書が作成されてから 5 日以内に、証明書利用者信頼に新しい証明書を登録する必要があります。これは、セカンダリのトークン署名/トークン暗号化解除証明書が作成されてから 5 日後にプライマリに昇格されて、実際に使用されるようになるためです。</p>
+<p>ここでは、例として Office 365 の場合の手順をご案内します (Office 365以外の場合には、実際に利用されている証明書利用者信頼ごとに手順をご確認ください)。</p>
+<ol>
+<li>プライマリ AD FS サーバーでスタート画面などから [Windows PowerShell 用 Windows Azure Active Directory モジュール] を管理者として起動します。</li>
+<li><p>起動した PowerShell で以下のコマンドを実行し、Office 365 に接続します。</p>
+ <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Connect-MsolService</span><br></pre></td></tr></table></figure>
+<p> 資格情報の入力を求められるので、管理者アカウントの情報を入力します。</p>
+</li>
+<li><p>続けて、以下のコマンドを実行して現在の証明書情報を調べて、更新が必要か確認します。</p>
+ <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Get-MsolFederationProperty -DomainName</span><br></pre></td></tr></table></figure>
+<p> このコマンドで得られる結果から “Source : ADFS Server” と、”Source : Microsoft Office 365” のブロックを比較します。この 2 つのブロックの情報が異なる場合は、引き続き下記の手順に従って更新を行う必要があります。</p>
+</li>
+<li><p>続けて、以下のコマンドを実行して Office 365 の証明書情報を更新します。</p>
+ <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Update-MSOLFederatedDomain -DomainName</span><br></pre></td></tr></table></figure>
+<p> ※ 複数のトップレベル ドメインをサポートしている場合は、代わりに以下コマンドを実行します。</p>
+ <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Update-MSOLFederatedDomain -DomainName -SupportMultipleDomain</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>上記 3. の手順で再度確認を行います。</p>
+</li>
+</ol>
+<p>以上で Office 365 の証明書情報更新手順は終了です。<br>次のステップに進みます。</p>
+<h3 id="3-セカンダリのトークン署名-トークン暗号化解除証明書をプライマリに昇格"><a href="#3-セカンダリのトークン署名-トークン暗号化解除証明書をプライマリに昇格" class="headerlink" title="3. セカンダリのトークン署名/トークン暗号化解除証明書をプライマリに昇格"></a>3. セカンダリのトークン署名/トークン暗号化解除証明書をプライマリに昇格</h3><p>※ この手順以降、手順 4. が完了するまで、正しく認証ができない場合があります。手順 4. まで続けて実行してください。</p>
+<p>手順 1. で自動、または手動でセカンダリのトークン署名/トークン暗号化解除証明書が作成されてから 5 日後に、AD FS によって自動でセカンダリがプライマリに昇格されます。それ以降、AD FS では、この新しいプライマリのトークン署名/トークン暗号化解除証明書が使用されるようになります。そのため、上述の手順 2. は、セカンダリの証明書が作成されてから 5 日以内に行う必要があります。</p>
+<p>この AD FS によるプライマリへの自動昇格を待たずに、手動で昇格することも可能です。その手順は、以下になります。</p>
+<ol>
+<li>プライマリ AD FS サーバー で PowerShell を管理者として起動します。</li>
+<li><p>起動した PowerShell で以下のコマンドを実行して自動ロールオーバー機能を無効化します。</p>
+ <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-ADFSProperties -AutoCertificateRollover <span class="literal">$false</span></span><br></pre></td></tr></table></figure>
+<p> ※ すでに無効化されている場合は、このコマンドの実行は不要です。</p>
+</li>
+<li><p>スタート画面などから [AD FS の管理] コンソールを開き、画面左側から [AD FS] - [サービス] - [証明書] を選択します。</p>
+</li>
+<li>画面中央から、プライマリに昇格したいセカンダリのトークン署名/トークン暗号化解除証明書を右クリックし、[プライマリとして設定] を選択します。</li>
+<li>警告が表示される場合は [はい] をクリックします。</li>
+<li><p>続けて、PowerShell で以下のコマンドを実行して自動ロールオーバー機能を有効に戻します。</p>
+ <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-ADFSProperties -AutoCertificateRollover <span class="literal">$true</span></span><br></pre></td></tr></table></figure>
+<p> ※ 無効化された状態で運用をされる場合は、このコマンドの実行は不要です。</p>
+<p> 以下の手順でセカンダリのトークン署名/トークン暗号化解除証明書が自動、もしくは手動でプライマリに昇格されていることを確認致します。</p>
+</li>
+<li><p>プライマリ AD FS サーバーでスタート画面などから [AD FS の管理] コンソールを開きます。</p>
+</li>
+<li>画面左側から [AD FS] - [サービス] - [証明書] を選択します。</li>
+<li>画面中央から、トークン署名/トークン暗号化解除証明書のプライマリとセカンダリが入れ替わっていることを確認します。</li>
+</ol>
+<p>以上でセカンダリのトークン署名/トークン暗号化解除証明書をプライマリに昇格する手順は終了です。次のステップに進みます。</p>
+<h3 id="4-Active-Directory-Federation-Services-を再起動"><a href="#4-Active-Directory-Federation-Services-を再起動" class="headerlink" title="4. Active Directory Federation Services を再起動"></a>4. Active Directory Federation Services を再起動</h3><p>手順 3. の後、トークン署名/トークン暗号化解除証明書の入れ替えが各 AD FS サーバーに反映されるまで、10 分ほど待った後、各 AD FS サーバーの Active Directory Federation Services を再起動致します。各 AD FS サーバーで以下の手順を行い、Active Directory Federation Services を再起動致します。</p>
+<ol>
+<li>スタート画面などから [サービス] コンソールを開きます。</li>
+<li>[Active Directory Federation Services] を右クリックし、[再起動] を選択します。</li>
+</ol>
+<p>以上で Active Directory Federation Services の再起動手順は終了です。</p>
+<h2 id="補足"><a href="#補足" class="headerlink" title="補足"></a>補足</h2><p>以下について補足をさせて頂きます。トークン署名/トークン暗号化解除証明書の更新に際しまして、ご参考になれば幸いです。</p>
+<ol>
+<li>トークン署名/トークン暗号化解除証明書の有効期間を延ばす手順</li>
+<li>自動ロールオーバー機能を無効化する手順</li>
+<li>セカンダリのトークン署名/トークン暗号化解除証明書を削除する手順</li>
+</ol>
+<p>それぞれの詳細を後述致します。</p>
+<h3 id="1-トークン署名-トークン暗号化解除証明書の有効期間を変更する手順"><a href="#1-トークン署名-トークン暗号化解除証明書の有効期間を変更する手順" class="headerlink" title="1. トークン署名/トークン暗号化解除証明書の有効期間を変更する手順"></a>1. トークン署名/トークン暗号化解除証明書の有効期間を変更する手順</h3><p>既定では、トークン署名/トークン暗号化解除証明書の有効期間は 1 年です。以下の手順に沿って、トークン署名/トークン暗号化解除証明書の有効期間を変更することで、次回以降作成される証明書に反映されます。</p>
+<p>なお、この手順は現行の証明書の期間を変更するものではなく、この設定以降に作成される証明書の有効期間を変更するものとなります。そのため、トークン署名/トークン暗号化解除証明書の有効期間を変更する際には、最初にこの手順を実施していただいた後に証明書の更新作業を行ってください。</p>
+<ol>
+<li>プライマリ AD FS サーバー で PowerShell を管理者として起動します。</li>
+<li><p>起動した PowerShell で以下のコマンドを実行して有効期間を設定します。</p>
+ <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-AdfsProperties -CertificateDuration</span><br></pre></td></tr></table></figure>
+<p> 例えば、およそ 10 年 (3650日) に設定する場合は以下のようになります。</p>
+ <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-AdfsProperties -CertificateDuration <span class="number">3650</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>弊社内部情報より、最長で 50 年の設定を行っても問題ないことを確認しております。</p>
+<h3 id="2-自動ロールオーバー機能を無効化する手順"><a href="#2-自動ロールオーバー機能を無効化する手順" class="headerlink" title="2. 自動ロールオーバー機能を無効化する手順"></a>2. 自動ロールオーバー機能を無効化する手順</h3><p>先述のとおり、自動ロールオーバー機能は既定で以下のように動作します。</p>
+<ul>
+<li>現在使用されているプライマリのトークン署名/トークン暗号化解除証明書の有効期限が切れる 20 日前に、新証明書をセカンダリとして作成する</li>
+<li>セカンダリのトークン署名/トークン暗号化解除証明書が作成されてから 5 日後に、プライマリ (旧証明書) とセカンダリ (新証明書) を入れ替える</li>
+</ul>
+<p>そのため、各証明書の有効期限に合わせて(既定では 1年ごとに) 新しい証明書を証明書利用者信頼に登録する作業を行っていただく必要がございます。</p>
+<p>※ 証明書利用者信頼の中には、AD FS からフェデレーションメタデータを受信できるネットワーク環境であれば、自動的に更新作業が行われるものもございます。</p>
+<p>上述 1 の証明書の有効期限を変更する手順と併せて、自動ロールオーバー機能を無効にしていただくことで、各作業を、各証明書の有効期限が切れるまでにお客様の任意のタイミングで進めていただくことができます。自動ロールオーバー機能を無効にする方法は以下になります。</p>
+<ol>
+<li>プライマリ AD FS サーバー で PowerShell を管理者として起動します。</li>
+<li><p>起動した PowerShell で以下のコマンドを実行して自動ロールオーバー機能を無効化します。</p>
+ <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-ADFSProperties -AutoCertificateRollover <span class="literal">$false</span></span><br></pre></td></tr></table></figure>
+<p> なお、自動ロールオーバー機能を有効に戻す場合は、以下のコマンドを実行します。</p>
+ <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-ADFSProperties -AutoCertificateRollover <span class="literal">$true</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="3-セカンダリのトークン署名-トークン暗号化解除証明書を削除する手順"><a href="#3-セカンダリのトークン署名-トークン暗号化解除証明書を削除する手順" class="headerlink" title="3. セカンダリのトークン署名/トークン暗号化解除証明書を削除する手順"></a>3. セカンダリのトークン署名/トークン暗号化解除証明書を削除する手順</h3><p>トークン署名/トークン暗号化解除証明書の更新作業を行っていただいた後、元々プライマリであった証明書がセカンダリとして残ります。以下の手順に沿って、このセカンダリの証明書を削除することが可能です。</p>
+<p>なお、このセカンダリの証明書は残っていても AD FS の動作などに影響を及ぼすものではございません。</p>
+<ol>
+<li>プライマリ AD FS サーバー で PowerShell を管理者として起動します。</li>
+<li><p>起動した PowerShell で以下のコマンドを実行して現在の証明書情報を確認します。</p>
+ <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Get-AdfsCertificate</span><br></pre></td></tr></table></figure>
+<p> CertificateType の値が Token-Signing になっていて IsPrimary の値が False になっているブロックがセカンダリのトークン署名証明書の情報ブロックです (例)。</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Certificate : [Subject]</span><br><span class="line">CN=ADFS Signing - adfs.test.com</span><br><span class="line">[Issuer]</span><br><span class="line">CN=ADFS Signing - adfs.test.com</span><br><span class="line">[Serial Number]</span><br><span class="line">1E841605620028AC4FB542149E31A4A7</span><br><span class="line">[Not Before]</span><br><span class="line">2017/10/11 15:09:47</span><br><span class="line">[Not After]</span><br><span class="line">2057/10/01 15:09:47</span><br><span class="line">[Thumbprint]</span><br><span class="line">41D3FE9CB98FA89BE0899904B3B227DECB8A512A</span><br><span class="line">CertificateType : Token-Signing ★&lt;&lt;&lt;</span><br><span class="line">IsPrimary : False ★&lt;&lt;&lt;</span><br><span class="line">StoreLocation : CurrentUser</span><br><span class="line">StoreName : My</span><br><span class="line">Thumbprint : 41D3FE9CB98FA89BE0899904B3B227DECB8A512A ★&lt;&lt;&lt;</span><br></pre></td></tr></table></figure>
+<p> ※ 念のため、AD FS 管理ツールからセカンダリのトークン署名証明書をダブルクリックし、[詳細] タブの「拇印」が Thumbprint と一致していることを確認します。</p>
+</li>
+</ol>
+<pre><code>CertificateType の値が Token-Decrypting になっていて IsPrimary の値が False になっているブロックがセカンダリのトークン暗号化解除証明書の情報ブロックです (例)。
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Certificate : [Subject]</span><br><span class="line">CN=ADFS Encryption - adfs.test.com</span><br><span class="line">[Issuer]</span><br><span class="line">CN=ADFS Encryption - adfs.test.com</span><br><span class="line">[Serial Number]</span><br><span class="line">3E79CAA431F92DB6454084FEA1AE9995</span><br><span class="line">[Not Before]</span><br><span class="line">2017/10/11 15:09:47</span><br><span class="line">[Not After]</span><br><span class="line">2057/10/01 15:09:47</span><br><span class="line">[Thumbprint]</span><br><span class="line">57CA6410E8C213DC14645AEBCCDEF0481FC8C641</span><br><span class="line">CertificateType : Token-Decrypting ★&lt;&lt;&lt;</span><br><span class="line">IsPrimary : False ★&lt;&lt;&lt;</span><br><span class="line">StoreLocation : CurrentUser</span><br><span class="line">StoreName : My</span><br><span class="line">Thumbprint : 57CA6410E8C213DC14645AEBCCDEF0481FC8C641 ★&lt;&lt;&lt;</span><br></pre></td></tr></table></figure>
+
+※ 念のため、AD FS 管理ツールからセカンダリのトークン暗号化解除証明書をダブルクリックし、[詳細] タブの「拇印」が Thumbprint と一致していることを確認します。
+</code></pre><ol start="3">
+<li><p>続けて、PowerShell で以下のコマンドを実行して自動ロールオーバー機能を無効化します。</p>
+ <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-ADFSProperties -AutoCertificateRollover <span class="literal">$false</span></span><br></pre></td></tr></table></figure>
+<p> ※ すでに無効化されている場合はこのコマンドの実行は不要です。</p>
+</li>
+<li><p>上記 2. で確認した結果を元に、PowerShell で以下のコマンドを実行してセカンダリのトークン署名証明書を削除します。</p>
+ <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Remove-AdfsCertificate -Thumbprint 【削除する証明書の拇印】 -CertificateType Token-Signing</span><br></pre></td></tr></table></figure>
+<p> 上記 2 の例ですと、以下のコマンドを実行します。</p>
+ <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Remove-AdfsCertificate -Thumbprint <span class="number">41</span>D3FE9CB98FA89BE0899904B3B227DECB8A512A -CertificateType Token-Signing</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>上記 2. で確認した結果を元に、PowerShell で以下のコマンドを実行してセカンダリのトークン暗号化解除証明書を削除します。</p>
+ <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Remove-AdfsCertificate -Thumbprint 【削除する証明書の拇印】 -CertificateType Token-Decrypting</span><br></pre></td></tr></table></figure>
+<p> 上記 2 の例ですと、以下のコマンドを実行します。</p>
+ <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Remove-AdfsCertificate -Thumbprint <span class="number">57</span>CA6410E8C213DC14645AEBCCDEF0481FC8C641 -CertificateType Token-Decrypting</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>続けて、PowerShell で以下のコマンドを実行して自動ロールオーバー機能を有効に戻します。</p>
+ <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-ADFSProperties -AutoCertificateRollover <span class="literal">$true</span></span><br></pre></td></tr></table></figure>
+<p> ※ 無効化された状態で運用をされる場合はこのコマンドの実行は不要です。</p>
+</li>
+</ol>
+<p>手順は以上の通りとなります。<br>上記手順は過去にも同様のお問い合わせをお受けした際、多くのお客様にご案内しております実績のある手順となっておりますので、ご参考いただけますと幸いです。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jpazureid.github.io/2017/10/03/active-directory-federation-service/update-token-certificate/" data-id="cjtqwo5y5004je4ythlq8p3r6" class="article-share-link">共有</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/AD-FS/">AD FS</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="../5/">&laquo; 戻る</a><a class="page-number" href="../../">1</a><span class="space">&hellip;</span><a class="page-number" href="../4/">4</a><a class="page-number" href="../5/">5</a><span class="page-number current">6</span>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">タグ</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="../../tags/AAD-Connect/">AAD Connect</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/AD-FS/">AD FS</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/AD-Sync/">AD Sync</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-AD/">Azure AD</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-AD-Application-Proxy/">Azure AD Application Proxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-AD-B2B/">Azure AD B2B</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-AD-Directory-Rolls/">Azure AD Directory Rolls</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-AD-License/">Azure AD License</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/CBA/">CBA</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Conditional-Access/">Conditional Access</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/ExpressRoute/">ExpressRoute</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Hard-match/">Hard match</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Hybrid-Azure-AD-Join/">Hybrid Azure AD Join</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Intune/">Intune</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/MFA/">MFA</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/OAuth/">OAuth</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/PowerShell/">PowerShell</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/RBAC/">RBAC</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Security/">Security</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Sgin-in-log/">Sgin-in log</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Smart-lockout/">Smart lockout</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Subscription/">Subscription</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Tenant-Restrictions/">Tenant Restrictions</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Token/">Token</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/UPN/">UPN</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Windows-Defender-ATP/">Windows Defender ATP</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Workplace-Join/">Workplace Join</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/graph-api/">graph api</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/signin-log/">signin log</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/サポート/">サポート</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/トラブルシューティング/">トラブルシューティング</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/情報採取/">情報採取</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/証明書認証/">証明書認証</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">タグクラウド</h3>
+    <div class="widget tagcloud">
+      <a href="../../tags/AAD-Connect/" style="font-size: 18.33px;">AAD Connect</a> <a href="../../tags/AD-FS/" style="font-size: 16.67px;">AD FS</a> <a href="../../tags/AD-Sync/" style="font-size: 10px;">AD Sync</a> <a href="../../tags/Azure-AD/" style="font-size: 20px;">Azure AD</a> <a href="../../tags/Azure-AD-Application-Proxy/" style="font-size: 10px;">Azure AD Application Proxy</a> <a href="../../tags/Azure-AD-B2B/" style="font-size: 13.33px;">Azure AD B2B</a> <a href="../../tags/Azure-AD-Directory-Rolls/" style="font-size: 10px;">Azure AD Directory Rolls</a> <a href="../../tags/Azure-AD-License/" style="font-size: 10px;">Azure AD License</a> <a href="../../tags/CBA/" style="font-size: 10px;">CBA</a> <a href="../../tags/Conditional-Access/" style="font-size: 15px;">Conditional Access</a> <a href="../../tags/ExpressRoute/" style="font-size: 10px;">ExpressRoute</a> <a href="../../tags/Hard-match/" style="font-size: 10px;">Hard match</a> <a href="../../tags/Hybrid-Azure-AD-Join/" style="font-size: 10px;">Hybrid Azure AD Join</a> <a href="../../tags/Intune/" style="font-size: 11.67px;">Intune</a> <a href="../../tags/MFA/" style="font-size: 10px;">MFA</a> <a href="../../tags/OAuth/" style="font-size: 10px;">OAuth</a> <a href="../../tags/PowerShell/" style="font-size: 10px;">PowerShell</a> <a href="../../tags/RBAC/" style="font-size: 11.67px;">RBAC</a> <a href="../../tags/Security/" style="font-size: 11.67px;">Security</a> <a href="../../tags/Sgin-in-log/" style="font-size: 10px;">Sgin-in log</a> <a href="../../tags/Smart-lockout/" style="font-size: 10px;">Smart lockout</a> <a href="../../tags/Subscription/" style="font-size: 10px;">Subscription</a> <a href="../../tags/Tenant-Restrictions/" style="font-size: 10px;">Tenant Restrictions</a> <a href="../../tags/Token/" style="font-size: 10px;">Token</a> <a href="../../tags/UPN/" style="font-size: 10px;">UPN</a> <a href="../../tags/Windows-Defender-ATP/" style="font-size: 10px;">Windows Defender ATP</a> <a href="../../tags/Workplace-Join/" style="font-size: 10px;">Workplace Join</a> <a href="../../tags/graph-api/" style="font-size: 11.67px;">graph api</a> <a href="../../tags/signin-log/" style="font-size: 11.67px;">signin log</a> <a href="../../tags/サポート/" style="font-size: 11.67px;">サポート</a> <a href="../../tags/トラブルシューティング/" style="font-size: 11.67px;">トラブルシューティング</a> <a href="../../tags/情報採取/" style="font-size: 11.67px;">情報採取</a> <a href="../../tags/証明書認証/" style="font-size: 10px;">証明書認証</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">アーカイブ</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2019/03/">三月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2019/02/">二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/12/">十二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/11/">十一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/10/">十月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/08/">八月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/07/">七月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/06/">六月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/05/">五月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/04/">四月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/02/">二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/01/">一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/12/">十二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/10/">十月 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最近の投稿</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="../../2019/03/27/azure-active-directory-connect/introduction-staging-server/">(no title)</a>
+          </li>
+        
+          <li>
+            <a href="../../2019/02/04/azure-active-directory/how-to-get-sign-in-logs/">Azure AD サインイン ログ取得方法まとめ</a>
+          </li>
+        
+          <li>
+            <a href="../../2018/12/12/azure-active-directory/last-signin-reports/">PowerShell にて全ユーザーの最終サインイン日時を一括で取得する方法</a>
+          </li>
+        
+          <li>
+            <a href="../../2018/11/01/azure-active-directory/create-subscription-error/">サブスクリプション作成時のエラー「アカウントが Azure サブスクリプションに関連付けられないディレクトリに属しています。別のアカウントでサインインしてください」</a>
+          </li>
+        
+          <li>
+            <a href="../../2018/11/01/active-directory-federation-service/adfs-cba-ts/">証明書認証のトラブルシューティング</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 Azure Identity Support Japan<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="../../index.html" class="mobile-nav-link">Home</a>
+  
+    <a href="../../archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="../../fancybox/jquery.fancybox.css">
+  <script src="../../fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="../../js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
