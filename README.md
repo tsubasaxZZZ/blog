@@ -31,6 +31,7 @@
 - [Azure AD B2B とは](./azure-active-directory/what-is-b2b.md)
 - [Azure AD の条件付きアクセスに関する Q&A](./azure-active-directory/qanda-conditional-access.md)
 - [Azure Active Directory の PowerShell モジュール](./azure-active-directory/powershell-module.md)
+- [Azure AD への PowerShell 接続のトラブルシューティング](./azure-active-directory/powershell-troubleshooting.md)
 - [Azure サブスクリプションと Azure AD の管理者](./azure-active-directory/subscription-azure-ad-relationship.md)
 - [「アクセス権がありません」のエラーについて](./azure-active-directory/azuread-access-denied.md)
 - サブスクリプションが見えない
