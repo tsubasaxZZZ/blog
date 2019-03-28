@@ -6,6 +6,8 @@ tags:
   - PowerShell
 ---
 
+# Azure AD への PowerShell 接続のトラブルシューティング
+
 こんにちは。Azure ID サポート チームの三浦です。
 今回は、Office 365 サポート チームの方にも協力を得まして、 Azure Active Directory (Azure AD) の PowerShell にて Azure AD に接続できない場合のトラブルシューティングについてまとめてみました。
 
@@ -31,6 +33,7 @@ PowerShell で Connect-MsolService (または Connect-AzureAD) コマンドの�
 次に紹介する実行例のように認証ウィンドウを表示させずに資格情報をパラメーターで渡す方法もありますが、両者では Azure AD に対する認証の仕方が異なります。そのため、問題の絞り込みのために資格情報を指定せずに実行した場合、動作に変化があるか確認します。
  
 コマンド実行例：
+
 ```powershell
 $Credential = Get-Credential
 Connect-MsolService -Credential $Credential
@@ -55,12 +58,15 @@ Get-ChildItem 'HKLM:\SOFTWARE\Microsoft\NET Framework Setup\NDP' -recurse | Get-
 ```
 
 コマンド実行結果の例 :
+
+```
 > PSChildName                      Version        Release
 \-----------                      -------        -------
 Client                           4.7.03190      461814　<-- このバージョンを確認します。
 Full                             4.7.03190      461814
 Client                           4.0.0.0                
- 
+```
+
 確認した結果、 4.6 よりも古い場合は、下記のサイトから .NET Framework 4.6 をダウンロードしてインストールします。
 
 ※ 4.7 のバージョンは OS によっては追加のモジュールのインストールが必要なのでここでは 4.6 の紹介にしていますが、もちろん 4.7 のインストールで構いません。
@@ -77,10 +83,13 @@ $psversiontable
 ```
 
 コマンド実行結果の例 :
+
+```
 > Name                           Value
 \----                           -----
 PSVersion                      5.1.17763.316　<-- このバージョンを確認します。
- 
+```
+
 5.0 よりも古い場合は、下記のサイトから Windows Management Framework (WMF) 5.1 をダウンロードしてインストールします。
  
 Windows Management Framework 5.1
@@ -94,11 +103,14 @@ Get-InstalledModule
 ```
 
 コマンド実行結果の例 :
+
+```
 > Version              Name                                Repository           Description
 \-------              ----                                ----------           -----------
 1.1.183.17           MSOnline                            PSGallery            Microsoft Azure Active Directory Modul...　              <-- このバージョンを確認します。
 2.0.2.5             AzureADPreview                      PSGallery            Azure Active Directory V2 Preview Modu...                        <-- このバージョンを確認します。
- 
+```
+
 MSOnline  の場合であれば 2019 年 3 月 15 日現在の最新版は、1.1.183.17 となります。古い場合は、下記のコマンドを実行し、アップグレードします。
 
 ``` powershell
@@ -137,35 +149,42 @@ Install-Module -Name MSOnline
 1. モジュールのダウンロードを行うための PC で Windows PowerShell を起動します。
  
 2. 下記のコマンドレットを実行し、リポジトリ ファイル群をダウンロードします。
-``` powershell
-Save-Module -Name MSOnline -Path C:\temp
-```
-※ C:\temp\ フォルダーの指定は任意です。
+
+  ``` powershell
+  Save-Module -Name MSOnline -Path C:\temp
+  ```
+
+  ※ C:\temp\ フォルダーの指定は任意です。
  
 3. ダウンロードした MSOnline フォルダーを Office 365 に PowerShell 接続するための PC 上の C:\Temp 配下に配置します。
  
 4. Windows PowerShell を起動します。
  
 5. 下記のコマンドを実行して、モジュールをインポートします。
-``` powershell
-Import-Module "C:\Temp\MSOnline\＜バージョン番号＞\MSOnline.psd1"
-```
-※ 3. で配置したフォルダーを指定ください。
-※ エラーが発生する場合は、モジュールの各ファイルのプロパティを開いて「ブロック解除」されていることをご確認ください。
+
+  ``` powershell
+  Import-Module "C:\Temp\MSOnline\＜バージョン番号＞\MSOnline.psd1"
+  ```
+
+  ※ 3. で配置したフォルダーを指定ください。
+  ※ エラーが発生する場合は、モジュールの各ファイルのプロパティを開いて「ブロック解除」されていることをご確認ください。
  
 6. 下記のコマンドを実行して、モジュールがインポートされたことを確認します。
-``` powershell
-Get-Module MSOnline
-```
+
+  ``` powershell
+  Get-Module MSOnline
+  ```
 
 7. 次のような結果が返れば、インポート完了です。
  
 コマンド実行結果の例 :
+
+```
 > powershell
 ModuleType Version Name ExportedCommands
 \---------- ------- ---- ----------------
 Manifest 1.1.183.17 MSOnline {Add-MsolAdministrativeUnitMember, Add-MsolForeignGroupToRole, Add-MsolGroupMember, Add-MsolRoleMember...}
- 
+```
 
 ## 3. ネットワーク環境の確認
  
@@ -175,6 +194,7 @@ Manifest 1.1.183.17 MSOnline {Add-MsolAdministrativeUnitMember, Add-MsolForeignG
  
 Office 365 URLs and IP address ranges
 https://docs.microsoft.com/en-us/office365/enterprise/urls-and-ip-address-ranges
+
 ※ PowerShell は、「Microsoft 365 Common および Office Online」カテゴリの通信になります。
  
 この公開情報は、定期更新されておりますため、お客様の環境にて最新版のリストを元にネットワーク制御する必要があります。社内ネットワークからではなく、クライアントをモバイルネットワーク（公衆回線）に接続し、アクセス制御のない環境から Office 365 へ PowerShell 接続して、動作に違いがあるか確認する方法も有効です。
@@ -194,7 +214,8 @@ Invoke-WebRequest -Uri https://login.microsoftonline.com
 ### 3-3. 認証機能付きプロキシのバイパスについて
  
 認証機能付きプロキシについては、以下のコマンドを実行し、資格情報を指定することができます。
-``` powershell
+
+```powershell
 $ProxyCredential = New-Object System.Net.NetworkCredential("ユーザー名","パスワード")
 [System.Net.WebRequest]::DefaultWebProxy.Credentials = $ProxyCredential
 ```
@@ -203,9 +224,8 @@ $ProxyCredential = New-Object System.Net.NetworkCredential("ユーザー名","�
  
 Managing Office 365 endpoints
 https://docs.microsoft.com/en-us/office365/enterprise/managing-office-365-endpoints
---- 抜粋 ---
-Separately if you choose to only do direct routing for the Optimize category endpoints, any required Allow category endpoints that you send to the proxy server will need to be listed in the proxy server to bypass further processing. For example, SSL break and Inspect and Proxy Authentication are incompatible with both the Optimize and Allow category endpoints.
---- 抜粋 ---
+
+> Separately if you choose to only do direct routing for the Optimize category endpoints, any required Allow category endpoints that you send to the proxy server will need to be listed in the proxy server to bypass further processing. For example, SSL break and Inspect and Proxy Authentication are incompatible with both the Optimize and Allow category endpoints.
  
 ### 3-4. プロキシ サーバーの指定について
  
@@ -213,12 +233,13 @@ Separately if you choose to only do direct routing for the Optimize category end
  
 ※プロキシ サーバー：10.10.10.10、ポート：8080 の場合
 
-``` powershell
+```powershell
 [System.Net.WebRequest]::DefaultWebProxy = New-Object System.Net.WebProxy("http://10.10.10.10:8080")
 ```
 
 設定を元に戻す場合は、下記のコマンドを実行します。
-``` powershell
+
+```powershell
 [System.Net.WebRequest]::DefaultWebProxy =$null
 ```
 
