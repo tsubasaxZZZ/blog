@@ -237,6 +237,13 @@ https://docs.microsoft.com/en-us/office365/enterprise/managing-office-365-endpoi
 [System.Net.WebRequest]::DefaultWebProxy = New-Object System.Net.WebProxy("http://10.10.10.10:8080")
 ```
 
+PowerShell で上記のようにプロキシを指定しても Connect-MsolService や Connect-AzureAD を資格情報を事前に指定すること無く実行すると Internet Explorer のプロキシ設定も利用するため、ネットワークの切り分けの観点では次の実行例のように資格情報を事前に指定するようにします。
+
+```powershell
+$Credential = Get-Credential
+Connect-MsolService -Credential $Credential
+```
+
 設定を元に戻す場合は、下記のコマンドを実行します。
 
 ```powershell
