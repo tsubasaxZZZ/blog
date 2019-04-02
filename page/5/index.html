@@ -70,7 +70,7 @@
   
     <article id="post-azure-active-directory/member-and-guest-user" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="../../2017/12/12/azure-active-directory/member-and-guest-user/" class="article-date">
+    <a href="../../azure-active-directory/member-and-guest-user/" class="article-date">
   <time datetime="2017-12-11T15:00:00.000Z" itemprop="datePublished">2017-12-12</time>
 </a>
     
@@ -82,7 +82,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="../../2017/12/12/azure-active-directory/member-and-guest-user/">Member ユーザーと Guest ユーザーについて</a>
+      <a class="article-title" href="../../azure-active-directory/member-and-guest-user/">Member ユーザーと Guest ユーザーについて</a>
     </h1>
   
 
@@ -92,15 +92,15 @@
       
         <p>こんにちは、Azure &amp; Identity サポート チームの坂井です。</p>
 <p>Azure AD に所属しているユーザーの種類として、下記のように 「Member」 と 「Guest」があります。今回は、こちらのユーザーの種類について説明します。</p>
-<img src="/blog/2017/12/12/azure-active-directory/member-and-guest-user/member-and-guest.png">
+<img src="/blog/azure-active-directory/member-and-guest-user/member-and-guest.png">
 <h2 id="はじめに"><a href="#はじめに" class="headerlink" title="はじめに"></a>はじめに</h2><p>下記のように、個人アカウントや別テナントの職場または学校アカウント (組織アカウント) を追加した (Azure AD B2B の機能を利用した) 場合に、ユーザーの種類が 「Guest」 として追加されます。</p>
-<img src="/blog/2017/12/12/azure-active-directory/member-and-guest-user/personal-work-account.png">
+<img src="/blog/azure-active-directory/member-and-guest-user/personal-work-account.png">
 <p>これ以外の Azure のサブスクリプションのサインアップで利用した個人アカウントや組織内のドメイン (上記の例の場合：contso.com) をユーザー名 (例：<a href="mailto:test@contoso.com" target="_blank" rel="noopener">test@contoso.com</a>) に持つユーザーは「Member」として登録されます。また、クラシックポータル  (旧ポータル) より追加した外部ユーザーについては 「Member」として登録されております。</p>
 <h2 id="詳細"><a href="#詳細" class="headerlink" title="詳細"></a>詳細</h2><p>既定ではゲスト ユーザーに対しては、 Azure AD のデータへのアクセスを制限しています。そのため、ゲスト ユーザーでサインインした場合、招待された Azure AD のユーザーの一覧を参照することもできませんし、各種設定の参照・変更も制限されています。もちろん、サブスクリプションに対する権限を付与していない場合は、サブスクリプションのリソースを操作することもできません。<br>(一般ユーザーとゲスト ユーザーがそれぞれできること (アクセス許可の比較) は、こちらをご参照ください。)</p>
-<img src="/blog/2017/12/12/azure-active-directory/member-and-guest-user/access-denied.png">
-<img src="/blog/2017/12/12/azure-active-directory/member-and-guest-user/no-access-permission.png">
+<img src="/blog/azure-active-directory/member-and-guest-user/access-denied.png">
+<img src="/blog/azure-active-directory/member-and-guest-user/no-access-permission.png">
 <p>ゲストに対するアクセス制限は、以下の赤枠の箇所 (ゲストのアクセス許可を制限する) で変更できます。この設定が “はい” の場合には「Guest」の操作は上記のように制限されています。</p>
-<img src="/blog/2017/12/12/azure-active-directory/member-and-guest-user/guest-users-permissions-are-limited.png">
+<img src="/blog/azure-active-directory/member-and-guest-user/guest-users-permissions-are-limited.png">
 <p>ユーザーの属性については、PowerShell を利用することで Member から Guest、またその逆についても変更が可能です。Guest から Member  に変更する際は「Guest」に対して行っていた制御の対象外のユーザーとなるため、セキュリティポリシーに沿った対応や特定のユーザーに絞った設定変更をお勧め致します。</p>
 <h2 id="ユーザー-タイプ変更手順"><a href="#ユーザー-タイプ変更手順" class="headerlink" title="ユーザー タイプ変更手順"></a>ユーザー タイプ変更手順</h2><p>この作業を実施するためには、Azure AD 用の PowerShell (Azure AD v1 の PowerShell) を利用する必要がありますが、 PowerShell を利用する際には Microsoft アカウントではなく、組織アカウントでの全体管理者が必要です (Azure AD の PowerShell については <a href="https://blogs.technet.microsoft.com/jpazureid/2017/12/04/aad-powershell/" target="_blank" rel="noopener">リンク</a> も参照ください)。そのために対処策は次の手順で実施する必要があります。</p>
 <ol>
@@ -152,7 +152,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jpazureid.github.io/2017/12/12/azure-active-directory/member-and-guest-user/" data-id="cjtqwo5ti0010e4yt70gnzxm2" class="article-share-link">共有</a>
+      <a data-url="https://jpazureid.github.io/azure-active-directory/member-and-guest-user/" data-id="cjtz46pm80013zcytrsboiuid" class="article-share-link">共有</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Azure-AD-B2B/">Azure AD B2B</a></li></ul>
@@ -166,7 +166,7 @@
   
     <article id="post-azure-active-directory/what-is-b2b" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="../../2017/12/12/azure-active-directory/what-is-b2b/" class="article-date">
+    <a href="../../azure-active-directory/what-is-b2b/" class="article-date">
   <time datetime="2017-12-11T15:00:00.000Z" itemprop="datePublished">2017-12-12</time>
 </a>
     
@@ -178,7 +178,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="../../2017/12/12/azure-active-directory/what-is-b2b/">Azure AD B2B とは</a>
+      <a class="article-title" href="../../azure-active-directory/what-is-b2b/">Azure AD B2B とは</a>
     </h1>
   
 
@@ -198,18 +198,18 @@
 </ul>
 <p>このような連携が必要な時に、利用する機能が、今回ご紹介する Azure AD B2B になります。</p>
 <h2 id="はじめに"><a href="#はじめに" class="headerlink" title="はじめに"></a>はじめに</h2><p> Azure サブスクリプションは必ず 1 つの Azure AD に関連付けられています。<br>そのため、その関連付けられた Azure AD に所属しているユーザーのみがそのサブスクリプションに紐づくリソースを利用可能です。</p>
-<img src="/blog/2017/12/12/azure-active-directory/what-is-b2b/subscription-user.png">
+<img src="/blog/azure-active-directory/what-is-b2b/subscription-user.png">
 <p>では、複数の Azure AD がある場合はどのようになるでしょうか。<br>この場合、別の Azure AD へのアクセスや別の Azure AD に関連付けられているサブスクリプションにアクセスできません。</p>
-<img src="/blog/2017/12/12/azure-active-directory/what-is-b2b/subscription-user-inaccessible.png">
+<img src="/blog/azure-active-directory/what-is-b2b/subscription-user-inaccessible.png">
 <p>こんな時、Azure AD B2B を利用することで、別 Azure AD にユーザーを追加(コピーのようなイメージ)することで、別の Azure AD に所属してリソースを利用することが可能です。</p>
-<img src="/blog/2017/12/12/azure-active-directory/what-is-b2b/invite-user-to-tenant.png">
+<img src="/blog/azure-active-directory/what-is-b2b/invite-user-to-tenant.png">
 <h2 id="詳細"><a href="#詳細" class="headerlink" title="詳細"></a>詳細</h2><p>別の Azure AD のユーザーを追加する方法で多く利用されるものを  2  つ紹介します。</p>
 <h3 id="1-ゲスト-ユーザーの追加"><a href="#1-ゲスト-ユーザーの追加" class="headerlink" title="1. ゲスト ユーザーの追加"></a>1. ゲスト ユーザーの追加</h3><p>明示的に別の Azure AD (または outlook.com や gmail.com などのマイクロソフト アカウント) を追加する操作です。Azure ポータルのメニューより [Azure Active Directory] – [ユーザーとグループ] – [すべてのユーザー] の順に進みます。下記、[新しいゲスト ユーザー] から別の Azure AD のユーザーを追加できます。招待メールが送られ、そのメールよりウィザードを完了する必要があります。</p>
-<img src="/blog/2017/12/12/azure-active-directory/what-is-b2b/screenshot-new-guest-user.png">
+<img src="/blog/azure-active-directory/what-is-b2b/screenshot-new-guest-user.png">
 <h3 id="2-RBAC-アクセス制御-IAM-によるユーザーの追加"><a href="#2-RBAC-アクセス制御-IAM-によるユーザーの追加" class="headerlink" title="2. RBAC (アクセス制御 IAM) によるユーザーの追加"></a>2. RBAC (アクセス制御 IAM) によるユーザーの追加</h3><p>RBAC では、Azure サブスクリプションに紐づけられている Azure AD のユーザーに対してアクセス権を割り当てる必要があります。では、RBAC でアクセス権を割り当てるときに別の Azure AD のユーザーに対してアクセス権を割り当てるときには、先に 1 の作業を実施しておく必要があるのでしょうか？</p>
 <p>いいえ、もしユーザーが存在していない場合には、 1 のユーザー追加も合わせて行われます。<br>Azure ポータルの [サブスクリプション] – [サブスクリプション名] – [アクセス制御 (IAM)]の順に進みます。</p>
 <p>下記、[追加] から別の Azure AD のユーザーを追加することができます。招待メールが送られ、そのメールよりウィザードを完了する流れは同様になりますが、同時にサブスクリプションに対するロールを割り当てられます。</p>
-<img src="/blog/2017/12/12/azure-active-directory/what-is-b2b/screenshot-iam.png">
+<img src="/blog/azure-active-directory/what-is-b2b/screenshot-iam.png">
 <h2 id="よくあるお問い合わせ"><a href="#よくあるお問い合わせ" class="headerlink" title="よくあるお問い合わせ"></a>よくあるお問い合わせ</h2><p><span style="color:blue">Q</span>. B2B の機能以外で、Azure AD 間を連携することは可能ですか？</p>
 <p><span style="color:red">A</span>. いいえ、できません。複数の Azure AD 間で同期や複製を行うことはできません。B2B の機能は Azure AD 同士を連携するというよりは、 Azure AD と別 Azure AD のユーザーを連携する機能です。</p>
 <p><span style="color:blue">Q</span>. 別の Azure AD に登録されたアプリケーションを利用するのに、Azure AD B2B の機能を利用できますか？</p>
@@ -222,7 +222,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jpazureid.github.io/2017/12/12/azure-active-directory/what-is-b2b/" data-id="cjtqwo5tq001ce4yt3q5twh5n" class="article-share-link">共有</a>
+      <a data-url="https://jpazureid.github.io/azure-active-directory/what-is-b2b/" data-id="cjtz46pmc001dzcytzitw091a" class="article-share-link">共有</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Azure-AD-B2B/">Azure AD B2B</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/RBAC/">RBAC</a></li></ul>
@@ -236,7 +236,7 @@
   
     <article id="post-azure-active-directory/powershell-module" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="../../2017/12/04/azure-active-directory/powershell-module/" class="article-date">
+    <a href="../../azure-active-directory/powershell-module/" class="article-date">
   <time datetime="2017-12-03T15:00:00.000Z" itemprop="datePublished">2017-12-04</time>
 </a>
     
@@ -248,7 +248,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="../../2017/12/04/azure-active-directory/powershell-module/">Azure Active Directory の PowerShell モジュール</a>
+      <a class="article-title" href="../../azure-active-directory/powershell-module/">Azure Active Directory の PowerShell モジュール</a>
     </h1>
   
 
@@ -284,7 +284,7 @@
 <h3 id="PowerShell-モジュール"><a href="#PowerShell-モジュール" class="headerlink" title="PowerShell モジュール"></a>PowerShell モジュール</h3><p>PowerShell のバージョンを 5.0 以上にするために Windows Management Framework (WMF) 5.1 を以下のサイトからダウンロードしてインストールします。</p>
 <p>Windows Management Framework 5.1<br><a href="https://www.microsoft.com/en-us/download/details.aspx?id=54616" target="_blank" rel="noopener">https://www.microsoft.com/en-us/download/details.aspx?id=54616</a></p>
 <p>システムの PowerShell のバージョンは $psversiontable で確認できます。以下の例だと 5.1.15063.726 というバージョンがインストールされていることが確認できます。</p>
-<img src="/blog/2017/12/04/azure-active-directory/powershell-module/powershell-version.jpg">
+<img src="/blog/azure-active-directory/powershell-module/powershell-version.jpg">
 <h3 id="Azure-AD-PowerShell-インストール方法"><a href="#Azure-AD-PowerShell-インストール方法" class="headerlink" title="Azure AD PowerShell インストール方法"></a>Azure AD PowerShell インストール方法</h3><p>上記の前提条件を満たしたうえで、次の手順でインストールを実施します。</p>
 <ol>
 <li>管理者で PowerShell を起動します。</li>
@@ -336,7 +336,7 @@
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$ProxyCredential</span> = <span class="built_in">New-Object</span> System.Net.NetworkCredential(<span class="string">"ユーザー名"</span>,<span class="string">"パスワード"</span>)</span><br><span class="line">[System.Net.WebRequest]::DefaultWebProxy.Credentials = <span class="variable">$ProxyCredential</span></span><br></pre></td></tr></table></figure>
 <p>&lt;モジュールがインストールされているかの確認&gt;</p>
 <p>モジュールがインストールされているかは Get-InstalledModule コマンドで確認できます。</p>
-<img src="/blog/2017/12/04/azure-active-directory/powershell-module/get-installedmodule.jpg">
+<img src="/blog/azure-active-directory/powershell-module/get-installedmodule.jpg">
 <p>&lt;モジュールのアンインストール方法&gt;</p>
 <p>Uninstall-Module コマンドでアンインストールができます。Azure AD v2 の通常版と Preview 版は併用できませんので、通常版を利用している環境で Preview 版を利用したい場合には管理者で PowerShell を起動し、 Preview 版をインストール前に次のコマンドで通常版のアンインストールが必要です。</p>
 <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Uninstall-Module AzureAD</span><br></pre></td></tr></table></figure>
@@ -359,7 +359,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jpazureid.github.io/2017/12/04/azure-active-directory/powershell-module/" data-id="cjtqwo5x8003fe4yt0992mh8q" class="article-share-link">共有</a>
+      <a data-url="https://jpazureid.github.io/azure-active-directory/powershell-module/" data-id="cjtz46poa003hzcyti6aiga76" class="article-share-link">共有</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Azure-AD/">Azure AD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/PowerShell/">PowerShell</a></li></ul>
@@ -373,7 +373,7 @@
   
     <article id="post-azure-active-directory/qanda-conditional-access" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="../../2017/12/04/azure-active-directory/qanda-conditional-access/" class="article-date">
+    <a href="../../azure-active-directory/qanda-conditional-access/" class="article-date">
   <time datetime="2017-12-03T15:00:00.000Z" itemprop="datePublished">2017-12-04</time>
 </a>
     
@@ -385,7 +385,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="../../2017/12/04/azure-active-directory/qanda-conditional-access/">Azure AD の条件付きアクセスに関する Q&amp;A</a>
+      <a class="article-title" href="../../azure-active-directory/qanda-conditional-access/">Azure AD の条件付きアクセスに関する Q&amp;A</a>
     </h1>
   
 
@@ -431,14 +431,14 @@
 <hr>
 <p><span style="color:blue">Q</span>. 条件付きアクセスの設定において、全てユーザーがアクセスできない設定になってしまいました。設定を解除可能でしょうか。</p>
 <p><span style="color:red">A</span>. このような状況の場合は、残念ながらお客様側での解除はできません。そのため、設定の解除をご希望の場合は、お手数ですが弊社サポート サービスをご利用いただけますと幸いです。Azure ポータルにもアクセスができない状況と存じますので、ほかにお持ちのテナントからお問い合わせを発行ください。<br>サポート サービスをご利用いただくには、Azure ポータル上から、Azure Active Directory を選択し、[新しいサポート要求] を選択ください。以下のような画面からお問い合わせいただければと思います。</p>
-<img src="/blog/2017/12/04/azure-active-directory/qanda-conditional-access/create-support-ticket-1.png">
-<img src="/blog/2017/12/04/azure-active-directory/qanda-conditional-access/create-support-ticket-2.png">
+<img src="/blog/azure-active-directory/qanda-conditional-access/create-support-ticket-1.png">
+<img src="/blog/azure-active-directory/qanda-conditional-access/create-support-ticket-2.png">
 <p>上記内容が少しでもお客様の参考となりますと幸いです。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jpazureid.github.io/2017/12/04/azure-active-directory/qanda-conditional-access/" data-id="cjtqwo5x8003ge4ytdwajxoy8" class="article-share-link">共有</a>
+      <a data-url="https://jpazureid.github.io/azure-active-directory/qanda-conditional-access/" data-id="cjtz46pob003izcytpp9fj7eh" class="article-share-link">共有</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Azure-AD/">Azure AD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Conditional-Access/">Conditional Access</a></li></ul>
@@ -452,7 +452,7 @@
   
     <article id="post-azure-active-directory/azuread-access-denied" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="../../2017/11/20/azure-active-directory/azuread-access-denied/" class="article-date">
+    <a href="../../azure-active-directory/azuread-access-denied/" class="article-date">
   <time datetime="2017-11-19T15:00:00.000Z" itemprop="datePublished">2017-11-20</time>
 </a>
     
@@ -464,7 +464,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="../../2017/11/20/azure-active-directory/azuread-access-denied/">「アクセス権がありません」のエラーについて</a>
+      <a class="article-title" href="../../azure-active-directory/azuread-access-denied/">「アクセス権がありません」のエラーについて</a>
     </h1>
   
 
@@ -481,15 +481,15 @@
 <p>このコンテンツへのアクセス権がないようです。アクセス権を得るには、所有者に連絡してください。</p>
 <hr>
 <p>画面は下記のような表示です。</p>
-<img src="/blog/2017/11/20/azure-active-directory/azuread-access-denied/azuread-access-denied.png">
+<img src="/blog/azure-active-directory/azuread-access-denied/azuread-access-denied.png">
 <p>こちらは、エラーメッセージの通りアクセスしようとしたユーザーの権限が不足している状況を示すエラーになります。</p>
 <p>ここでいう、権限とはサブスクリプションの権限（RBAC で付与した所有者の権限など）とは異なる、Azure AD の権限となります。</p>
 <p>サブスクリプションの管理者と Azure AD の管理者の説明については、下記のブログをご確認ください。</p>
 <p>-参考情報</p>
-<p><a href="./subscription-azure-ad-relationship.md">Azure サブスクリプションと Azure AD の管理者</a></p>
+<p><a href="/blog/./subscription-azure-ad-relationship/">Azure サブスクリプションと Azure AD の管理者</a></p>
 <p>詳細<br>下記、 [Azure AD 管理ポータルへのアクセスを制限する] が「はい」に設定されている場合は、Azure AD の管理者権限を持ったユーザーのみが [Azure Active Directory] を参照できるようになります。</p>
 <p>こちらを「いいえ」に設定することで、一般のユーザーでも [Azure Active Directory] 配下の参照が可能になりますが、設計上「はい」にする必要がある場合は、個別のユーザー毎に下記の回避策をご実施ください。</p>
-<img src="/blog/2017/11/20/azure-active-directory/azuread-access-denied/azuread-portal.png">
+<img src="/blog/azure-active-directory/azuread-access-denied/azuread-portal.png">
 <p>回避策<br>Azure AD ディレクトリの全体管理者の権限をもつユーザーで、Azure ポータル (<a href="https://portal.azure.com" target="_blank" rel="noopener">https://portal.azure.com</a>) へサインインします。<br>[Azure Active Directory] - [ユーザーとグループ] - [すべてのユーザー] - [（権限を付与する）ユーザー] の順に選択します。<br>[ディレクトリ ロール] をクリックします。<br>全体管理者 (または制限付き管理者) を選択して [保存] をクリックします。</p>
 <p>管理者の種類と役割については、下記の弊社公開情報をご確認ください。</p>
 <p>Azure Active Directory での管理者ロールの割り当て</p>
@@ -499,7 +499,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jpazureid.github.io/2017/11/20/azure-active-directory/azuread-access-denied/" data-id="cjtqwo5ss000ie4ytx8aud77s" class="article-share-link">共有</a>
+      <a data-url="https://jpazureid.github.io/azure-active-directory/azuread-access-denied/" data-id="cjtz46plp000fzcytnc8hepu4" class="article-share-link">共有</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Azure-AD/">Azure AD</a></li></ul>
@@ -513,7 +513,7 @@
   
     <article id="post-azure-active-directory-connect/duplicate-attribute-recoverability-behavior" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="../../2017/11/08/azure-active-directory-connect/duplicate-attribute-recoverability-behavior/" class="article-date">
+    <a href="../../azure-active-directory-connect/duplicate-attribute-recoverability-behavior/" class="article-date">
   <time datetime="2017-11-07T15:00:00.000Z" itemprop="datePublished">2017-11-08</time>
 </a>
     
@@ -525,7 +525,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="../../2017/11/08/azure-active-directory-connect/duplicate-attribute-recoverability-behavior/">\[Azure AD Connect\] ID 同期と重複属性の回復性の動作について</a>
+      <a class="article-title" href="../../azure-active-directory-connect/duplicate-attribute-recoverability-behavior/">\[Azure AD Connect\] ID 同期と重複属性の回復性の動作について</a>
     </h1>
   
 
@@ -533,7 +533,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>こんにちは、Azure &amp; Identity サポート チームの後藤です。<br><br>2017 年 3 月に多くのテナントで有効化された ID 同期と重複属性の回復性の動作についてご紹介します。<br><br>なお、2017 年 10 月 30 日以降は例外なくすべてのテナントでこの機能は有効になっています。</p>
+        <p>こんにちは、Azure &amp; Identity サポート チームの後藤です。<br><br>2017 年 3 月に多くのテナントで有効化された ID 同期と重複属性の回復性の動作についてご紹介します。<br>なお、2017 年 10 月 30 日以降は例外なくすべてのテナントでこの機能は有効になっています。</p>
 <p>以下のような流れでご紹介します。</p>
 <p>&lt;目次&gt;</p>
 <ol>
@@ -543,15 +543,15 @@
 <li>ID 同期と重複属性の回復性が動作しないケース</li>
 </ol>
 <h2 id="1-以前の動作の概要"><a href="#1-以前の動作の概要" class="headerlink" title="1. 以前の動作の概要"></a>1. 以前の動作の概要</h2><p>以前は、ディレクトリ同期の際に UPN または ProxyAddresses の属性が Azure AD 内で重複するようなユーザー オブジェクトを Azure AD に同期を試みた場合、エラーが発生し、ユーザー オブジェクトを Azure AD に作成することができませんでした。</p>
-<p>一例 :<br>Azure AD に、UPN : <a href="mailto:user01@contoso.com" target="_blank" rel="noopener">user01@contoso.com</a> (オリジナルuser01)のユーザーが存在します。<br><br>この <a href="mailto:user01@contoso.com" target="_blank" rel="noopener">user01@contoso.com</a> ユーザーは、過去にディレクトリ同期によって登録されたユーザーですが、現在は一度ディレクトリ同期運用をやめており、テナントのディレクトリ同期も無効化しています。<br><br>この状態で、オンプレミス AD ドメインに UPN : <a href="mailto:user01@contoso.com" target="_blank" rel="noopener">user01@contoso.com</a> (新user01)のユーザーを作成します。<br><br>改めてディレクトリ同期を行う運用になったので、Azure AD Connect で同じテナントに同期を行うと、オリジナルuser01と新user01の UPN 重複エラーが発生し、Azure AD へのエクスポートに失敗します。</p>
-<p>同じ UPN を持つユーザーであれば UPN ソフトマッチにより [重複ではなく結合] するのでは？と思われる方もいらっしゃるかもしれませんが、オリジナルuser01は [過去にディレクトリ同期で登録されたユーザー] であるため、ImmutableID がすでにセットされています。<br><br>そのため、この例ではソフトマッチは行われず、オリジナルuser01と新user01が別のオブジェクトとして扱われ、UPN 値の重複が問題となります。<br><br>なお、ProxyAddresses 属性のメール アドレス (プライマリ,セカンダリ共に) も UPN と同様に重複が問題となります。</p>
+<p>一例 :<br>Azure AD に、UPN : <a href="mailto:user01@contoso.com" target="_blank" rel="noopener">user01@contoso.com</a> (オリジナルuser01)のユーザーが存在します。<br>この <a href="mailto:user01@contoso.com" target="_blank" rel="noopener">user01@contoso.com</a> ユーザーは、過去にディレクトリ同期によって登録されたユーザーですが、現在は一度ディレクトリ同期運用をやめており、テナントのディレクトリ同期も無効化しています。<br>この状態で、オンプレミス AD ドメインに UPN : <a href="mailto:user01@contoso.com" target="_blank" rel="noopener">user01@contoso.com</a> (新user01)のユーザーを作成します。<br>改めてディレクトリ同期を行う運用になったので、Azure AD Connect で同じテナントに同期を行うと、オリジナルuser01と新user01の UPN 重複エラーが発生し、Azure AD へのエクスポートに失敗します。</p>
+<p>同じ UPN を持つユーザーであれば UPN ソフトマッチにより [重複ではなく結合] するのでは？と思われる方もいらっしゃるかもしれませんが、オリジナルuser01は [過去にディレクトリ同期で登録されたユーザー] であるため、ImmutableID がすでにセットされています。<br>そのため、この例ではソフトマッチは行われず、オリジナルuser01と新user01が別のオブジェクトとして扱われ、UPN 値の重複が問題となります。<br>なお、ProxyAddresses 属性のメール アドレス (プライマリ,セカンダリ共に) も UPN と同様に重複が問題となります。</p>
 <p>このエラーを検知した場合、下記のような内容のメールで技術的通知の連絡先に通知されます。</p>
 <ul>
 <li>“Unable to update this object because the following attributes associated with this object have values that may already be associated with another object in your local directory services: [<a href="mailto:**UserPrincipalName**user01@contoso.com" target="_blank" rel="noopener">**UserPrincipalName**user01@contoso.com</a>;]. Correct or remove the duplicate values in your local directory.”<br>(このオブジェクトに紐づく属性値 [<strong>UserPrincipalName</strong> <a href="mailto:user01@contoso.com" target="_blank" rel="noopener">user01@contoso.com</a>;] は、ローカル ディレクトリ サービスの他のオブジェクトに既に紐付けられているため、このオブジェクトを更新できません。ローカル ディレクトリの重複している属性値を変更または削除してください。)</li>
 <li>Unable to update this object because the following attributes associated with this object have values that may already be associated with another object in your local directory services: [<strong>ProxyAddresses</strong>SMTP:<a href="mailto:user01@contoso.com" target="_blank" rel="noopener">user01@contoso.com</a>;]. Correct or remove the duplicate values in your local directory.”<br>(このオブジェクトに紐づく属性値 [<strong>ProxyAddresses</strong> SMTP:<a href="mailto:user01@contoso.com" target="_blank" rel="noopener">user01@contoso.com</a>;] は、ローカル ディレクトリ サービスの他のオブジェクトに既に紐付けられているため、このオブジェクトを更新できません。ローカル ディレクトリの重複している属性値を変更または削除してください。)</li>
 </ul>
-<p>以降、重複した属性値の状態を解消する対処を実施するまでは、定期的な同期処理が行われる毎に失敗し、このメールが通知されます。<br><br>重複属性の回復性が有効になるまでは！</p>
-<h2 id="2-ID-同期と重複属性の回復性の動作"><a href="#2-ID-同期と重複属性の回復性の動作" class="headerlink" title="2. ID 同期と重複属性の回復性の動作"></a>2. ID 同期と重複属性の回復性の動作</h2><p>前述の例のように、ディレクトリ同期の際に UPN または ProxyAddresses の属性が Azure AD にて重複するようなユーザー オブジェクトを Azure AD に同期しようとしても、重複属性の回復性が有効なテナントでは、Export 処理時のエラーが出力されることなく、ユーザー オブジェクトが Azure AD に作成されます。<br><br>もちろん、値が重複した2つのオブジェクトを登録することはできないため、後から同期により生成されるユーザーのプレフィックス部分には 4 桁の数字がつき、サフィックス部分にはイニシャル ドメイン名が付与されます。</p>
+<p>以降、重複した属性値の状態を解消する対処を実施するまでは、定期的な同期処理が行われる毎に失敗し、このメールが通知されます。<br>重複属性の回復性が有効になるまでは！</p>
+<h2 id="2-ID-同期と重複属性の回復性の動作"><a href="#2-ID-同期と重複属性の回復性の動作" class="headerlink" title="2. ID 同期と重複属性の回復性の動作"></a>2. ID 同期と重複属性の回復性の動作</h2><p>前述の例のように、ディレクトリ同期の際に UPN または ProxyAddresses の属性が Azure AD にて重複するようなユーザー オブジェクトを Azure AD に同期しようとしても、重複属性の回復性が有効なテナントでは、Export 処理時のエラーが出力されることなく、ユーザー オブジェクトが Azure AD に作成されます。<br>もちろん、値が重複した2つのオブジェクトを登録することはできないため、後から同期により生成されるユーザーのプレフィックス部分には 4 桁の数字がつき、サフィックス部分にはイニシャル ドメイン名が付与されます。</p>
 <p>一例 :</p>
 <ul>
 <li>Azure AD に、UPN : <a href="mailto:user01@contoso.com" target="_blank" rel="noopener">user01@contoso.com</a> (オリジナルuser01)のユーザーが存在します。</li>
@@ -567,31 +567,31 @@
 <li><p>このオブジェクトは Azure Active Directory で更新されましたが、次の属性が他のオブジェクト [ProxyAddresses SMTP:<a href="mailto:user01@contoso.com" target="_blank" rel="noopener">user01@contoso.com</a>;] と関連付けられているため、一部のプロパティが変更されています。この問題を解決する手順に関しては、<a href="https://aka.ms/duplicateattributeresiliency" target="_blank" rel="noopener">https://aka.ms/duplicateattributeresiliency</a> をご覧ください。</p>
 </li>
 </ul>
-<p>このメールは検知された初回のみ送信され、以降繰り返される同期のタイミングでは送信されません。<br><br>そのため、後から重複対象のオブジェクトをメールの履歴のみで探すのが困難になることが予想されますが、ご安心ください。<br><br>PowerShell コマンドで重複する属性の競合のエラー状況を DirSyncProvisioningErrors から確認できます。</p>
+<p>このメールは検知された初回のみ送信され、以降繰り返される同期のタイミングでは送信されません。<br>そのため、後から重複対象のオブジェクトをメールの履歴のみで探すのが困難になることが予想されますが、ご安心ください。<br>PowerShell コマンドで重複する属性の競合のエラー状況を DirSyncProvisioningErrors から確認できます。</p>
 <p>例 :<br>Get-MsolDirSyncProvisioningError -ErrorCategory PropertyConflict</p>
 <p>ExtensionData      : System.Runtime.Serialization.ExtensionDataObject<br>DisplayName        : user01<br>ImmutableId        : EVxRjF4MDACb9TViLrGGvA==<br>LastDirSyncTime    : 2017/10/20 5:02:43<br>ObjectId           : 87d11ec2-e8ce-4a99-801a-6352d5678a03<br>ObjectType         : User<br>ProvisioningErrors : {ProxyAddresses, UserPrincipalName}<br>ProxyAddresses     : {smtp:<a href="mailto:user01@contoso.onmicrosoft.com" target="_blank" rel="noopener">user01@contoso.onmicrosoft.com</a>, smtp: <a href="mailto:user012457@contoso.onmicrosoft.com" target="_blank" rel="noopener">user012457@contoso.onmicrosoft.com</a>}<br>UserPrincipalName  : <a href="mailto:user012457@contoso.onmicrosoft.com" target="_blank" rel="noopener">user012457@contoso.onmicrosoft.com</a></p>
 <p>以上は UserPrincipalName が重複する場合の動作ですが ProxyAddresses の値が重複する場合には重複した情報は削除されます。例えば UserPrincpalName と ProxyAddresses の両方が重複している場合には、ディレクトリ同期の結果 UserPricipalName は “+<4digitnumber>@.onmicrosoft.com”　になり、 ProxyAddresses は null となります。</4digitnumber></p>
-<h2 id="3-重複状態からの解消について"><a href="#3-重複状態からの解消について" class="headerlink" title="3. 重複状態からの解消について"></a>3. 重複状態からの解消について</h2><p>約一時間に一度のバック グラウンドのタイマー タスクが Azure プラットフォームで動作しており重複が解消されているか確認します。重複属性を持つユーザーの削除、重複属性の値の修正により、重複している属性の値の重複が解消されると、DirSyncProvisioningErrors を消す動作と UPN 及び ProxyAddresses に格納されている “+&lt;<em>4DigitNumber&gt;@.onmicrosoft.com</em>”　の値をオンプレミス AD から元々エクスポートしようとしていた UPN 及び ProxyAddresses に格納されている値に自動的に修正する動作が生じます。<br><br>経験則にはなりますが、重複が解消されてから DirSyncProvisioningErrors を消す動作と UPN 及び ProxyAddresses の自動解決には早い場合には 1.5 時間、時間を要する場合では 24 時間ほどかかります。</p>
+<h2 id="3-重複状態からの解消について"><a href="#3-重複状態からの解消について" class="headerlink" title="3. 重複状態からの解消について"></a>3. 重複状態からの解消について</h2><p>約一時間に一度のバック グラウンドのタイマー タスクが Azure プラットフォームで動作しており重複が解消されているか確認します。重複属性を持つユーザーの削除、重複属性の値の修正により、重複している属性の値の重複が解消されると、DirSyncProvisioningErrors を消す動作と UPN 及び ProxyAddresses に格納されている “+&lt;<em>4DigitNumber&gt;@.onmicrosoft.com</em>”　の値をオンプレミス AD から元々エクスポートしようとしていた UPN 及び ProxyAddresses に格納されている値に自動的に修正する動作が生じます。<br>経験則にはなりますが、重複が解消されてから DirSyncProvisioningErrors を消す動作と UPN 及び ProxyAddresses の自動解決には早い場合には 1.5 時間、時間を要する場合では 24 時間ほどかかります。</p>
 <p>例 :<br>(1) Azure AD 上のオリジナルuser01 である <a href="mailto:user01@contoso.com" target="_blank" rel="noopener">user01@contoso.com</a> というユーザーが削除され、新user01との UPN の重複が解消されます。<br>(2) Azure 側で約1時間に1回行われているバックグラウンドのタイマー タスクで重複が解消されことを検知します。<br>(3) 新user01オブジェクトに対する DirSyncProvisioningErrors が消え、Azure AD に存在する UPN が <a href="mailto:user012457@contoso.onmicrosoft.com" target="_blank" rel="noopener">user012457@contoso.onmicrosoft.com</a>のユーザーの UPN が <a href="mailto:user01@contoso.com" target="_blank" rel="noopener">user01@contoso.com</a> に自動変更されます。</p>
 <h2 id="4-ID-同期と重複属性の回復性が動作しないケース"><a href="#4-ID-同期と重複属性の回復性が動作しないケース" class="headerlink" title="4. ID 同期と重複属性の回復性が動作しないケース"></a>4. ID 同期と重複属性の回復性が動作しないケース</h2><p>次のようなケースでは ID 同期と重複属性の回復性は動作しません。</p>
 <p><strong>シナリオ1. オンプレミス Active Directory 上の UPN 名に含まれるドメイン名がAzure AD にはカスタムドメインとして登録されていない場合</strong></p>
-<p>オンプレミス AD ドメイン上でのあるユーザーの UPN の値が <a href="mailto:user01@contoso.com" target="_blank" rel="noopener">user01@contoso.com</a> だとします。<br><br>この AD ドメインのディレクトリ同期先である Azure AD のイニシャル ドメインがonmicrosoft.com であり、カスタム ドメインとして contoso.com を登録していない環境であるとします。</p>
-<p>この環境でディレクトリ同期を実施した結果 Azure AD に作成されるユーザーの UPN の値は、呼応するカスタム ドメインが存在しないので <a href="mailto:user01@contoso.onmicrosoft.com" target="_blank" rel="noopener">user01@contoso.onmicrosoft.com</a> というようになります。<br><br>また、この Azure AD に同期作成されたユーザーに対して属性が重複するユーザーを同期した場合 (前述の 1. 2. のような条件を満たしたケース) が生じた場合には、後から同期されたユーザーはこれまでのご案内と同様に <a href="mailto:user012547@contoso.onmicrosoft.com" target="_blank" rel="noopener">user012547@contoso.onmicrosoft.com</a> というようになります。<br>しかし、この状況ではオリジナルの user01 が削除されるなど、重複状態が解消されても、<a href="mailto:user012547@contoso.onmicrosoft.com" target="_blank" rel="noopener">user012547@contoso.onmicrosoft.com</a> ユーザーの自動　UPN 変更回復は実行されません。</p>
+<p>オンプレミス AD ドメイン上でのあるユーザーの UPN の値が <a href="mailto:user01@contoso.com" target="_blank" rel="noopener">user01@contoso.com</a> だとします。<br>この AD ドメインのディレクトリ同期先である Azure AD のイニシャル ドメインがonmicrosoft.com であり、カスタム ドメインとして contoso.com を登録していない環境であるとします。</p>
+<p>この環境でディレクトリ同期を実施した結果 Azure AD に作成されるユーザーの UPN の値は、呼応するカスタム ドメインが存在しないので <a href="mailto:user01@contoso.onmicrosoft.com" target="_blank" rel="noopener">user01@contoso.onmicrosoft.com</a> というようになります。<br>また、この Azure AD に同期作成されたユーザーに対して属性が重複するユーザーを同期した場合 (前述の 1. 2. のような条件を満たしたケース) が生じた場合には、後から同期されたユーザーはこれまでのご案内と同様に <a href="mailto:user012547@contoso.onmicrosoft.com" target="_blank" rel="noopener">user012547@contoso.onmicrosoft.com</a> というようになります。<br>しかし、この状況ではオリジナルの user01 が削除されるなど、重複状態が解消されても、<a href="mailto:user012547@contoso.onmicrosoft.com" target="_blank" rel="noopener">user012547@contoso.onmicrosoft.com</a> ユーザーの自動　UPN 変更回復は実行されません。</p>
 <p><strong>シナリオ2. SipProxyAddress の値が重複する場合 :</strong></p>
-<p>ProxyAddress 属性に SIP: として指定する SipProxyAddress 値は、Azure AD ユーザーに同期されると SipProxyAddress属性にセットされます。<br><br>この SipProxyAddress は前述の 1. や2. のような条件で重複するケースの場合は、重複属性の回復性は動作せず、“+<4digitnumber>@.onmicrosoft.com” のユーザーが Azure AD に作成されることもありません。<br><br>これは、今回の重複属性の回復性の発動対象の値が Azure AD 側のユーザーが保持する UPN と ProxyAddresses のみとなり、SipProxyAddress の重複は発動対象ではないことが原因です。以下で詳細を解説します。</4digitnumber></p>
+<p>ProxyAddress 属性に SIP: として指定する SipProxyAddress 値は、Azure AD ユーザーに同期されると SipProxyAddress属性にセットされます。<br>この SipProxyAddress は前述の 1. や2. のような条件で重複するケースの場合は、重複属性の回復性は動作せず、“+<4digitnumber>@.onmicrosoft.com” のユーザーが Azure AD に作成されることもありません。<br>これは、今回の重複属性の回復性の発動対象の値が Azure AD 側のユーザーが保持する UPN と ProxyAddresses のみとなり、SipProxyAddress の重複は発動対象ではないことが原因です。以下で詳細を解説します。</4digitnumber></p>
 <p>SipProxyAddress とは、下記一例にあるコマンドで確認することができる属性です。</p>
 <p>一例 :</p>
 <ol>
 <li><p>Connect-AzureAD コマンドで Azure AD にサインインします。</p>
-<img src="/blog/2017/11/08/azure-active-directory-connect/duplicate-attribute-recoverability-behavior/2-1.png">
+<img src="/blog/azure-active-directory-connect/duplicate-attribute-recoverability-behavior/2-1.png">
 </li>
 <li><p>Get-AzureADUser コマンドで対象ユーザーのオブジェクト ID を確認します。</p>
-<img src="/blog/2017/11/08/azure-active-directory-connect/duplicate-attribute-recoverability-behavior/2-2-1.png">
-<img src="/blog/2017/11/08/azure-active-directory-connect/duplicate-attribute-recoverability-behavior/2-2-2.png">
+<img src="/blog/azure-active-directory-connect/duplicate-attribute-recoverability-behavior/2-2-1.png">
+<img src="/blog/azure-active-directory-connect/duplicate-attribute-recoverability-behavior/2-2-2.png">
 </li>
 <li><p>Get-AzureADUser コマンドで対象ユーザーについてプロパティを確認します。</p>
-<img src="/blog/2017/11/08/azure-active-directory-connect/duplicate-attribute-recoverability-behavior/2-3.png">
-<img src="/blog/2017/11/08/azure-active-directory-connect/duplicate-attribute-recoverability-behavior/2-3-2.png">
+<img src="/blog/azure-active-directory-connect/duplicate-attribute-recoverability-behavior/2-3.png">
+<img src="/blog/azure-active-directory-connect/duplicate-attribute-recoverability-behavior/2-3-2.png">
 </li>
 </ol>
 <p>オンプレミス AD のユーザーの ProxyAddresses に “SIP:“ より始まる Lync 及び Skype で利用するアドレスが値として格納されている場合に、ディレクトリ同期をすると Azure AD に生成されるユーザーの SipProxyAddress にこの値が格納されます。</p>
@@ -602,27 +602,27 @@
 <li>この状態で、オンプレミス AD ドメインに ProxyAddresses 属性内に [SIP:<a href="mailto:user01@contoso.com" target="_blank" rel="noopener">user01@contoso.com</a>] の値を持つユーザーを作成します(新user01)。</li>
 <li>改めてディレクトリ同期を行う運用になったので、Azure AD Connect で同じテナントに同期を行うと、オリジナルuser01と新user01の SipProxyAddress 重複状態が検知されますが、重複属性の回復性機能の対象外であるため、単純に重複エラーとなり、Azure AD へのエクスポートが行われない結果となります。</li>
 </ul>
-<p>このエラーを検知した場合、下記のような内容のメールで技術的通知の連絡先に通知されます。<br><br>また、本メールは同期の処理が繰り返し行われ、都度エクスポートが失敗する度に通知されます。</p>
+<p>このエラーを検知した場合、下記のような内容のメールで技術的通知の連絡先に通知されます。<br>また、本メールは同期の処理が繰り返し行われ、都度エクスポートが失敗する度に通知されます。</p>
 <ul>
 <li>このオブジェクトを更新できません。このオブジェクトに関連付けられている次の属性の値が、ローカル ディレクトリ サービスの別のオブジェクトに既に関連付けられていることが原因として考えられます: [SipProxyAddress <a href="mailto:user01@contoso.com" target="_blank" rel="noopener">user01@contoso.com</a> ディレクトリで重複している値を修正または削除してください。属性値が重複しているオブジェクトの検出方法については、<a href="http://support.microsoft.com/kb/2647098" target="_blank" rel="noopener">http://support.microsoft.com/kb/2647098</a> を参照してください。</li>
 </ul>
-<p><strong>シナリオ3. 一度同期対象から外したユーザーを再度同期対象に戻した場合 :</strong><br>一度同期対象から外した後で、別のユーザーに同じ ProxyAddresses を設定し、同期します。同期対象から外したユーザーは、 Azure AD 上でも削除されますが、完全に削除されるのではなく 30 日間はごみ箱に保存されます。このゴミ箱にユーザー情報が残っていても、この場合には重複は検出されません。その上で、同期対象から外したユーザーを再度同期対象にします。このとき、別のユーザーではすでに ProxyAddresses に同じものが設定されているので重複が生じますが、重複属性の回復性機能が動作すれば、ユーザー自体の同期はされますが、 ProxyAddresses は空になると予測されますが、そうなりません。<br><br>わかりにくいと思いますので、具体例を紹介します。</p>
+<p><strong>シナリオ3. 一度同期対象から外したユーザーを再度同期対象に戻した場合 :</strong><br>一度同期対象から外した後で、別のユーザーに同じ ProxyAddresses を設定し、同期します。同期対象から外したユーザーは、 Azure AD 上でも削除されますが、完全に削除されるのではなく 30 日間はごみ箱に保存されます。このゴミ箱にユーザー情報が残っていても、この場合には重複は検出されません。その上で、同期対象から外したユーザーを再度同期対象にします。このとき、別のユーザーではすでに ProxyAddresses に同じものが設定されているので重複が生じますが、重複属性の回復性機能が動作すれば、ユーザー自体の同期はされますが、 ProxyAddresses は空になると予測されますが、そうなりません。<br>わかりにくいと思いますので、具体例を紹介します。</p>
 <ol>
 <li><a href="mailto:User01@contoso.com" target="_blank" rel="noopener">User01@contoso.com</a> というユーザーは ProxyAddresses としてSMTP:<a href="mailto:user01@contoso.com" target="_blank" rel="noopener">user01@contoso.com</a> をもち、その情報が Azure AD に同期されています。</li>
 <li><a href="mailto:user01@contoso.com" target="_blank" rel="noopener">user01@contoso.com</a> を同期対象から解除します。この後で同期処理が行われることにより<a href="mailto:user01@contoso.com" target="_blank" rel="noopener">user01@contoso.com</a> は Azure AD 上はごみ箱に入ります。</li>
 <li><a href="mailto:user02@contoso.com" target="_blank" rel="noopener">user02@contoso.com</a> “ をオンプレミス AD に作成し、ProxyAddresses として <a href="mailto:user01@contoso.com" target="_blank" rel="noopener">user01@contoso.com</a> を設定します。ディレクトリ同期をし、Azure AD にユーザーが生成されます。また、 ProxyAddresses <a href="mailto:user01@contoso.com" target="_blank" rel="noopener">user01@contoso.com</a> を持つ削除されておらず有効なアカウントは存在しないため、重複検出機能は動作せずにそのまま作成されます。</li>
 <li><a href="mailto:user01@contoso.com" target="_blank" rel="noopener">user01@contoso.com</a> を同期対象に戻します。その後、ディレクトリ同期をしますと、Azure AD のごみ箱にあります <a href="mailto:user01@contoso.com" target="_blank" rel="noopener">user01@contoso.com</a> を再度有効なユーザーアカウントに変更する処理が行われます。しかし、このとき ProxyAddresses が重複しているためエラーが発生しますが、このとき重複検出の回復性の機能は動作せずにユーザーは有効にされず、 Azure AD Connect としても同期のエラーを検出します。</li>
 </ol>
-<p>このシナリオに合致するケースでは、下記のようなエラーが記録されます。<br><img src="/blog/2017/11/08/azure-active-directory-connect/duplicate-attribute-recoverability-behavior/31.png"></p>
+<p>このシナリオに合致するケースでは、下記のようなエラーが記録されます。<br><img src="/blog/azure-active-directory-connect/duplicate-attribute-recoverability-behavior/31.png"></p>
 <p>このエラーを検知した場合も、下記のような内容のメールで技術的通知の連絡先に通知されます。</p>
-<p>Unable to update this object because the following attributes associated with this object have values that may already be associated with another object in your local directory services: [<strong>ProxyAddresses</strong>SMTP:<a href="mailto:user01@contoso.com" target="_blank" rel="noopener">user01@contoso.com</a>;]. Correct or remove the duplicate values in your local directory.”<br><br>(このオブジェクトに紐づく属性値 [<strong>ProxyAddresses</strong> SMTP:<a href="mailto:user01@contoso.com" target="_blank" rel="noopener">user01@contoso.com</a>;] は、ローカル ディレクトリ サービスの他のオブジェクトに既に紐付けられているため、このオブジェクトを更新できません。ローカル ディレクトリの重複している属性値を変更または削除してください。)</p>
+<p>Unable to update this object because the following attributes associated with this object have values that may already be associated with another object in your local directory services: [<strong>ProxyAddresses</strong>SMTP:<a href="mailto:user01@contoso.com" target="_blank" rel="noopener">user01@contoso.com</a>;]. Correct or remove the duplicate values in your local directory.”<br>(このオブジェクトに紐づく属性値 [<strong>ProxyAddresses</strong> SMTP:<a href="mailto:user01@contoso.com" target="_blank" rel="noopener">user01@contoso.com</a>;] は、ローカル ディレクトリ サービスの他のオブジェクトに既に紐付けられているため、このオブジェクトを更新できません。ローカル ディレクトリの重複している属性値を変更または削除してください。)</p>
 <p>以降、重複した ProxyAddresses の値の状態を解消する対処を実施するまでは、定期的な同期処理が行われる毎に失敗し、このメールが通知されます。</p>
 <p>「コミュニティにおけるマイクロソフト社員による発言やコメントは、マイクロソフトの正式な見解またはコメントではありません。」</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jpazureid.github.io/2017/11/08/azure-active-directory-connect/duplicate-attribute-recoverability-behavior/" data-id="cjtqwo5yd004qe4ytyx8jj79h" class="article-share-link">共有</a>
+      <a data-url="https://jpazureid.github.io/azure-active-directory-connect/duplicate-attribute-recoverability-behavior/" data-id="cjtz46ppi004qzcytgd8kebgv" class="article-share-link">共有</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/AAD-Connect/">AAD Connect</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Azure-AD/">Azure AD</a></li></ul>
@@ -636,7 +636,7 @@
   
     <article id="post-azure-active-directory/subscription-azure-ad-relationship" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="../../2017/11/04/azure-active-directory/subscription-azure-ad-relationship/" class="article-date">
+    <a href="../../azure-active-directory/subscription-azure-ad-relationship/" class="article-date">
   <time datetime="2017-11-03T15:00:00.000Z" itemprop="datePublished">2017-11-04</time>
 </a>
     
@@ -648,7 +648,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="../../2017/11/04/azure-active-directory/subscription-azure-ad-relationship/">Azure サブスクリプションと Azure AD の管理者</a>
+      <a class="article-title" href="../../azure-active-directory/subscription-azure-ad-relationship/">Azure サブスクリプションと Azure AD の管理者</a>
     </h1>
   
 
@@ -659,9 +659,9 @@
         <p>こんにちは、 Azure ID サポートチームの三浦です。</p>
 <p>今回は混乱することが多い Azure のサブスクリプションと Azure Active Directory (Azure AD) の関係、それぞれの管理者について紹介します。</p>
 <h2 id="Azure-サブスクリプションと-Azure-AD-の関係"><a href="#Azure-サブスクリプションと-Azure-AD-の関係" class="headerlink" title="Azure サブスクリプションと Azure AD の関係"></a>Azure サブスクリプションと Azure AD の関係</h2><p>まず、 Azure サブスクリプションと Azure AD の関係ですが、 Azure のサブスクリプションに Azure AD が含まれているというイメージを持たれている方もいるかもしれませんが、以下の図のようなイメージは間違いです。</p>
-<img src="/blog/2017/11/04/azure-active-directory/subscription-azure-ad-relationship/wrong-understanding.png">
+<img src="/blog/azure-active-directory/subscription-azure-ad-relationship/wrong-understanding.png">
 <p>正しくは Azure サブスクリプションと Azure AD には包含関係は無く、独立しています。Azure サブスクリプションは必ず 1 つの Azure AD に関連付けられています (*注1) ので、両者の関係性は次のような図になります。</p>
-<img src="/blog/2017/11/04/azure-active-directory/subscription-azure-ad-relationship/subscription-relationship.png">
+<img src="/blog/azure-active-directory/subscription-azure-ad-relationship/subscription-relationship.png">
 <p>上の図では 2 つのサブスクリプションが Office 365 を利用中の同一の Azure AD に関連づけられている例です。この例では Office 365 で利用しているアカウント情報を Azure のサブスクリプションも参照し、サブスクリプションへのアクセス権限の付与などにもそのまま利用します。</p>
 <blockquote>
 <p>注 1: 関連付けのことを “信頼しています” という表現を使用する場合もあります。この関連付けを変更するためには、サブスクリプションのアカウント管理者を別の Azure AD のユーザーに譲渡する作業、もしくはディレクトリの切り替えの作業が必要です。Azure AD に関連づけられた Azure のサブスクリプションは 1 つの場合もありますし、3 つ以上の場合もあります。また、 Office 365 を利用中の Azure AD に関連付けることもできれば、そうではないケースもあります。</p>
@@ -678,10 +678,10 @@
 <p>管理者についてもそれぞれ独立していますので Azure サブスクリプションの管理者であっても Azure AD の全体管理者でなければ、 Azure AD の管理 (ユーザー追加、削除など) はできません。同様に Azure AD の全体管理者であっても、必ずしも紐づく Azure サブスクリプションの管理者ではありません。</p>
 <p>例えば次のような関係を考えてみましょう。</p>
 <p>company1 という会社ではすでに Azure AD を保持しており、その Azure AD のディレクトリ名は company1com.onmicrosoft.com です。この Azure AD にはカスタムドメインとして company1.com というドメイン名が紐づけられています (*注3)。以下の図では <a href="mailto:user1@company1.com" target="_blank" rel="noopener">user1@company1.com</a> というアカウントが Azure のサブスクリプションを作成した状態での関係を示しています。</p>
-<img src="/blog/2017/11/04/azure-active-directory/subscription-azure-ad-relationship/subscription-relationship-a.png">
+<img src="/blog/azure-active-directory/subscription-azure-ad-relationship/subscription-relationship-a.png">
 <p><a href="mailto:user1@company1.com" target="_blank" rel="noopener">user1@company1.com</a> というアカウントは Azure のサブスクリプションのアカウント管理者でありサービス管理者です。そのため、サブスクリプション内のすべての権限を持ちます。例えばこのサブスクリプション内で仮想マシンを作成したり、仮想ネットワークを設定したりすることができます。しかし、関連づけられている Azure AD に対しては user1 は管理者権限を持ちません。Azure AD に対して管理者権限を必要とする作業を実施する場合には <a href="mailto:admin1@company1com.onmicrosoft.com" target="_blank" rel="noopener">admin1@company1com.onmicrosoft.com</a> または <a href="mailto:admin2@company1.com" target="_blank" rel="noopener">admin2@company1.com</a> という全体管理者に、作業を依頼するか、あるいは自身に Azure AD の権限を与えてくれるように依頼する必要があります。</p>
 <p>別のパターンを考えてみます。</p>
-<img src="/blog/2017/11/04/azure-active-directory/subscription-azure-ad-relationship/subscription-relationship-b.png">
+<img src="/blog/azure-active-directory/subscription-azure-ad-relationship/subscription-relationship-b.png">
 <p>ここでは Microsoft アカウントの <a href="mailto:user2@outlook.com" target="_blank" rel="noopener">user2@outlook.com</a> を指定して Azure サブスクリプションを作成しています。この例の outlook.com のように企業に紐づかない Microsoft アカウントを利用して Azure サブスクリプションを作成した場合など、サブスクリプション作成時に利用したアカウントが所属する Azure AD が無い場合には、新規で Azure AD ディレクトリが自動的に作成されます。この場合、特に役割の追加作業をしていなくても Azure サブスクリプションのアカウント管理者 = Azure AD の全体管理者になります。</p>
 <p>この場合でも以下のようにサブスクリプションに別のアカウント <a href="mailto:user3@outlook.com" target="_blank" rel="noopener">user3@outlook.com</a> を所有者として追加した場合には、このアカウントは Azure AD の管理者ではありませんので、もしそのアカウントにも権限を付与したいのであれば <a href="mailto:user2@outlook.com" target="_blank" rel="noopener">user2@outlook.com</a> が、 <a href="mailto:user3@outlook.com" target="_blank" rel="noopener">user3@outlook.com</a> を全体管理者にする作業が必要です。</p>
 <blockquote>
@@ -697,7 +697,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jpazureid.github.io/2017/11/04/azure-active-directory/subscription-azure-ad-relationship/" data-id="cjtqwo5x9003ie4yte2cq96ss" class="article-share-link">共有</a>
+      <a data-url="https://jpazureid.github.io/azure-active-directory/subscription-azure-ad-relationship/" data-id="cjtz46poc003kzcytls95oz6e" class="article-share-link">共有</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Azure-AD/">Azure AD</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Subscription/">Subscription</a></li></ul>
@@ -711,7 +711,7 @@
   
     <article id="post-azure-active-directory-connect/general-information" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="../../2017/10/24/azure-active-directory-connect/general-information/" class="article-date">
+    <a href="../../azure-active-directory-connect/general-information/" class="article-date">
   <time datetime="2017-10-23T15:00:00.000Z" itemprop="datePublished">2017-10-24</time>
 </a>
     
@@ -723,7 +723,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="../../2017/10/24/azure-active-directory-connect/general-information/">Azure AD Connect サーバーの全般情報</a>
+      <a class="article-title" href="../../azure-active-directory-connect/general-information/">Azure AD Connect サーバーの全般情報</a>
     </h1>
   
 
@@ -773,7 +773,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jpazureid.github.io/2017/10/24/azure-active-directory-connect/general-information/" data-id="cjtqwo5tv001je4yttulmiv97" class="article-share-link">共有</a>
+      <a data-url="https://jpazureid.github.io/azure-active-directory-connect/general-information/" data-id="cjtz46pme001hzcyt77yjnvwj" class="article-share-link">共有</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/AAD-Connect/">AAD Connect</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/サポート/">サポート</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/情報採取/">情報採取</a></li></ul>
@@ -787,7 +787,7 @@
   
     <article id="post-azure-active-directory-connect/problem-user-synchronize" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="../../2017/10/24/azure-active-directory-connect/problem-user-synchronize/" class="article-date">
+    <a href="../../azure-active-directory-connect/problem-user-synchronize/" class="article-date">
   <time datetime="2017-10-23T15:00:00.000Z" itemprop="datePublished">2017-10-24</time>
 </a>
     
@@ -799,7 +799,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="../../2017/10/24/azure-active-directory-connect/problem-user-synchronize/">Azure AD Connect でユーザー同期ができない問題</a>
+      <a class="article-title" href="../../azure-active-directory-connect/problem-user-synchronize/">Azure AD Connect でユーザー同期ができない問題</a>
     </h1>
   
 
@@ -823,7 +823,7 @@
 <h1 id="2-Azure-AD-Connect-サーバー上のオブジェクト情報"><a href="#2-Azure-AD-Connect-サーバー上のオブジェクト情報" class="headerlink" title="2.Azure AD Connect サーバー上のオブジェクト情報"></a>2.Azure AD Connect サーバー上のオブジェクト情報</h1><ul>
 <li>1 の手順で ldifde コマンドにて取得したオブジェクトと同オブジェクトについて採取します。</li>
 </ul>
-<p>2-1. 既定で “C:\Program Files\Microsoft Azure AD Sync\UIShell” にあります “miisclient.exe” を実行し、[Synchronization Service Manager] を開きます。<br><br>2-2. 画面上部の [Metaverse Search] ボタンを押します。<br><br>2-3. 画面上部の [Scope by Objects Type] から、[person]を選びます。<br><br>あまりにも多くのユーザーが [Search Results] として出力され、さらに細かい条件を指定する場合は、[Attribute] に属性を指定し、[Operator]に “Equal” や “Starts with(前方一致) “を選択し、[Value] に検索するユーザーのキーワードをご指定ください。<br><br>2-4. 表示された ユーザーをダブルクリックします。<br><br>2-5. [Metaverse Object Properties]の画面をひろげ、 [Attributes] タブの設定全体が見えるようにした上で画面キャプチャを取得します。（画面が切れる場合は、スクロールなどして全体の情報を採取します）<br><br>2-6. [Connectors]タブを選択します。<br><br>2-7. [Distinguished Name] にAzure AD とオンプレAD の二つの表示を確認します。<br><br>2-8. 一方の [Distinguished Name] 設定を選択します。<br><br>2-9. 表示された [Connector Space Object Properties] の設定全体が見えるように画面キャプチャを取得します。<br><br>2-10 [Close] を押し、先ほど選択しなかった、もう一方の [Connector Space Object Properties] についても画面キャプチャを取得します。<br></p>
+<p>2-1. 既定で “C:\Program Files\Microsoft Azure AD Sync\UIShell” にあります “miisclient.exe” を実行し、[Synchronization Service Manager] を開きます。<br>2-2. 画面上部の [Metaverse Search] ボタンを押します。<br>2-3. 画面上部の [Scope by Objects Type] から、[person]を選びます。<br>あまりにも多くのユーザーが [Search Results] として出力され、さらに細かい条件を指定する場合は、[Attribute] に属性を指定し、[Operator]に “Equal” や “Starts with(前方一致) “を選択し、[Value] に検索するユーザーのキーワードをご指定ください。<br>2-4. 表示された ユーザーをダブルクリックします。<br>2-5. [Metaverse Object Properties]の画面をひろげ、 [Attributes] タブの設定全体が見えるようにした上で画面キャプチャを取得します。（画面が切れる場合は、スクロールなどして全体の情報を採取します）<br>2-6. [Connectors]タブを選択します。<br>2-7. [Distinguished Name] にAzure AD とオンプレAD の二つの表示を確認します。<br>2-8. 一方の [Distinguished Name] 設定を選択します。<br>2-9. 表示された [Connector Space Object Properties] の設定全体が見えるように画面キャプチャを取得します。<br>2-10 [Close] を押し、先ほど選択しなかった、もう一方の [Connector Space Object Properties] についても画面キャプチャを取得します。  </p>
 <h1 id="3-Synchronization-Service-Manager-のエラー画面ショット"><a href="#3-Synchronization-Service-Manager-のエラー画面ショット" class="headerlink" title="3.Synchronization Service Manager のエラー画面ショット"></a>3.Synchronization Service Manager のエラー画面ショット</h1><p>Azure AD Connect の Synchronization Service Manager にてエラーが発生しているか確認し、エラーが生じている場合にはその画面情報を取得します。</p>
 <p>確認する箇所は[Operations] を選択して、[Status]が success でないものについて、画面右下のリンクをクリックしたときのすべての画面ショットを採取します。</p>
 <h1 id="4-イベント-ログ"><a href="#4-イベント-ログ" class="headerlink" title="4.イベント ログ"></a>4.イベント ログ</h1><p>Azure AD Connect サーバーに管理者権限でサインインし、作業を実施ください。</p>
@@ -838,7 +838,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jpazureid.github.io/2017/10/24/azure-active-directory-connect/problem-user-synchronize/" data-id="cjtqwo5u3001re4ytgpppdqaa" class="article-share-link">共有</a>
+      <a data-url="https://jpazureid.github.io/azure-active-directory-connect/problem-user-synchronize/" data-id="cjtz46pmk001rzcytu4bmo9ow" class="article-share-link">共有</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/AAD-Connect/">AAD Connect</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/サポート/">サポート</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/情報採取/">情報採取</a></li></ul>
@@ -852,7 +852,7 @@
   
     <article id="post-azure-active-directory-connect/upn-hard-match" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="../../2017/10/05/azure-active-directory-connect/upn-hard-match/" class="article-date">
+    <a href="../../azure-active-directory-connect/upn-hard-match/" class="article-date">
   <time datetime="2017-10-04T15:00:00.000Z" itemprop="datePublished">2017-10-05</time>
 </a>
     
@@ -864,7 +864,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="../../2017/10/05/azure-active-directory-connect/upn-hard-match/">Azure AD (Office 365) 上のユーザーをオンプレミス Active Directory ユーザーと紐付ける方法</a>
+      <a class="article-title" href="../../azure-active-directory-connect/upn-hard-match/">Azure AD (Office 365) 上のユーザーをオンプレミス Active Directory ユーザーと紐付ける方法</a>
     </h1>
   
 
@@ -900,9 +900,9 @@
 </ol>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ldifde -f c:\ ldifde_user.txt -d &quot;手順 5. でコピーした内容&quot; -p subtree</span><br></pre></td></tr></table></figure>
 <p>コマンド例：</p>
-<img src="/blog/2017/10/05/azure-active-directory-connect/upn-hard-match/hardmatch_11.png">
+<img src="/blog/azure-active-directory-connect/upn-hard-match/hardmatch_11.png">
 <p>1-7. 出力されたファイルを開き、ObjectGUID の値を確認します。<br>出力結果例：</p>
-<img src="/blog/2017/10/05/azure-active-directory-connect/upn-hard-match/hardmatch_2.png">
+<img src="/blog/azure-active-directory-connect/upn-hard-match/hardmatch_2.png">
 <h2 id="2-Azure-AD-上で-ImmutableId-が設定されてないことを確認"><a href="#2-Azure-AD-上で-ImmutableId-が設定されてないことを確認" class="headerlink" title="2. Azure AD 上で ImmutableId が設定されてないことを確認"></a>2. Azure AD 上で ImmutableId が設定されてないことを確認</h2><p>Azure AD の紐づけ対象のアカウントに ImmutableId が設定されていないことを確認します。ImmutableId が設定されている場合には、すでに同期対象となっていることを示します。</p>
 <ol>
 <li>インターネットに接続している任意のコンピューター上で “Windows PowerShell 用 Windows Azure Active Directory モジュール” を管理者として実行します。</li>
@@ -929,7 +929,7 @@
 <p>3-4. 下記のコマンドを実行します。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Get-MsolUser -UserPrincipalName &quot;対象ユーザーの UPN&quot; | fl</span><br></pre></td></tr></table></figure>
 <p>コマンド例：</p>
-<img src="/blog/2017/10/05/azure-active-directory-connect/upn-hard-match/hardmatch_3.png">
+<img src="/blog/azure-active-directory-connect/upn-hard-match/hardmatch_3.png">
 <h3 id="4-手動で差分ディレクトリ同期を実施"><a href="#4-手動で差分ディレクトリ同期を実施" class="headerlink" title="4. 手動で差分ディレクトリ同期を実施"></a>4. 手動で差分ディレクトリ同期を実施</h3><p>※2016 年 2 月に公開された新しいバージョン（1.1.105.0 以上）の Azure AD Connectを使用した手順をご案内いたします。</p>
 <ol>
 <li>ディレクトリ同期サーバーに管理者権限でログインします。</li>
@@ -945,7 +945,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://jpazureid.github.io/2017/10/05/azure-active-directory-connect/upn-hard-match/" data-id="cjtqwo5u7001we4ytb70wa2ku" class="article-share-link">共有</a>
+      <a data-url="https://jpazureid.github.io/azure-active-directory-connect/upn-hard-match/" data-id="cjtz46pml001tzcyt0dpq9t35" class="article-share-link">共有</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/AAD-Connect/">AAD Connect</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Hard-match/">Hard match</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/UPN/">UPN</a></li></ul>
@@ -994,7 +994,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">アーカイブ</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2019/03/">三月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2019/02/">二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/12/">十二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/11/">十一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/10/">十月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/08/">八月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/07/">七月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/06/">六月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/05/">五月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/04/">四月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/02/">二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/01/">一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/12/">十二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/10/">十月 2017</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2019/02/">二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/12/">十二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/11/">十一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/10/">十月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/08/">八月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/07/">七月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/06/">六月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/05/">五月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/04/">四月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/02/">二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/01/">一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/12/">十二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/10/">十月 2017</a></li></ul>
     </div>
   </div>
 
@@ -1007,23 +1007,23 @@
       <ul>
         
           <li>
-            <a href="../../2019/03/27/azure-active-directory-connect/introduction-staging-server/">(no title)</a>
+            <a href="../../azure-active-directory/how-to-get-sign-in-logs/">Azure AD サインイン ログ取得方法まとめ</a>
           </li>
         
           <li>
-            <a href="../../2019/02/04/azure-active-directory/how-to-get-sign-in-logs/">Azure AD サインイン ログ取得方法まとめ</a>
+            <a href="../../azure-active-directory/last-signin-reports/">PowerShell にて全ユーザーの最終サインイン日時を一括で取得する方法</a>
           </li>
         
           <li>
-            <a href="../../2018/12/12/azure-active-directory/last-signin-reports/">PowerShell にて全ユーザーの最終サインイン日時を一括で取得する方法</a>
+            <a href="../../azure-active-directory-connect/introduction-staging-server/">ステージング サーバーのすゝめ</a>
           </li>
         
           <li>
-            <a href="../../2018/11/01/azure-active-directory/create-subscription-error/">サブスクリプション作成時のエラー「アカウントが Azure サブスクリプションに関連付けられないディレクトリに属しています。別のアカウントでサインインしてください」</a>
+            <a href="../../azure-active-directory/create-subscription-error/">サブスクリプション作成時のエラー「アカウントが Azure サブスクリプションに関連付けられないディレクトリに属しています。別のアカウントでサインインしてください」</a>
           </li>
         
           <li>
-            <a href="../../2018/11/01/active-directory-federation-service/adfs-cba-ts/">証明書認証のトラブルシューティング</a>
+            <a href="../../active-directory-federation-service/adfs-cba-ts/">証明書認証のトラブルシューティング</a>
           </li>
         
       </ul>

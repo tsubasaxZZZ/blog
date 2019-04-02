@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  <!-- this tag should remove when publish production  -->
+  <meta name="”robots”" content="”noindex”">
+  
+
+  
+  <title>Member ユーザーと Guest ユーザーについて | Japan Azure Identity Support Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="こんにちは、Azure &amp;amp; Identity サポート チームの坂井です。 Azure AD に所属しているユーザーの種類として、下記のように 「Member」 と 「Guest」があります。今回は、こちらのユーザーの種類について説明します。  はじめに下記のように、個人アカウントや別テナントの職場または学校アカウント (組織アカウント) を追加した (Azure AD B2B の機能を利">
+<meta name="keywords" content="Azure AD B2B">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Member ユーザーと Guest ユーザーについて">
+<meta property="og:url" content="https://jpazureid.github.io/azure-active-directory/member-and-guest-user/index.html">
+<meta property="og:site_name" content="Japan Azure Identity Support Blog">
+<meta property="og:description" content="こんにちは、Azure &amp;amp; Identity サポート チームの坂井です。 Azure AD に所属しているユーザーの種類として、下記のように 「Member」 と 「Guest」があります。今回は、こちらのユーザーの種類について説明します。  はじめに下記のように、個人アカウントや別テナントの職場または学校アカウント (組織アカウント) を追加した (Azure AD B2B の機能を利">
+<meta property="og:locale" content="ja">
+<meta property="og:image" content="https://jpazureid.github.io/blog/azure-active-directory/member-and-guest-user/member-and-guest.png">
+<meta property="og:image" content="https://jpazureid.github.io/blog/azure-active-directory/member-and-guest-user/personal-work-account.png">
+<meta property="og:image" content="https://jpazureid.github.io/blog/azure-active-directory/member-and-guest-user/access-denied.png">
+<meta property="og:image" content="https://jpazureid.github.io/blog/azure-active-directory/member-and-guest-user/no-access-permission.png">
+<meta property="og:image" content="https://jpazureid.github.io/blog/azure-active-directory/member-and-guest-user/guest-users-permissions-are-limited.png">
+<meta property="og:updated_time" content="2019-04-02T01:39:11.649Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Member ユーザーと Guest ユーザーについて">
+<meta name="twitter:description" content="こんにちは、Azure &amp;amp; Identity サポート チームの坂井です。 Azure AD に所属しているユーザーの種類として、下記のように 「Member」 と 「Guest」があります。今回は、こちらのユーザーの種類について説明します。  はじめに下記のように、個人アカウントや別テナントの職場または学校アカウント (組織アカウント) を追加した (Azure AD B2B の機能を利">
+<meta name="twitter:image" content="https://jpazureid.github.io/blog/azure-active-directory/member-and-guest-user/member-and-guest.png">
+  
+    <link rel="alternate" href="../../atom.xml" title="Japan Azure Identity Support Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="../../css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="../../index.html" id="logo">Japan Azure Identity Support Blog</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="../../index.html">Home</a>
+        
+          <a class="main-nav-link" href="../../archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="../../atom.xml" title="RSSフィード"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="検索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://jpazureid.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-azure-active-directory/member-and-guest-user" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href class="article-date">
+  <time datetime="2017-12-11T15:00:00.000Z" itemprop="datePublished">2017-12-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Member ユーザーと Guest ユーザーについて
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>こんにちは、Azure &amp; Identity サポート チームの坂井です。</p>
+<p>Azure AD に所属しているユーザーの種類として、下記のように 「Member」 と 「Guest」があります。今回は、こちらのユーザーの種類について説明します。</p>
+<img src="/blog/azure-active-directory/member-and-guest-user/member-and-guest.png">
+<h2 id="はじめに"><a href="#はじめに" class="headerlink" title="はじめに"></a>はじめに</h2><p>下記のように、個人アカウントや別テナントの職場または学校アカウント (組織アカウント) を追加した (Azure AD B2B の機能を利用した) 場合に、ユーザーの種類が 「Guest」 として追加されます。</p>
+<img src="/blog/azure-active-directory/member-and-guest-user/personal-work-account.png">
+<p>これ以外の Azure のサブスクリプションのサインアップで利用した個人アカウントや組織内のドメイン (上記の例の場合：contso.com) をユーザー名 (例：<a href="mailto:test@contoso.com" target="_blank" rel="noopener">test@contoso.com</a>) に持つユーザーは「Member」として登録されます。また、クラシックポータル  (旧ポータル) より追加した外部ユーザーについては 「Member」として登録されております。</p>
+<h2 id="詳細"><a href="#詳細" class="headerlink" title="詳細"></a>詳細</h2><p>既定ではゲスト ユーザーに対しては、 Azure AD のデータへのアクセスを制限しています。そのため、ゲスト ユーザーでサインインした場合、招待された Azure AD のユーザーの一覧を参照することもできませんし、各種設定の参照・変更も制限されています。もちろん、サブスクリプションに対する権限を付与していない場合は、サブスクリプションのリソースを操作することもできません。<br>(一般ユーザーとゲスト ユーザーがそれぞれできること (アクセス許可の比較) は、こちらをご参照ください。)</p>
+<img src="/blog/azure-active-directory/member-and-guest-user/access-denied.png">
+<img src="/blog/azure-active-directory/member-and-guest-user/no-access-permission.png">
+<p>ゲストに対するアクセス制限は、以下の赤枠の箇所 (ゲストのアクセス許可を制限する) で変更できます。この設定が “はい” の場合には「Guest」の操作は上記のように制限されています。</p>
+<img src="/blog/azure-active-directory/member-and-guest-user/guest-users-permissions-are-limited.png">
+<p>ユーザーの属性については、PowerShell を利用することで Member から Guest、またその逆についても変更が可能です。Guest から Member  に変更する際は「Guest」に対して行っていた制御の対象外のユーザーとなるため、セキュリティポリシーに沿った対応や特定のユーザーに絞った設定変更をお勧め致します。</p>
+<h2 id="ユーザー-タイプ変更手順"><a href="#ユーザー-タイプ変更手順" class="headerlink" title="ユーザー タイプ変更手順"></a>ユーザー タイプ変更手順</h2><p>この作業を実施するためには、Azure AD 用の PowerShell (Azure AD v1 の PowerShell) を利用する必要がありますが、 PowerShell を利用する際には Microsoft アカウントではなく、組織アカウントでの全体管理者が必要です (Azure AD の PowerShell については <a href="https://blogs.technet.microsoft.com/jpazureid/2017/12/04/aad-powershell/" target="_blank" rel="noopener">リンク</a> も参照ください)。そのために対処策は次の手順で実施する必要があります。</p>
+<ol>
+<li>Azure AD の全体管理者アカウントを作成する (※すでに組織アカウントの全体管理者が存在する場合は、スキップ)</li>
+<li>PowerShell を実行し、該当ユーザーを 「Guest」 から 「Member」 に変更する</li>
+</ol>
+<h3 id="1-Azure-AD-の全体管理者アカウントを作成する-※すでに組織アカウントの全体管理者が存在する場合は、スキップ"><a href="#1-Azure-AD-の全体管理者アカウントを作成する-※すでに組織アカウントの全体管理者が存在する場合は、スキップ" class="headerlink" title="1. Azure AD の全体管理者アカウントを作成する (※すでに組織アカウントの全体管理者が存在する場合は、スキップ)"></a>1. Azure AD の全体管理者アカウントを作成する (※すでに組織アカウントの全体管理者が存在する場合は、スキップ)</h3><ol>
+<li>Azure ポータルにサインインします。</li>
+<li>Azure Active Directory を開き、[ドメイン名] を開きます。</li>
+<li>一覧に表示されている名前で onmicrosoft.com を含む名前を控えておきます。</li>
+<li>[ユーザーとグループ] - [すべてのユーザー] と辿り、右ペインの上部にある [+ 新しいユーザー] をクリックします。</li>
+<li>名前欄に適当な例えば admin1 などを入力し、 ユーザー名として 1-3 で確認した onmicrosoft.com のドメイ<br>ン名と名前欄に設定したものを組み合わせて <a href="mailto:admin1@contoso.onmicrosoft.com" target="_blank" rel="noopener">admin1@contoso.onmicrosoft.com</a> というように入力します。</li>
+<li>ディレクトリ ロール欄で “全体管理者” を選択し、 [OK] をクリックします。</li>
+<li>“パスワードを表示” をクリックし、パスワードを控えて [作成] をクリックします。</li>
+</ol>
+<h3 id="2-PowerShell-を実行し、該当ユーザーを-Guest-から-Member-に変更する"><a href="#2-PowerShell-を実行し、該当ユーザーを-Guest-から-Member-に変更する" class="headerlink" title="2. PowerShell を実行し、該当ユーザーを Guest から Member に変更する"></a>2. PowerShell を実行し、該当ユーザーを Guest から Member に変更する</h3><ol>
+<li>Azure AD 用の PowerShell (Azure AD v1 の MSOnline の PowerShell) を起動します。<br>※モジュールの入手方法については、弊社ブログをご参照ください。インストールされていない環境では 1. MSOnline (Azure AD v1) のインストールをお願いします。</li>
+<li>以下のコマンドを実行します。<br>Connect-MsolService</li>
+<li>資格情報の入力を求められるため、1 で作成したアカウントの情報を入力します。<br>このときパスワードの変更が求められるはずですので、パスワードを新しく設定します。</li>
+<li><p>以下のコマンドを実行して、対象ユーザーの UserPrincipalName および UserType 属性値を確認します。</p>
+ <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Get-MsolUser -All | <span class="built_in">Format-Table</span> UserPrincipalName,UserType</span><br></pre></td></tr></table></figure>
+<p> 出力例:</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">UserPrincipalName                             UserType</span><br><span class="line">User1_live.com#EXT#@contoso.onmicrosoft.com   Guest  -&gt; 「Guest」 であることが確認できます。</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<ol start="5">
+<li><p>以下のコマンドを実行して、対象ユーザーの UserType を 「Member」 に変更します。</p>
+ <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-MsolUser -UserPrincipalName &lt;対象ユーザーの UserPrincipalName&gt; -UserType Member</span><br></pre></td></tr></table></figure>
+<p> 実行例:</p>
+ <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-MsolUser -UserPrincipalName User1_live.com<span class="comment">#EXT#@contoso.onmicrosoft.com -UserType Member</span></span><br></pre></td></tr></table></figure>
+<ol start="6">
+<li><p>再度以下のコマンドを実行して、対象ユーザーの UserType を確認します。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Get-MsolUser -All | <span class="built_in">Format-Table</span> UserPrincipalName,UserType</span><br></pre></td></tr></table></figure>
+<p>出力例:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">UserPrincipalName                             UserType</span><br><span class="line">User1_live.com#EXT#@contoso.onmicrosoft.com   Member  -&gt; 変更されたことを確認します。</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ol>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p>「Member」→「Guest」に変更する場合は、UserType に 「Guest」を指定します。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Set-MsolUser -UserPrincipalName &lt;対象ユーザーの UserPrincipalName&gt; -UserType Guest</span><br></pre></td></tr></table></figure>
+<p>上記内容が少しでも皆様の参考となりますと幸いです。</p>
+<h2 id="変更履歴"><a href="#変更履歴" class="headerlink" title="変更履歴"></a>変更履歴</h2><ul>
+<li>2017/12/12: 公開しました。</li>
+<li>2018/02/26: Microsoft Connect のリタイアに伴い MSOnline モジュールのダウンロードができなくなったため記載を変更しました。</li>
+<li>2018/10/31: メンバーとゲストの既定のアクセス許可の比較情報のリンクを追加しました。</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://jpazureid.github.io/azure-active-directory/member-and-guest-user/" data-id="cjtz46pm80013zcytrsboiuid" class="article-share-link">共有</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="../../tags/Azure-AD-B2B/">Azure AD B2B</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="../../active-directory-federation-service/kmsi-not-shown-wia/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">次の記事</strong>
+      <div class="article-nav-title">
+        
+          フェデレーション環境 (Windows 統合認証) で [サインインの状態を維持しますか？] の画面が表示されない
+        
+      </div>
+    </a>
+  
+  
+    <a href="../what-is-b2b/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前の記事</strong>
+      <div class="article-nav-title">Azure AD B2B とは</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">タグ</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="../../tags/AAD-Connect/">AAD Connect</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/AD-FS/">AD FS</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/AD-Sync/">AD Sync</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-AD/">Azure AD</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-AD-Application-Proxy/">Azure AD Application Proxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-AD-B2B/">Azure AD B2B</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-AD-Directory-Rolls/">Azure AD Directory Rolls</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Azure-AD-License/">Azure AD License</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/CBA/">CBA</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Conditional-Access/">Conditional Access</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/ExpressRoute/">ExpressRoute</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Hard-match/">Hard match</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Hybrid-Azure-AD-Join/">Hybrid Azure AD Join</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Intune/">Intune</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/MFA/">MFA</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/OAuth/">OAuth</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/PowerShell/">PowerShell</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/RBAC/">RBAC</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Security/">Security</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Sgin-in-log/">Sgin-in log</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Smart-lockout/">Smart lockout</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Subscription/">Subscription</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Tenant-Restrictions/">Tenant Restrictions</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Token/">Token</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/UPN/">UPN</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Windows-Defender-ATP/">Windows Defender ATP</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/Workplace-Join/">Workplace Join</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/graph-api/">graph api</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/signin-log/">signin log</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/サポート/">サポート</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/トラブルシューティング/">トラブルシューティング</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/情報採取/">情報採取</a></li><li class="tag-list-item"><a class="tag-list-link" href="../../tags/証明書認証/">証明書認証</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">タグクラウド</h3>
+    <div class="widget tagcloud">
+      <a href="../../tags/AAD-Connect/" style="font-size: 18.33px;">AAD Connect</a> <a href="../../tags/AD-FS/" style="font-size: 16.67px;">AD FS</a> <a href="../../tags/AD-Sync/" style="font-size: 10px;">AD Sync</a> <a href="../../tags/Azure-AD/" style="font-size: 20px;">Azure AD</a> <a href="../../tags/Azure-AD-Application-Proxy/" style="font-size: 10px;">Azure AD Application Proxy</a> <a href="../../tags/Azure-AD-B2B/" style="font-size: 13.33px;">Azure AD B2B</a> <a href="../../tags/Azure-AD-Directory-Rolls/" style="font-size: 10px;">Azure AD Directory Rolls</a> <a href="../../tags/Azure-AD-License/" style="font-size: 10px;">Azure AD License</a> <a href="../../tags/CBA/" style="font-size: 10px;">CBA</a> <a href="../../tags/Conditional-Access/" style="font-size: 15px;">Conditional Access</a> <a href="../../tags/ExpressRoute/" style="font-size: 10px;">ExpressRoute</a> <a href="../../tags/Hard-match/" style="font-size: 10px;">Hard match</a> <a href="../../tags/Hybrid-Azure-AD-Join/" style="font-size: 10px;">Hybrid Azure AD Join</a> <a href="../../tags/Intune/" style="font-size: 11.67px;">Intune</a> <a href="../../tags/MFA/" style="font-size: 10px;">MFA</a> <a href="../../tags/OAuth/" style="font-size: 10px;">OAuth</a> <a href="../../tags/PowerShell/" style="font-size: 10px;">PowerShell</a> <a href="../../tags/RBAC/" style="font-size: 11.67px;">RBAC</a> <a href="../../tags/Security/" style="font-size: 11.67px;">Security</a> <a href="../../tags/Sgin-in-log/" style="font-size: 10px;">Sgin-in log</a> <a href="../../tags/Smart-lockout/" style="font-size: 10px;">Smart lockout</a> <a href="../../tags/Subscription/" style="font-size: 10px;">Subscription</a> <a href="../../tags/Tenant-Restrictions/" style="font-size: 10px;">Tenant Restrictions</a> <a href="../../tags/Token/" style="font-size: 10px;">Token</a> <a href="../../tags/UPN/" style="font-size: 10px;">UPN</a> <a href="../../tags/Windows-Defender-ATP/" style="font-size: 10px;">Windows Defender ATP</a> <a href="../../tags/Workplace-Join/" style="font-size: 10px;">Workplace Join</a> <a href="../../tags/graph-api/" style="font-size: 11.67px;">graph api</a> <a href="../../tags/signin-log/" style="font-size: 11.67px;">signin log</a> <a href="../../tags/サポート/" style="font-size: 11.67px;">サポート</a> <a href="../../tags/トラブルシューティング/" style="font-size: 11.67px;">トラブルシューティング</a> <a href="../../tags/情報採取/" style="font-size: 11.67px;">情報採取</a> <a href="../../tags/証明書認証/" style="font-size: 10px;">証明書認証</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">アーカイブ</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2019/02/">二月 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/12/">十二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/11/">十一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/10/">十月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/09/">九月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/08/">八月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/07/">七月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/06/">六月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/05/">五月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/04/">四月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/03/">三月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/02/">二月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2018/01/">一月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/12/">十二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="../../archives/2017/10/">十月 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最近の投稿</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="../how-to-get-sign-in-logs/">Azure AD サインイン ログ取得方法まとめ</a>
+          </li>
+        
+          <li>
+            <a href="../last-signin-reports/">PowerShell にて全ユーザーの最終サインイン日時を一括で取得する方法</a>
+          </li>
+        
+          <li>
+            <a href="../../azure-active-directory-connect/introduction-staging-server/">ステージング サーバーのすゝめ</a>
+          </li>
+        
+          <li>
+            <a href="../create-subscription-error/">サブスクリプション作成時のエラー「アカウントが Azure サブスクリプションに関連付けられないディレクトリに属しています。別のアカウントでサインインしてください」</a>
+          </li>
+        
+          <li>
+            <a href="../../active-directory-federation-service/adfs-cba-ts/">証明書認証のトラブルシューティング</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 Azure Identity Support Japan<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="../../index.html" class="mobile-nav-link">Home</a>
+  
+    <a href="../../archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="../../fancybox/jquery.fancybox.css">
+  <script src="../../fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="../../js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
